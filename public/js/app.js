@@ -49469,12 +49469,6 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]);
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
-
 var app = new Vue({
   el: '#app'
 });
@@ -49613,8 +49607,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/gedfrey/program/laravel/easynote/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/gedfrey/program/laravel/easynote/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/gedfrey/Programacion/laravel/easynote/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/gedfrey/Programacion/laravel/easynote/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
