@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App;
 
-class PostController extends Controller
+class TextController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +14,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = App\Post::all();
-        return view('home',compact('posts'));
+        //
     }
 
     /**
@@ -26,7 +24,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('post.create');
+        //
     }
 
     /**
@@ -37,19 +35,14 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-//        return view('home');
-        $request->validate([
-           'title' => 'required|max:255',
-            'description' => 'required'
-        ]);
+        $newText = new App\Text;
+        $newText->value = $request->value;
+        $newText->size = $request->size;
+        $newText->align = $request->align;
+        $newText->type_text_id = $request->type_text_id;
+        $newText->save();
 
-        $postCreate = new App\Post;
-        $postCreate->title = $request->title;
-        $postCreate->description = $request->description;
-        $postCreate->user_id =Auth::id();
-        $postCreate->save();
-        $post = $postCreate;
-        return view('post.details',compact('post'));
+        return $newText;
     }
 
     /**
@@ -60,8 +53,8 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $post = App\Post::findOrFail($id);
-        return view('post.details',compact('post'));
+        $newText = App\Text::findOrFail($id);
+        return $newText;
     }
 
     /**
@@ -72,8 +65,7 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        $post = App\Post::findOrFail($id);
-        return view('post.edit',compact('post'));
+        //
     }
 
     /**
@@ -85,16 +77,14 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'title'=>'required|max:255',
-            'description'=>'required'
-        ]);
+        $updateText = App\Text::findOrFail($id);
+        $updateText->value = $request->value;
+        $updateText->size = $request->size;
+        $updateText->align = $request->align;
+        $updateText->type_text_id = $request->type_text_id;
+        $updateText->save();
 
-        $post = App\Post::findOrFail($id);
-        $post->title = $request->title;
-        $post->description = $request->description;
-        $post->save();
-        return view('post.details',compact('post'));
+        return $updateText;
     }
 
     /**
@@ -105,9 +95,6 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        $postDelete = App\Post::findOrFail($id);
-        $postDelete->delete();
-        $posts = App\Post::all();
-        return view('home',compact('posts'));
+        //
     }
 }

@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App;
 
-class PostController extends Controller
+class ContentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +14,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = App\Post::all();
-        return view('home',compact('posts'));
+        $contents = App\Content::all();
+        return $contents;
     }
 
     /**
@@ -26,7 +25,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('post.create');
+        //
     }
 
     /**
@@ -37,19 +36,13 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-//        return view('home');
-        $request->validate([
-           'title' => 'required|max:255',
-            'description' => 'required'
-        ]);
+        $newContent = new App\Content;
+        $newContent->order = $request->order;
+        $newContent->post_id = $request->post_id;
+        $newContent->text_id = $request->text_id;
+        $newContent->save();
 
-        $postCreate = new App\Post;
-        $postCreate->title = $request->title;
-        $postCreate->description = $request->description;
-        $postCreate->user_id =Auth::id();
-        $postCreate->save();
-        $post = $postCreate;
-        return view('post.details',compact('post'));
+        return $newContent;
     }
 
     /**
@@ -60,8 +53,8 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $post = App\Post::findOrFail($id);
-        return view('post.details',compact('post'));
+        $content = App\Content::findOrFail($id);
+        return $content;
     }
 
     /**
@@ -72,8 +65,7 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        $post = App\Post::findOrFail($id);
-        return view('post.edit',compact('post'));
+        //
     }
 
     /**
@@ -85,16 +77,7 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'title'=>'required|max:255',
-            'description'=>'required'
-        ]);
-
-        $post = App\Post::findOrFail($id);
-        $post->title = $request->title;
-        $post->description = $request->description;
-        $post->save();
-        return view('post.details',compact('post'));
+        //
     }
 
     /**
@@ -105,9 +88,6 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        $postDelete = App\Post::findOrFail($id);
-        $postDelete->delete();
-        $posts = App\Post::all();
-        return view('home',compact('posts'));
+        //
     }
 }
