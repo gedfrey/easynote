@@ -8,6 +8,6 @@ class Content extends Model
 {
     public function text()
     {
-        return $this->hasOne('App\Text');
+        return $this->belongsTo('App\Text');
     }
 }

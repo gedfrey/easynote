@@ -8,6 +8,11 @@ class Text extends Model
 {
     public function content()
     {
-        return $this->belongsTo('App\Content');
+        return $this->hasOne('App\Content');
+    }
+
+    public function type_text()
+    {
+        return $this->belongsTo('App\Type_Text');
     }
 }
