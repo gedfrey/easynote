@@ -26,4 +26,52 @@ class ContentsEditController extends Controller
         ->get();
         return $order;
     }
+
+    public function up(Request $request){
+        $contents = App\Content::where('post_id',$request->post_id)
+            ->orderBy('order','asc')
+            ->get();
+
+        $content = App\Content::findOrFail($request->content_id);
+        $length = count($content);
+
+        for($x = $content->order;$x <= length;$x++){
+            $value = App\Content::where('post_id',$request->post_id)
+                ->where('order',$x);
+            if($value){
+                $order = $value->order;
+                $value->order = $content->order;
+                $value->save();
+                $content->order = $order;
+                $content->save();
+                return $content;
+            }
+        }
+    }
+
+    public function down(Request $request){
+
+        error_log(1);
+
+        $contents = App\Content::where('post_id',$request->post_id)
+            ->orderBy('order','asc')
+            ->get();
+
+
+        $content = App\Content::find($request->content_id);
+
+        for($x = $content->order;$x >= 1;$x--){
+            $value = App\Content::where('post_id',$request->post_id)
+                ->where('order',$x);
+            if($value){
+                $order = $value->order;
+                $value->order = $content->order;
+                $value->save();
+                $content->order = $order;
+                $content->save();
+                return $content;
+            }
+        }
+
+    }
 }

@@ -1954,9 +1954,38 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      message: {
+        create: ''
+      },
       contents: [],
       form: {
         value: '',
@@ -1973,7 +2002,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         value: null,
         size: null,
         align: null,
-        type: null
+        type: null,
+        createContent: null
       }
     };
   },
@@ -2008,11 +2038,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     textValue: function textValue() {
       if (this.options.title) {
-        return 'Ingresa el titulo';
+        return 'Ingresa el titulo...';
       }
 
       if (this.options.text) {
-        return 'Ingresa el texto';
+        return 'Ingresa el texto...';
       }
     },
     textSize: function textSize() {
@@ -2056,8 +2086,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   orderNumber += order[0].order;
                 }
 
-                if (this.form.type === 1 || this.form.type === 2) {
+                if (this.form.type === 1) {
                   if (this.form.value.length >= 4 && this.form.value.length <= 20) {
+                    this.validateForm.value = true;
+                  } else {
+                    this.validateForm.value = false;
+                  }
+                } else if (this.form.type === 2) {
+                  if (this.form.value.length >= 20 && this.form.value.length <= 200) {
                     this.validateForm.value = true;
                   } else {
                     this.validateForm.value = false;
@@ -2076,14 +2112,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   this.validateForm.align = false;
                 }
 
-                console.log('EL tipo es');
-                console.log(this.form.type);
-                console.log('la longitud es');
-                console.log(this.form.value.length);
-                console.log(this.validateForm.value, this.validateForm.size, this.validateForm.align);
-
                 if (!(this.validateForm.value && this.validateForm.size && this.validateForm.align)) {
-                  _context.next = 25;
+                  _context.next = 20;
                   break;
                 }
 
@@ -2093,14 +2123,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   'align': this.form.align,
                   'type_text_id': this.form.type
                 };
-                _context.next = 18;
+                _context.next = 13;
                 return axios.post('/texts', text);
 
-              case 18:
+              case 13:
                 post = _context.sent;
 
                 if (!(post.status == 201)) {
-                  _context.next = 25;
+                  _context.next = 20;
                   break;
                 }
 
@@ -2109,14 +2139,32 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   'post_id': this.post_id,
                   'text_id': post.data.id
                 };
-                _context.next = 23;
+                _context.next = 18;
                 return axios.post('/contents', content);
 
-              case 23:
+              case 18:
                 postContent = _context.sent;
-                this.getContentsByPost();
 
-              case 25:
+                if (postContent.status === 201) {
+                  this.message.create = 'Agregado exitosamente';
+                  this.validateForm.createContent = false;
+                  this.getContentsByPost();
+                  this.form.value = '';
+                  this.form.type = '';
+                  this.form.size = '';
+                  this.form.align = '';
+                  this.validateForm.value = null;
+                  this.validateForm.type = null;
+                  this.validateForm.align = null;
+                  this.validateForm.size = null;
+                  this.options.title = false;
+                  this.options.text = false;
+                } else {
+                  this.validateForm.createContent = true;
+                  this.message.create = 'Hubo un error al crear el contenido';
+                }
+
+              case 20:
               case "end":
                 return _context.stop();
             }
@@ -2309,7 +2357,63 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       this.form.type = id;
       console.log(this.form.type);
-    }
+    },
+    moveContent: function () {
+      var _moveContent = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(content_id, post_id, move) {
+        var object, post, _post;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+          while (1) {
+            switch (_context5.prev = _context5.next) {
+              case 0:
+                console.log(content_id);
+                console.log(post_id);
+                console.log(move);
+                object = {
+                  'post_id': post_id,
+                  'content_id': content_id
+                };
+
+                if (!(move === 'up')) {
+                  _context5.next = 12;
+                  break;
+                }
+
+                _context5.next = 7;
+                return axios.post('/post/contents/up', object);
+
+              case 7:
+                post = _context5.sent;
+                console.log(post);
+                this.getContentsByPost();
+                _context5.next = 17;
+                break;
+
+              case 12:
+                _context5.next = 14;
+                return axios.post('/post/contents/down', object);
+
+              case 14:
+                _post = _context5.sent;
+                console.log(_post);
+                this.getContentsByPost();
+
+              case 17:
+              case "end":
+                return _context5.stop();
+            }
+          }
+        }, _callee5, this);
+      }));
+
+      function moveContent(_x2, _x3, _x4) {
+        return _moveContent.apply(this, arguments);
+      }
+
+      return moveContent;
+    }()
   },
   props: ['post_id'],
   mounted: function mounted() {
@@ -38482,9 +38586,29 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
+  return _c("div", { staticClass: "container-fluid" }, [
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-3 d-flex flex-column" }, [
+        _vm.validateForm.createContent === true
+          ? _c("div", { staticClass: "alert alert-danger" }, [
+              _vm._v(
+                "\n                " +
+                  _vm._s(_vm.message.create) +
+                  "\n            "
+              )
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.validateForm.createContent === false
+          ? _c("div", { staticClass: "alert alert-success" }, [
+              _vm._v(
+                "\n                " +
+                  _vm._s(_vm.message.create) +
+                  "\n            "
+              )
+            ])
+          : _vm._e(),
+        _vm._v(" "),
         _c("div", { staticClass: "dropdown mb-2" }, [
           _c(
             "button",
@@ -38545,42 +38669,90 @@ var render = function() {
               _c(
                 "div",
                 { staticClass: "card-body" },
-                _vm._l(_vm.contents, function(content) {
-                  return _c("div", { key: content.id, staticClass: "card" }, [
-                    _c("div", { staticClass: "card-body" }, [
-                      _c("p", { staticClass: "card-text" }, [
-                        _vm._v(
-                          "\n                                        " +
-                            _vm._s(content.value) +
-                            "\n                                    "
-                        )
+                [
+                  _vm._l(_vm.contents, function(content) {
+                    return _c("div", { key: content.id, staticClass: "row" }, [
+                      _c("div", { staticClass: "col" }, [
+                        _c("div", { staticClass: "card" }, [
+                          _c("div", { staticClass: "card-body" }, [
+                            _c("p", { staticClass: "card-text" }, [
+                              _vm._v(
+                                "\n                                                " +
+                                  _vm._s(content.value) +
+                                  "\n                                            "
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "a",
+                              {
+                                staticClass: "btn btn-warning",
+                                attrs: { href: "#" }
+                              },
+                              [_vm._v("Editar")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-danger",
+                                on: {
+                                  click: function($event) {
+                                    return _vm.deleteContent(content.id)
+                                  }
+                                }
+                              },
+                              [_vm._v("Eliminar")]
+                            )
+                          ])
+                        ])
                       ]),
                       _vm._v(" "),
-                      _c(
-                        "a",
-                        {
-                          staticClass: "btn btn-warning",
-                          attrs: { href: "#" }
-                        },
-                        [_vm._v("Editar")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "btn btn-danger",
-                          on: {
-                            click: function($event) {
-                              return _vm.deleteContent(content.id)
-                            }
-                          }
-                        },
-                        [_vm._v("Eliminar")]
-                      )
+                      _c("div", { staticClass: "col-2" }, [
+                        _c("div", { staticClass: "row" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-primary col mt-2",
+                              on: {
+                                click: function($event) {
+                                  return _vm.moveContent(
+                                    content.id,
+                                    _vm.post_id,
+                                    "up"
+                                  )
+                                }
+                              }
+                            },
+                            [_vm._v("Subir")]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "row" }, [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-primary col mt-2",
+                              on: {
+                                click: function($event) {
+                                  return _vm.moveContent(
+                                    content.id,
+                                    _vm.post_id,
+                                    "down"
+                                  )
+                                }
+                              }
+                            },
+                            [_vm._v("Bajar")]
+                          )
+                        ])
+                      ])
                     ])
-                  ])
-                }),
-                0
+                  }),
+                  _vm._v(" "),
+                  _c("div")
+                ],
+                2
               )
             ])
           ])
@@ -38609,27 +38781,70 @@ var render = function() {
                         }
                       },
                       [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.form.value,
-                              expression: "form.value"
-                            }
-                          ],
-                          class: ["form-control", _vm.isvalidValue],
-                          attrs: { type: "text", placeholder: _vm.textValue },
-                          domProps: { value: _vm.form.value },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
+                        _vm.options.title
+                          ? _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.form.value,
+                                  expression: "form.value"
+                                }
+                              ],
+                              class: ["form-control", "mb-2", _vm.isvalidValue],
+                              attrs: {
+                                type: "text",
+                                placeholder: _vm.textValue
+                              },
+                              domProps: { value: _vm.form.value },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.form,
+                                    "value",
+                                    $event.target.value
+                                  )
+                                }
                               }
-                              _vm.$set(_vm.form, "value", $event.target.value)
-                            }
-                          }
-                        }),
+                            })
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.options.text
+                          ? _c("textarea", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.form.value,
+                                  expression: "form.value"
+                                }
+                              ],
+                              class: ["form-control", "mb-2", _vm.isvalidValue],
+                              attrs: {
+                                name: "text",
+                                id: "",
+                                cols: "30",
+                                rows: "5",
+                                placeholder: _vm.textValue
+                              },
+                              domProps: { value: _vm.form.value },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.form,
+                                    "value",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          : _vm._e(),
                         _vm._v(" "),
                         !_vm.validateForm.value
                           ? _c("div", { staticClass: "invalid-feedback" }, [
@@ -38655,6 +38870,7 @@ var render = function() {
                             class: [
                               "custom-select",
                               "mr-sm-2",
+                              "mb-2",
                               _vm.isvalidsize
                             ],
                             attrs: { name: "form.size", id: "sizeSelect" },
@@ -38726,6 +38942,7 @@ var render = function() {
                             class: [
                               "custom-select",
                               "mr-sm-2",
+                              "mb-2",
                               _vm.isvalidalign
                             ],
                             attrs: { name: "form.align", id: "alignSelect" },
@@ -51337,8 +51554,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/gedfrey/program/laravel/easynote/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/gedfrey/program/laravel/easynote/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/gedfrey/Programacion/laravel/easynote/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/gedfrey/Programacion/laravel/easynote/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

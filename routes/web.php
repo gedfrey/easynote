@@ -41,4 +41,12 @@ Route::get('/post/contents/order/{id}','ContentsEditController@getOrder')
     ->name('post.contents.order')
     ->where('id','[0-9]+');
 
+Route::post('/post/contents/up','ContentsEditController@up')
+    ->name('post.contents.up')
+    ->middleware('auth');
+
+Route::post('/post/contents/down','ContentsEditController@down')
+    ->name('post.contents.down')
+    ->middleware('auth');
+
 

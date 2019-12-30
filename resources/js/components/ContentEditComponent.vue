@@ -1,7 +1,16 @@
 <template>
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
             <div class="col-3 d-flex flex-column">
+
+                <div class="alert alert-danger" v-if="validateForm.createContent === true">
+                    {{message.create}}
+                </div>
+
+                <div class="alert alert-success" v-if="validateForm.createContent === false">
+                    {{message.create}}
+                </div>
+
                 <div class="dropdown mb-2">
                     <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Agregar Texto
@@ -39,14 +48,30 @@
                                 Contenido del Post
                             </h5>
                             <div class="card-body">
-                                <div class="card" v-for="content of contents" :key="content.id">
-                                    <div class="card-body">
-                                        <p class="card-text">
-                                            {{content.value}}
-                                        </p>
-                                        <a href="#" class="btn btn-warning">Editar</a>
-                                        <button @click="deleteContent(content.id)" class="btn btn-danger">Eliminar</button>
+                                <div class="row" v-for="content of contents" :key="content.id">
+                                    <div class="col">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <p class="card-text">
+                                                    {{content.value}}
+                                                </p>
+                                                <a href="#" class="btn btn-warning">Editar</a>
+                                                <button @click="deleteContent(content.id)" class="btn btn-danger">Eliminar</button>
+                                            </div>
+                                        </div>
                                     </div>
+                                    <div class="col-2">
+                                        <div class="row">
+                                            <button class="btn btn-primary col mt-2" @click="moveContent(content.id,post_id,'up')">Subir</button>
+                                        </div>
+                                        <div class="row">
+                                            <button class="btn btn-primary col mt-2" @click="moveContent(content.id,post_id,'down')">Bajar</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div>
+
                                 </div>
                             </div>
                         </div>
@@ -61,11 +86,12 @@
                             </h5>
                             <div class="card-body">
                                 <form action="" method="post" @submit.prevent="storeText" v-if="options.title || options.text">
-                                    <input type="text" v-model="form.value" :class="['form-control',isvalidValue]" :placeholder="textValue">
+                                    <input v-if="options.title" type="text" v-model="form.value" :class="['form-control','mb-2',isvalidValue]" :placeholder="textValue">
+                                    <textarea name="text" v-if="options.text" :class="['form-control','mb-2',isvalidValue]" v-model="form.value" id="" cols="30" rows="5" :placeholder="textValue"></textarea>
                                     <div class="invalid-feedback" v-if="!validateForm.value">
                                         {{textValueFeedback}}
                                     </div>
-                                    <select name="form.size" id="sizeSelect" :class="['custom-select','mr-sm-2',isvalidsize]" v-model="form.size">
+                                    <select name="form.size" id="sizeSelect" :class="['custom-select','mr-sm-2','mb-2',isvalidsize]" v-model="form.size">
                                         <option value="">{{textSize}}</option>
                                         <option value="big">Grande</option>
                                         <option value="normal">normal</option>
@@ -74,7 +100,7 @@
                                     <div class="invalid-feedback" :state="validateForm.size" v-if="!validateForm.size">
                                         Debes seleccionar un valor
                                     </div>
-                                    <select name="form.align" id="alignSelect" :class="['custom-select','mr-sm-2',isvalidalign]" v-model="form.align">
+                                    <select name="form.align" id="alignSelect" :class="['custom-select','mr-sm-2','mb-2',isvalidalign]" v-model="form.align">
                                         <option value="">{{textAlign}}</option>
                                         <option value="text-center">centrado</option>
                                         <option value="text-left">izquierda</option>
@@ -98,6 +124,9 @@
     export default {
         data() {
             return {
+                message: {
+                  create: ''
+                },
                 contents: [],
                 form: {
                     value:'',
@@ -114,7 +143,8 @@
                     value : null,
                     size: null,
                     align: null,
-                    type: null
+                    type: null,
+                    createContent: null
 
                 }
 
@@ -151,10 +181,10 @@
             },
             textValue: function () {
                 if(this.options.title){
-                    return 'Ingresa el titulo';
+                    return 'Ingresa el titulo...';
                 }
                 if(this.options.text){
-                    return 'Ingresa el texto';
+                    return 'Ingresa el texto...';
                 }
             },
             textSize: function (){
@@ -184,7 +214,7 @@
                     orderNumber += order[0].order
                 }
 
-                if(this.form.type === 1 || this.form.type === 2){
+                if(this.form.type === 1){
 
                     if(this.form.value.length >= 4 && this.form.value.length <= 20){
                         this.validateForm.value = true
@@ -192,6 +222,12 @@
                         this.validateForm.value = false
                     }
 
+                }else if(this.form.type === 2){
+                    if(this.form.value.length >= 20 && this.form.value.length <= 200){
+                        this.validateForm.value = true
+                    }else{
+                        this.validateForm.value = false
+                    }
                 }
 
 
@@ -206,11 +242,6 @@
                 }else{
                     this.validateForm.align = false
                 }
-                console.log('EL tipo es')
-                console.log(this.form.type)
-                console.log('la longitud es')
-                console.log(this.form.value.length)
-                console.log(this.validateForm.value,this.validateForm.size,this.validateForm.align)
 
                 if(this.validateForm.value && this.validateForm.size && this.validateForm.align){
 
@@ -222,6 +253,7 @@
                     }
                     let post = await axios.post('/texts',text)
 
+
                     if(post.status == 201){
                         let content = {
                             'order': orderNumber,
@@ -229,7 +261,24 @@
                             'text_id': post.data.id
                         }
                         let postContent = await axios.post('/contents',content)
-                        this.getContentsByPost()
+                        if(postContent.status === 201){
+                            this.message.create = 'Agregado exitosamente'
+                            this.validateForm.createContent = false
+                            this.getContentsByPost()
+                            this.form.value = ''
+                            this.form.type = ''
+                            this.form.size = ''
+                            this.form.align = ''
+                            this.validateForm.value = null
+                            this.validateForm.type = null
+                            this.validateForm.align = null
+                            this.validateForm.size = null
+                            this.options.title = false
+                            this.options.text = false
+                        }else{
+                            this.validateForm.createContent = true
+                            this.message.create = 'Hubo un error al crear el contenido'
+                        }
                     }
 
                 }
@@ -278,7 +327,26 @@
                 }
                 this.form.type = id
                 console.log(this.form.type)
-            }
+            },
+            moveContent: async function(content_id,post_id,move){
+                console.log(content_id)
+                console.log(post_id)
+                console.log(move)
+                let object = {
+                    'post_id':post_id,
+                    'content_id':content_id
+                }
+                if(move === 'up'){
+                    let post = await axios.post('/post/contents/up',object)
+                    console.log(post)
+                    this.getContentsByPost()
+                }else{
+                    let post = await axios.post('/post/contents/down',object)
+                    console.log(post)
+                    this.getContentsByPost()
+                }
+
+            },
 
         },
         props: ['post_id'],
