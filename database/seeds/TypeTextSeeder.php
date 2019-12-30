@@ -18,7 +18,7 @@ class TypeTextSeeder extends Seeder
         ]);
 
         DB::table('type__texts')->insert([
-           'name' => 'text',
+           'name' => 'body_text',
             'created_at' => date("Y-m-d H:i:s")
         ]);
     }

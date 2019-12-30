@@ -1980,9 +1980,34 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
+      selectedItem: 0,
       message: {
         create: ''
       },
@@ -2004,7 +2029,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         align: null,
         type: null,
         createContent: null
-      }
+      },
+      selected: 'adios'
     };
   },
   computed: {
@@ -2361,46 +2387,43 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     moveContent: function () {
       var _moveContent = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(content_id, post_id, move) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(post_id, move) {
         var object, post, _post;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
           while (1) {
             switch (_context5.prev = _context5.next) {
               case 0:
-                console.log(content_id);
-                console.log(post_id);
-                console.log(move);
                 object = {
                   'post_id': post_id,
-                  'content_id': content_id
+                  'content_id': this.selectedItem
                 };
 
                 if (!(move === 'up')) {
-                  _context5.next = 12;
+                  _context5.next = 9;
                   break;
                 }
 
-                _context5.next = 7;
+                _context5.next = 4;
                 return axios.post('/post/contents/up', object);
 
-              case 7:
+              case 4:
                 post = _context5.sent;
                 console.log(post);
                 this.getContentsByPost();
-                _context5.next = 17;
+                _context5.next = 14;
                 break;
 
-              case 12:
-                _context5.next = 14;
+              case 9:
+                _context5.next = 11;
                 return axios.post('/post/contents/down', object);
 
-              case 14:
+              case 11:
                 _post = _context5.sent;
                 console.log(_post);
                 this.getContentsByPost();
 
-              case 17:
+              case 14:
               case "end":
                 return _context5.stop();
             }
@@ -2408,12 +2431,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee5, this);
       }));
 
-      function moveContent(_x2, _x3, _x4) {
+      function moveContent(_x2, _x3) {
         return _moveContent.apply(this, arguments);
       }
 
       return moveContent;
-    }()
+    }(),
+    addId: function addId(id) {
+      this.selectedItem = id;
+    },
+    checkSelectedItem: function checkSelectedItem(id) {
+      if (this.selectedItem === id) {
+        return 'bg-info';
+      }
+    }
   },
   props: ['post_id'],
   mounted: function mounted() {
@@ -38592,9 +38623,9 @@ var render = function() {
         _vm.validateForm.createContent === true
           ? _c("div", { staticClass: "alert alert-danger" }, [
               _vm._v(
-                "\n                " +
+                "\n                    " +
                   _vm._s(_vm.message.create) +
-                  "\n            "
+                  "\n                "
               )
             ])
           : _vm._e(),
@@ -38602,9 +38633,9 @@ var render = function() {
         _vm.validateForm.createContent === false
           ? _c("div", { staticClass: "alert alert-success" }, [
               _vm._v(
-                "\n                " +
+                "\n                    " +
                   _vm._s(_vm.message.create) +
-                  "\n            "
+                  "\n                "
               )
             ])
           : _vm._e(),
@@ -38622,7 +38653,11 @@ var render = function() {
                 "aria-expanded": "false"
               }
             },
-            [_vm._v("\n                    Agregar Texto\n                ")]
+            [
+              _vm._v(
+                "\n                        Agregar Texto\n                    "
+              )
+            ]
           ),
           _vm._v(" "),
           _c(
@@ -38662,7 +38697,7 @@ var render = function() {
             _c("div", { staticClass: "card" }, [
               _c("h5", { staticClass: "card-header" }, [
                 _vm._v(
-                  "\n                            Contenido del Post\n                        "
+                  "\n                                Contenido del Post\n                            "
                 )
               ]),
               _vm._v(" "),
@@ -38673,79 +38708,29 @@ var render = function() {
                   _vm._l(_vm.contents, function(content) {
                     return _c("div", { key: content.id, staticClass: "row" }, [
                       _c("div", { staticClass: "col" }, [
-                        _c("div", { staticClass: "card" }, [
-                          _c("div", { staticClass: "card-body" }, [
-                            _c("p", { staticClass: "card-text" }, [
-                              _vm._v(
-                                "\n                                                " +
-                                  _vm._s(content.value) +
-                                  "\n                                            "
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "a",
-                              {
-                                staticClass: "btn btn-warning",
-                                attrs: { href: "#" }
-                              },
-                              [_vm._v("Editar")]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "button",
-                              {
-                                staticClass: "btn btn-danger",
-                                on: {
-                                  click: function($event) {
-                                    return _vm.deleteContent(content.id)
-                                  }
-                                }
-                              },
-                              [_vm._v("Eliminar")]
-                            )
-                          ])
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-2" }, [
-                        _c("div", { staticClass: "row" }, [
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-primary col mt-2",
-                              on: {
-                                click: function($event) {
-                                  return _vm.moveContent(
-                                    content.id,
-                                    _vm.post_id,
-                                    "up"
-                                  )
-                                }
+                        _c(
+                          "div",
+                          {
+                            staticClass: "card",
+                            class: [_vm.checkSelectedItem(content.id)],
+                            on: {
+                              click: function($event) {
+                                return _vm.addId(content.id)
                               }
-                            },
-                            [_vm._v("Subir")]
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "row" }, [
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-primary col mt-2",
-                              on: {
-                                click: function($event) {
-                                  return _vm.moveContent(
-                                    content.id,
-                                    _vm.post_id,
-                                    "down"
-                                  )
-                                }
-                              }
-                            },
-                            [_vm._v("Bajar")]
-                          )
-                        ])
+                            }
+                          },
+                          [
+                            _c("div", { staticClass: "card-body" }, [
+                              _c("p", { staticClass: "card-text" }, [
+                                _vm._v(
+                                  "\n                                                    " +
+                                    _vm._s(content.value) +
+                                    "\n                                                "
+                                )
+                              ])
+                            ])
+                          ]
+                        )
                       ])
                     ])
                   }),
@@ -38758,12 +38743,27 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
+        _c(
+          "div",
+          {
+            class: [_vm.checkSelectedItem(1)],
+            on: {
+              click: function($event) {
+                return _vm.addId(1)
+              }
+            }
+          },
+          [_c("h1", [_vm._v(_vm._s(_vm.selectedItem))])]
+        ),
+        _vm._v(" "),
+        _vm._m(2),
+        _vm._v(" "),
         _c("div", { staticClass: "row mt-2" }, [
           _c("div", { staticClass: "col" }, [
             _c("div", { staticClass: "card" }, [
               _c("h5", { staticClass: "card-header" }, [
                 _vm._v(
-                  "\n                            Editar Contenido\n                        "
+                  "\n                                Editar Contenido\n                            "
                 )
               ]),
               _vm._v(" "),
@@ -38849,9 +38849,9 @@ var render = function() {
                         !_vm.validateForm.value
                           ? _c("div", { staticClass: "invalid-feedback" }, [
                               _vm._v(
-                                "\n                                    " +
+                                "\n                                        " +
                                   _vm._s(_vm.textValueFeedback) +
-                                  "\n                                "
+                                  "\n                                    "
                               )
                             ])
                           : _vm._e(),
@@ -38922,7 +38922,7 @@ var render = function() {
                               },
                               [
                                 _vm._v(
-                                  "\n                                    Debes seleccionar un valor\n                                "
+                                  "\n                                        Debes seleccionar un valor\n                                    "
                                 )
                               ]
                             )
@@ -38988,7 +38988,7 @@ var render = function() {
                         !_vm.validateForm.align
                           ? _c("div", { staticClass: "invalid-feedback" }, [
                               _vm._v(
-                                "\n                                    Debes seleccionar un valor\n                                "
+                                "\n                                        Debes seleccionar un valor\n                                    "
                               )
                             ])
                           : _vm._e(),
@@ -39006,6 +39006,57 @@ var render = function() {
                   : _vm._e()
               ])
             ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-2" }, [
+        _c("div", { staticClass: "col-2" }, [
+          _c("div", { staticClass: "row" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary mb-2",
+                on: {
+                  click: function($event) {
+                    return _vm.moveContent(_vm.post_id, "up")
+                  }
+                }
+              },
+              [_vm._v("Subir")]
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary mb-2",
+                on: {
+                  click: function($event) {
+                    return _vm.moveContent(_vm.post_id, "down")
+                  }
+                }
+              },
+              [_vm._v("Bajar")]
+            )
+          ]),
+          _vm._v(" "),
+          _vm._m(3),
+          _vm._v(" "),
+          _c("div", { staticClass: "row" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-danger",
+                on: {
+                  click: function($event) {
+                    return _vm.deleteContent(_vm.content.id)
+                  }
+                }
+              },
+              [_vm._v("Eliminar")]
+            )
           ])
         ])
       ])
@@ -39030,7 +39081,11 @@ var staticRenderFns = [
             "aria-expanded": "false"
           }
         },
-        [_vm._v("\n                    Agregar Multimedia\n                ")]
+        [
+          _vm._v(
+            "\n                        Agregar Multimedia\n                    "
+          )
+        ]
       ),
       _vm._v(" "),
       _c(
@@ -39078,7 +39133,11 @@ var staticRenderFns = [
             "aria-expanded": "false"
           }
         },
-        [_vm._v("\n                    Agregar Containers\n                ")]
+        [
+          _vm._v(
+            "\n                        Agregar Containers\n                    "
+          )
+        ]
       ),
       _vm._v(" "),
       _c(
@@ -39107,6 +39166,30 @@ var staticRenderFns = [
           )
         ]
       )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("p", [
+      _vm._v("Asterisk icon on a button:\n                    "),
+      _c(
+        "button",
+        { staticClass: "btn btn-default btn-sm", attrs: { type: "button" } },
+        [
+          _c("span", { staticClass: "glyphicon glyphicon-asterisk" }),
+          _vm._v(" Asterisk\n                    ")
+        ]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("button", { staticClass: "btn btn-warning mb-2" }, [_vm._v("Editar")])
     ])
   }
 ]
@@ -51554,8 +51637,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/gedfrey/Programacion/laravel/easynote/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/gedfrey/Programacion/laravel/easynote/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/gedfrey/program/laravel/easynote/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/gedfrey/program/laravel/easynote/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

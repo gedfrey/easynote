@@ -33,15 +33,15 @@ class ContentsEditController extends Controller
             ->get();
 
         $content = App\Content::findOrFail($request->content_id);
-        $length = count($content);
-
-        for($x = $content->order;$x <= length;$x++){
-            $value = App\Content::where('post_id',$request->post_id)
-                ->where('order',$x);
-            if($value){
-                $order = $value->order;
-                $value->order = $content->order;
-                $value->save();
+        for($x = $content->order;$x >= 1;$x--){
+            $value = App\Content::where([
+                'post_id' => $request->post_id,
+                'order' => $x -1
+            ])->get();
+            if(count($value) != 0){
+                $order = $value[0]->order;
+                $value[0]->order = $content->order;
+                $value[0]->save();
                 $content->order = $order;
                 $content->save();
                 return $content;
@@ -51,22 +51,23 @@ class ContentsEditController extends Controller
 
     public function down(Request $request){
 
-        error_log(1);
 
         $contents = App\Content::where('post_id',$request->post_id)
             ->orderBy('order','asc')
             ->get();
+        $length = count($contents);
 
 
         $content = App\Content::find($request->content_id);
 
-        for($x = $content->order;$x >= 1;$x--){
+        for($x = $content->order;$x <= $length ;$x++){
             $value = App\Content::where('post_id',$request->post_id)
-                ->where('order',$x);
-            if($value){
-                $order = $value->order;
-                $value->order = $content->order;
-                $value->save();
+                ->where('order',$x + 1)
+                ->get();
+            if(count($value)){
+                $order = $value[0]->order;
+                $value[0]->order = $content->order;
+                $value[0]->save();
                 $content->order = $order;
                 $content->save();
                 return $content;

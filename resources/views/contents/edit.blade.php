@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="container" id="app">
+    <div class="container-fluid" id="app">
         <content-edit :post_id="{{json_encode($id)}}"></content-edit>
     </div>
 

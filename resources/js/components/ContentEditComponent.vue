@@ -50,24 +50,22 @@
                             <div class="card-body">
                                 <div class="row" v-for="content of contents" :key="content.id">
                                     <div class="col">
-                                        <div class="card">
+                                        <div class="card" @click="addId(content.id)" :class="[checkSelectedItem(content.id)]">
                                             <div class="card-body">
                                                 <p class="card-text">
                                                     {{content.value}}
                                                 </p>
-                                                <a href="#" class="btn btn-warning">Editar</a>
-                                                <button @click="deleteContent(content.id)" class="btn btn-danger">Eliminar</button>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-2">
-                                        <div class="row">
-                                            <button class="btn btn-primary col mt-2" @click="moveContent(content.id,post_id,'up')">Subir</button>
-                                        </div>
-                                        <div class="row">
-                                            <button class="btn btn-primary col mt-2" @click="moveContent(content.id,post_id,'down')">Bajar</button>
-                                        </div>
-                                    </div>
+<!--                                    <div class="col-2">-->
+<!--                                        <div class="row">-->
+<!--                                            <button class="btn btn-primary col mt-2" @click="moveContent(content.id,post_id,'up')">Subir</button>-->
+<!--                                        </div>-->
+<!--                                        <div class="row">-->
+<!--                                            <button class="btn btn-primary col mt-2" @click="moveContent(content.id,post_id,'down')">Bajar</button>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
                                 </div>
 
                                 <div>
@@ -78,6 +76,16 @@
                     </div>
 
                 </div>
+                <div @click="addId(1)" :class="[checkSelectedItem(1)]">
+                    <h1>{{selectedItem}}</h1>
+                </div>
+
+
+                <p>Asterisk icon on a button:
+                    <button type="button" class="btn btn-default btn-sm">
+                        <span class="glyphicon glyphicon-asterisk"></span> Asterisk
+                    </button>
+                </p>
                 <div class="row mt-2">
                     <div class="col">
                         <div class="card">
@@ -117,6 +125,22 @@
                 </div>
 
             </div>
+            <div class="col-2">
+                <div class="col-2">
+                    <div class="row">
+                        <button class="btn btn-primary mb-2" @click="moveContent(post_id,'up')">Subir</button>
+                    </div>
+                    <div class="row">
+                        <button class="btn btn-primary mb-2" @click="moveContent(post_id,'down')">Bajar</button>
+                    </div>
+                    <div class="row">
+                        <button class="btn btn-warning mb-2">Editar</button>
+                    </div>
+                    <div class="row">
+                        <button @click="deleteContent(content.id)" class="btn btn-danger">Eliminar</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -124,6 +148,7 @@
     export default {
         data() {
             return {
+                selectedItem: 0,
                 message: {
                   create: ''
                 },
@@ -146,11 +171,13 @@
                     type: null,
                     createContent: null
 
-                }
+                },
+                selected: 'adios',
 
             }
         },
         computed: {
+
             isvalidValue: function(){
                 if(this.validateForm.value != null){
                     if(!this.validateForm.value){
@@ -328,13 +355,10 @@
                 this.form.type = id
                 console.log(this.form.type)
             },
-            moveContent: async function(content_id,post_id,move){
-                console.log(content_id)
-                console.log(post_id)
-                console.log(move)
+            moveContent: async function(post_id,move){
                 let object = {
                     'post_id':post_id,
-                    'content_id':content_id
+                    'content_id':this.selectedItem
                 }
                 if(move === 'up'){
                     let post = await axios.post('/post/contents/up',object)
@@ -346,6 +370,14 @@
                     this.getContentsByPost()
                 }
 
+            },
+            addId: function(id){
+                this.selectedItem = id;
+            },
+            checkSelectedItem: function(id){
+                if(this.selectedItem === id){
+                    return 'bg-info'
+                }
             },
 
         },
