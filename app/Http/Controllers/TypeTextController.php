@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App;
 
-class TextController extends Controller
+class TypeTextController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,8 @@ class TextController extends Controller
      */
     public function index()
     {
-
+        $types = App\Type_Text::all();
+        return $types;
     }
 
     /**
@@ -35,14 +36,7 @@ class TextController extends Controller
      */
     public function store(Request $request)
     {
-        $newText = new App\Text;
-        $newText->value = $request->value;
-        $newText->size = $request->size;
-        $newText->align = $request->align;
-        $newText->type_text_id = $request->type_text_id;
-        $newText->save();
-
-        return $newText;
+        //
     }
 
     /**
@@ -53,8 +47,8 @@ class TextController extends Controller
      */
     public function show($id)
     {
-        $text = App\Text::findOrFail($id);
-        return $text;
+        $type = App\Type_Text::findOrFail($id);
+        return $type;
     }
 
     /**
@@ -77,14 +71,7 @@ class TextController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $updateText = App\Text::findOrFail($id);
-        $updateText->value = $request->value;
-        $updateText->size = $request->size;
-        $updateText->align = $request->align;
-        $updateText->type_text_id = $request->type_text_id;
-        $updateText->save();
-
-        return $updateText;
+        //
     }
 
     /**

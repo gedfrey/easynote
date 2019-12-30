@@ -17,7 +17,8 @@ class UpdateTextsTable extends Migration
             $table->bigInteger('type_text_id');
             $table->foreign('type_text_id')
                 ->references('id')
-                ->on('type__texts');
+                ->on('type__texts')
+                ->onDelete('cascade');
         });
     }
 
