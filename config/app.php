@@ -2,6 +2,9 @@
 
 return [
 
+
+    'Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider',
+
     /*
     |--------------------------------------------------------------------------
     | Application Name

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App;
 
-class ContentController extends Controller
+class ImageController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,7 @@ class ContentController extends Controller
      */
     public function index()
     {
-        $contents = App\Content::all();
-        return $contents;
+        //
     }
 
     /**
@@ -36,15 +35,16 @@ class ContentController extends Controller
      */
     public function store(Request $request)
     {
-        $newContent = new App\Content;
-        $newContent->order = $request->order;
-        $newContent->post_id = $request->post_id;
-        $newContent->type_id = $request->type_id;
-        $newContent->text_id = $request->text_id;
-        $newContent->image_id = $request->image_id;
-        $newContent->save();
-
-        return $newContent;
+        if($request->hasFile('file')){
+            $image = $request->file('file');
+            $path = $request->file->store('img','public');
+//            return $path;
+            $newImage = new App\Image;
+//            return $path;
+            $newImage->url = $path;
+            $newImage->save();
+            return $newImage;
+        }
     }
 
     /**
@@ -55,8 +55,8 @@ class ContentController extends Controller
      */
     public function show($id)
     {
-        $content = App\Content::findOrFail($id);
-        return $content;
+        $image = App\Image::findorFail($id);
+        return $image;
     }
 
     /**
@@ -90,8 +90,6 @@ class ContentController extends Controller
      */
     public function destroy($id)
     {
-        $content = App\Content::findOrFail($id);
-        $content->delete();
-        return $id;
+        //
     }
 }

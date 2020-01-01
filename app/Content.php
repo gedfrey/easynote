@@ -10,4 +10,9 @@ class Content extends Model
     {
         return $this->belongsTo('App\Text');
     }
+
+    public function type()
+    {
+        return $this->belongsTo('App\Type');
+    }
 }

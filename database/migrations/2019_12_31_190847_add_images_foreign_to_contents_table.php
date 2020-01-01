@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddForeignTypesToContentTable extends Migration
+class AddImagesForeignToContentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,8 +14,8 @@ class AddForeignTypesToContentTable extends Migration
     public function up()
     {
         Schema::table('contents', function (Blueprint $table) {
-            $table->bigInteger('type_id');
-            $table->foreign('type_id')->references('id')->on('types')->onDelete('cascade');
+            $table->bigInteger('image_id')->nullable();
+            $table->foreign('image_id')->references('id')->on('images')->onDelete('cascade');
         });
     }
 
@@ -27,8 +27,8 @@ class AddForeignTypesToContentTable extends Migration
     public function down()
     {
         Schema::table('contents', function (Blueprint $table) {
-            $table->dropForeign('contents_type_id_foreign');
-            $table->dropColumn('type_id');
+            $table->dropForeign('contents_image_id_foreign');
+            $table->dropColumn('image_id');
         });
     }
 }

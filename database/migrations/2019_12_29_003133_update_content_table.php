@@ -14,7 +14,7 @@ class UpdateContentTable extends Migration
     public function up()
     {
         Schema::table('contents',function (Blueprint $table) {
-            $table->bigInteger('text_id');
+            $table->bigInteger('text_id')->nullable();
             $table->foreign('text_id')->references('id')->on('texts')->onDelete('cascade');
         });
     }

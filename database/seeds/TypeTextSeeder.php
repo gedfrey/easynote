@@ -21,5 +21,25 @@ class TypeTextSeeder extends Seeder
            'name' => 'body_text',
             'created_at' => date("Y-m-d H:i:s")
         ]);
+
+        DB::table('types')->insert([
+            'name' => 'text',
+            'created_at' => date("Y-m-d H:i:s")
+        ]);
+
+        DB::table('types')->insert([
+            'name' => 'images',
+            'created_at' => date("Y-m-d H:i:s")
+        ]);
+
+        DB::table('types')->insert([
+            'name' => 'file',
+            'created_at' => date("Y-m-d H:i:s")
+        ]);
+
+        DB::table('types')->insert([
+            'name' => 'property',
+            'created_at' => date("Y-m-d H:i:s")
+        ]);
     }
 }

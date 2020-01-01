@@ -27,6 +27,8 @@ Route::resource('texts','TextController')->middleware('auth');
 
 Route::resource('type-texts','TypeTextController');
 
+Route::resource('images','ImageController');
+
 Route::get('/post/contents/{id}','ContentsEditController@edit')
     ->name('post.contents.edit')
     ->where('id','[0-9)]+')
@@ -48,5 +50,7 @@ Route::post('/post/contents/up','ContentsEditController@up')
 Route::post('/post/contents/down','ContentsEditController@down')
     ->name('post.contents.down')
     ->middleware('auth');
+
+Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 
 

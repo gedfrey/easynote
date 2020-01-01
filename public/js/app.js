@@ -2004,6 +2004,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2018,10 +2022,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         align: '',
         type: 0
       },
+      file: null,
       type_texts: [],
+      // menuOptions: {
+      //   text:false,
+      //   file:false,
+      //   property:false
+      // },
       options: {
         text: false,
-        title: false
+        title: false,
+        image: false
       },
       validateForm: {
         value: null,
@@ -2030,7 +2041,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         type: null,
         createContent: null
       },
-      selected: 'adios'
+      chooseFile: 'Escoge el archivo...'
     };
   },
   computed: {
@@ -2091,11 +2102,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   methods: {
-    storeText: function () {
-      var _storeText = _asyncToGenerator(
+    storeImage: function () {
+      var _storeImage = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var orderNumber, order, text, post, content, postContent;
+        var orderNumber, order, config, formData, post, content, postContent;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -2112,11 +2123,93 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   orderNumber += order[0].order;
                 }
 
+                config = {
+                  headers: {
+                    'content-type': 'multipart/form-data'
+                  }
+                };
+                formData = new FormData();
+                formData.append('file', this.file);
+                _context.next = 11;
+                return axios.post('/images', formData, config);
+
+              case 11:
+                post = _context.sent;
+
+                if (!(post.status === 201)) {
+                  _context.next = 18;
+                  break;
+                }
+
+                content = {
+                  'order': orderNumber,
+                  'post_id': this.post_id,
+                  'image_id': post.data.id,
+                  'type_id': 2
+                };
+                _context.next = 16;
+                return axios.post('/contents', content);
+
+              case 16:
+                postContent = _context.sent;
+
+                // console.log(postContent)
+                if (postContent.status === 201) {
+                  this.chooseFile = 'Escoge el archivo...';
+                  this.message.create = 'Agregado exitosamente';
+                  this.validateForm.createContent = false;
+                  this.getContentsByPost();
+                } else {
+                  this.validateForm.createContent = true;
+                  this.message.create = 'Hubo un error al crear el contenido';
+                }
+
+              case 18:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function storeImage() {
+        return _storeImage.apply(this, arguments);
+      }
+
+      return storeImage;
+    }(),
+    storeText: function () {
+      var _storeText = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+        var orderNumber, order, text, post, content, postContent;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+          while (1) {
+            switch (_context2.prev = _context2.next) {
+              case 0:
+                orderNumber = 1;
+                _context2.next = 3;
+                return axios('/post/contents/order/' + this.post_id);
+
+              case 3:
+                order = _context2.sent;
+                order = order.data;
+
+                if (Array.isArray(order) && order.length) {
+                  orderNumber += order[0].order;
+                }
+
                 if (this.form.type === 1) {
                   if (this.form.value.length >= 4 && this.form.value.length <= 20) {
                     this.validateForm.value = true;
                   } else {
                     this.validateForm.value = false;
+                  }
+
+                  if (this.form.size.length) {
+                    this.validateForm.size = true;
+                  } else {
+                    this.validateForm.size = false;
                   }
                 } else if (this.form.type === 2) {
                   if (this.form.value.length >= 20 && this.form.value.length <= 200) {
@@ -2124,22 +2217,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   } else {
                     this.validateForm.value = false;
                   }
-                }
 
-                if (this.form.size.length) {
                   this.validateForm.size = true;
-                } else {
-                  this.validateForm.size = false;
                 }
 
                 if (this.form.align.length) {
                   this.validateForm.align = true;
                 } else {
                   this.validateForm.align = false;
-                }
+                } // console.log(this.validateForm.value, this.validateForm.size, this.validateForm.align)
+
 
                 if (!(this.validateForm.value && this.validateForm.size && this.validateForm.align)) {
-                  _context.next = 20;
+                  _context2.next = 19;
                   break;
                 }
 
@@ -2149,40 +2239,34 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   'align': this.form.align,
                   'type_text_id': this.form.type
                 };
-                _context.next = 13;
+                _context2.next = 12;
                 return axios.post('/texts', text);
 
-              case 13:
-                post = _context.sent;
+              case 12:
+                post = _context2.sent;
 
                 if (!(post.status == 201)) {
-                  _context.next = 20;
+                  _context2.next = 19;
                   break;
                 }
 
                 content = {
                   'order': orderNumber,
                   'post_id': this.post_id,
-                  'text_id': post.data.id
+                  'text_id': post.data.id,
+                  'type_id': 1
                 };
-                _context.next = 18;
+                _context2.next = 17;
                 return axios.post('/contents', content);
 
-              case 18:
-                postContent = _context.sent;
+              case 17:
+                postContent = _context2.sent;
 
                 if (postContent.status === 201) {
                   this.message.create = 'Agregado exitosamente';
                   this.validateForm.createContent = false;
                   this.getContentsByPost();
-                  this.form.value = '';
-                  this.form.type = '';
-                  this.form.size = '';
-                  this.form.align = '';
-                  this.validateForm.value = null;
-                  this.validateForm.type = null;
-                  this.validateForm.align = null;
-                  this.validateForm.size = null;
+                  this.resetFormTitle();
                   this.options.title = false;
                   this.options.text = false;
                 } else {
@@ -2190,12 +2274,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   this.message.create = 'Hubo un error al crear el contenido';
                 }
 
-              case 20:
+              case 19:
               case "end":
-                return _context.stop();
+                return _context2.stop();
             }
           }
-        }, _callee, this);
+        }, _callee2, this);
       }));
 
       function storeText() {
@@ -2204,28 +2288,64 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       return storeText;
     }(),
+    resetFormTitle: function resetFormTitle() {
+      this.form.value = '';
+      this.form.type = '';
+      this.form.size = '';
+      this.form.align = '';
+      this.validateForm.value = null;
+      this.validateForm.type = null;
+      this.validateForm.align = null;
+      this.validateForm.size = null;
+    },
+    fileUpload: function () {
+      var _fileUpload = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3(e) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+          while (1) {
+            switch (_context3.prev = _context3.next) {
+              case 0:
+                console.log(e.target.files[0]);
+                this.chooseFile = e.target.files[0].name;
+                this.file = e.target.files[0];
+
+              case 3:
+              case "end":
+                return _context3.stop();
+            }
+          }
+        }, _callee3, this);
+      }));
+
+      function fileUpload(_x) {
+        return _fileUpload.apply(this, arguments);
+      }
+
+      return fileUpload;
+    }(),
     getTypesTexts: function () {
       var _getTypesTexts = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
         var types;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
           while (1) {
-            switch (_context2.prev = _context2.next) {
+            switch (_context4.prev = _context4.next) {
               case 0:
-                _context2.next = 2;
+                _context4.next = 2;
                 return axios('/type-texts');
 
               case 2:
-                types = _context2.sent;
+                types = _context4.sent;
                 this.type_texts = types.data;
 
               case 4:
               case "end":
-                return _context2.stop();
+                return _context4.stop();
             }
           }
-        }, _callee2, this);
+        }, _callee4, this);
       }));
 
       function getTypesTexts() {
@@ -2237,99 +2357,130 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     getContentsByPost: function () {
       var _getContentsByPost = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-        var listContents, contents, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, content, text, type_text;
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5() {
+        var listContents, contents, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, content, text, type_text, image;
 
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
           while (1) {
-            switch (_context3.prev = _context3.next) {
+            switch (_context5.prev = _context5.next) {
               case 0:
                 listContents = [];
-                _context3.next = 3;
+                _context5.next = 3;
                 return axios('/post/contents/list/' + this.post_id);
 
               case 3:
-                contents = _context3.sent;
+                contents = _context5.sent;
                 _iteratorNormalCompletion = true;
                 _didIteratorError = false;
                 _iteratorError = undefined;
-                _context3.prev = 7;
+                _context5.prev = 7;
                 _iterator = contents.data[Symbol.iterator]();
 
               case 9:
                 if (_iteratorNormalCompletion = (_step = _iterator.next()).done) {
-                  _context3.next = 21;
+                  _context5.next = 29;
                   break;
                 }
 
                 content = _step.value;
-                _context3.next = 13;
+
+                if (!(content.type_id === 1)) {
+                  _context5.next = 21;
+                  break;
+                }
+
+                _context5.next = 14;
                 return axios('/texts/' + content.text_id);
 
-              case 13:
-                text = _context3.sent;
-                _context3.next = 16;
+              case 14:
+                text = _context5.sent;
+                _context5.next = 17;
                 return axios('/type-texts/' + text.data.type_text_id);
 
-              case 16:
-                type_text = _context3.sent;
+              case 17:
+                type_text = _context5.sent;
                 listContents.push({
                   'id': content.id,
                   'order': content.order,
-                  'value': text.data.value,
-                  'size': text.data.size,
-                  'align': text.data.align,
-                  'type': type_text.data.name
+                  'type': content.type_id,
+                  'text': {
+                    'value': text.data.value,
+                    'size': text.data.size,
+                    'align': text.data.align,
+                    'type': type_text.data.name
+                  }
                 });
-
-              case 18:
-                _iteratorNormalCompletion = true;
-                _context3.next = 9;
+                _context5.next = 26;
                 break;
 
               case 21:
-                _context3.next = 27;
+                if (!(content.type_id === 2)) {
+                  _context5.next = 26;
+                  break;
+                }
+
+                _context5.next = 24;
+                return axios('/images/' + content.image_id);
+
+              case 24:
+                image = _context5.sent;
+                listContents.push({
+                  'id': content.id,
+                  'order': content.order,
+                  'type': content.type_id,
+                  'image': {
+                    'url': image.data.url
+                  }
+                });
+
+              case 26:
+                _iteratorNormalCompletion = true;
+                _context5.next = 9;
                 break;
 
-              case 23:
-                _context3.prev = 23;
-                _context3.t0 = _context3["catch"](7);
-                _didIteratorError = true;
-                _iteratorError = _context3.t0;
+              case 29:
+                _context5.next = 35;
+                break;
 
-              case 27:
-                _context3.prev = 27;
-                _context3.prev = 28;
+              case 31:
+                _context5.prev = 31;
+                _context5.t0 = _context5["catch"](7);
+                _didIteratorError = true;
+                _iteratorError = _context5.t0;
+
+              case 35:
+                _context5.prev = 35;
+                _context5.prev = 36;
 
                 if (!_iteratorNormalCompletion && _iterator["return"] != null) {
                   _iterator["return"]();
                 }
 
-              case 30:
-                _context3.prev = 30;
+              case 38:
+                _context5.prev = 38;
 
                 if (!_didIteratorError) {
-                  _context3.next = 33;
+                  _context5.next = 41;
                   break;
                 }
 
                 throw _iteratorError;
 
-              case 33:
-                return _context3.finish(30);
+              case 41:
+                return _context5.finish(38);
 
-              case 34:
-                return _context3.finish(27);
+              case 42:
+                return _context5.finish(35);
 
-              case 35:
+              case 43:
                 this.contents = listContents;
 
-              case 36:
+              case 44:
               case "end":
-                return _context3.stop();
+                return _context5.stop();
             }
           }
-        }, _callee3, this, [[7, 23, 27, 35], [28,, 30, 34]]);
+        }, _callee5, this, [[7, 31, 35, 43], [36,, 38, 42]]);
       }));
 
       function getContentsByPost() {
@@ -2338,42 +2489,86 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       return getContentsByPost;
     }(),
+    editContent: function () {
+      var _editContent = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
+        var content;
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
+          while (1) {
+            switch (_context6.prev = _context6.next) {
+              case 0:
+                if (!(this.selectedItem !== 0)) {
+                  _context6.next = 6;
+                  break;
+                }
+
+                _context6.next = 3;
+                return axios.get('/contents/' + this.selectedItem);
+
+              case 3:
+                content = _context6.sent;
+                console.log(content);
+                this.selectedItem = 0;
+
+              case 6:
+              case "end":
+                return _context6.stop();
+            }
+          }
+        }, _callee6, this);
+      }));
+
+      function editContent() {
+        return _editContent.apply(this, arguments);
+      }
+
+      return editContent;
+    }(),
     deleteContent: function () {
       var _deleteContent = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4(id) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee7() {
         var content;
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee7$(_context7) {
           while (1) {
-            switch (_context4.prev = _context4.next) {
+            switch (_context7.prev = _context7.next) {
               case 0:
-                console.log("eliminando");
-                console.log(id);
-                _context4.next = 4;
-                return axios["delete"]('/contents/' + id);
+                if (!(this.selectedItem !== 0)) {
+                  _context7.next = 6;
+                  break;
+                }
 
-              case 4:
-                content = _context4.sent;
-                console.log(content);
+                _context7.next = 3;
+                return axios["delete"]('/contents/' + this.selectedItem);
+
+              case 3:
+                content = _context7.sent;
                 this.getContentsByPost();
+                this.selectedItem = 0;
 
-              case 7:
+              case 6:
               case "end":
-                return _context4.stop();
+                return _context7.stop();
             }
           }
-        }, _callee4, this);
+        }, _callee7, this);
       }));
 
-      function deleteContent(_x) {
+      function deleteContent() {
         return _deleteContent.apply(this, arguments);
       }
 
       return deleteContent;
     }(),
-    optionText: function optionText(type, id) {
+    setFalseOptions: function setFalseOptions() {
       this.options.text = false;
       this.options.title = false;
+      this.options.image = false;
+    },
+    optionText: function optionText(type, id) {
+      this.resetFormTitle();
+      this.setFalseOptions();
 
       if (type === 'title') {
         this.options.title = true;
@@ -2382,53 +2577,63 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
 
       this.form.type = id;
-      console.log(this.form.type);
+    },
+    optionImage: function optionImage() {
+      this.setFalseOptions();
+      this.options.image = true;
     },
     moveContent: function () {
       var _moveContent = _asyncToGenerator(
       /*#__PURE__*/
-      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee5(post_id, move) {
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee8(post_id, move) {
         var object, post, _post;
 
-        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee5$(_context5) {
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee8$(_context8) {
           while (1) {
-            switch (_context5.prev = _context5.next) {
+            switch (_context8.prev = _context8.next) {
               case 0:
+                if (!(this.selectedItem !== 0)) {
+                  _context8.next = 15;
+                  break;
+                }
+
                 object = {
                   'post_id': post_id,
                   'content_id': this.selectedItem
                 };
 
                 if (!(move === 'up')) {
-                  _context5.next = 9;
+                  _context8.next = 9;
                   break;
                 }
 
-                _context5.next = 4;
+                _context8.next = 5;
                 return axios.post('/post/contents/up', object);
 
-              case 4:
-                post = _context5.sent;
-                console.log(post);
+              case 5:
+                post = _context8.sent;
                 this.getContentsByPost();
-                _context5.next = 14;
+                _context8.next = 14;
                 break;
 
               case 9:
-                _context5.next = 11;
+                _context8.next = 11;
                 return axios.post('/post/contents/down', object);
 
               case 11:
-                _post = _context5.sent;
+                _post = _context8.sent;
                 console.log(_post);
                 this.getContentsByPost();
 
               case 14:
+                this.selectedItem = 0;
+
+              case 15:
               case "end":
-                return _context5.stop();
+                return _context8.stop();
             }
           }
-        }, _callee5, this);
+        }, _callee8, this);
       }));
 
       function moveContent(_x2, _x3) {
@@ -2439,6 +2644,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }(),
     addId: function addId(id) {
       this.selectedItem = id;
+    },
+    sizeTitle: function sizeTitle(size) {
+      if (size === 'big') {
+        return 'display-1';
+      } else if (size === 'normal') {
+        return 'display-3';
+      } else if (size === 'little') {
+        return 'display-5';
+      }
     },
     checkSelectedItem: function checkSelectedItem(id) {
       if (this.selectedItem === id) {
@@ -38623,9 +38837,9 @@ var render = function() {
         _vm.validateForm.createContent === true
           ? _c("div", { staticClass: "alert alert-danger" }, [
               _vm._v(
-                "\n                    " +
+                "\n                " +
                   _vm._s(_vm.message.create) +
-                  "\n                "
+                  "\n            "
               )
             ])
           : _vm._e(),
@@ -38633,32 +38847,15 @@ var render = function() {
         _vm.validateForm.createContent === false
           ? _c("div", { staticClass: "alert alert-success" }, [
               _vm._v(
-                "\n                    " +
+                "\n                " +
                   _vm._s(_vm.message.create) +
-                  "\n                "
+                  "\n            "
               )
             ])
           : _vm._e(),
         _vm._v(" "),
         _c("div", { staticClass: "dropdown mb-2" }, [
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-primary dropdown-toggle",
-              attrs: {
-                type: "button",
-                id: "dropdownMenu1",
-                "data-toggle": "dropdown",
-                "aria-haspopup": "true",
-                "aria-expanded": "false"
-              }
-            },
-            [
-              _vm._v(
-                "\n                        Agregar Texto\n                    "
-              )
-            ]
-          ),
+          _vm._m(0),
           _vm._v(" "),
           _c(
             "div",
@@ -38686,9 +38883,34 @@ var render = function() {
           )
         ]),
         _vm._v(" "),
-        _vm._m(0),
+        _c("div", { staticClass: "dropdown mb-2" }, [
+          _vm._m(1),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "dropdown-menu",
+              attrs: { "aria-labelledby": "dropdownMenu2" }
+            },
+            [
+              _c(
+                "button",
+                {
+                  staticClass: "dropdown-item",
+                  attrs: { type: "button" },
+                  on: {
+                    click: function($event) {
+                      return _vm.optionImage()
+                    }
+                  }
+                },
+                [_vm._v("Imagen")]
+              )
+            ]
+          )
+        ]),
         _vm._v(" "),
-        _vm._m(1)
+        _vm._m(2)
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "col" }, [
@@ -38697,7 +38919,7 @@ var render = function() {
             _c("div", { staticClass: "card" }, [
               _c("h5", { staticClass: "card-header" }, [
                 _vm._v(
-                  "\n                                Contenido del Post\n                            "
+                  "\n                            Contenido del Post\n                        "
                 )
               ]),
               _vm._v(" "),
@@ -38707,31 +38929,81 @@ var render = function() {
                 [
                   _vm._l(_vm.contents, function(content) {
                     return _c("div", { key: content.id, staticClass: "row" }, [
-                      _c("div", { staticClass: "col" }, [
-                        _c(
-                          "div",
-                          {
-                            staticClass: "card",
-                            class: [_vm.checkSelectedItem(content.id)],
-                            on: {
-                              click: function($event) {
-                                return _vm.addId(content.id)
-                              }
-                            }
-                          },
-                          [
-                            _c("div", { staticClass: "card-body" }, [
-                              _c("p", { staticClass: "card-text" }, [
-                                _vm._v(
-                                  "\n                                                    " +
-                                    _vm._s(content.value) +
-                                    "\n                                                "
+                      content.type === 1
+                        ? _c("div", { staticClass: "col" }, [
+                            _c(
+                              "div",
+                              {
+                                staticClass: "card",
+                                class: [
+                                  _vm.checkSelectedItem(content.id),
+                                  content.text.align
+                                ],
+                                on: {
+                                  click: function($event) {
+                                    return _vm.addId(content.id)
+                                  }
+                                }
+                              },
+                              [
+                                _c("div", { staticClass: "card-body" }, [
+                                  _c(
+                                    "p",
+                                    {
+                                      class: [
+                                        "card-text",
+                                        _vm.sizeTitle(content.text.size)
+                                      ]
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                                                " +
+                                          _vm._s(content.text.value) +
+                                          "\n                                            "
+                                      )
+                                    ]
+                                  )
+                                ])
+                              ]
+                            )
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      content.type === 2
+                        ? _c("div", { staticClass: "col" }, [
+                            _c(
+                              "div",
+                              {
+                                staticClass: "card",
+                                class: [_vm.checkSelectedItem(content.id)],
+                                on: {
+                                  click: function($event) {
+                                    return _vm.addId(content.id)
+                                  }
+                                }
+                              },
+                              [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "card-body d-flex justify-content-center align-item-center"
+                                  },
+                                  [
+                                    _c("img", {
+                                      attrs: {
+                                        src:
+                                          "http://localhost:8000/storage/" +
+                                          content.image.url,
+                                        alt: content.image.url
+                                      }
+                                    })
+                                  ]
                                 )
-                              ])
-                            ])
-                          ]
-                        )
-                      ])
+                              ]
+                            )
+                          ])
+                        : _vm._e()
                     ])
                   }),
                   _vm._v(" "),
@@ -38743,27 +39015,12 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
-        _c(
-          "div",
-          {
-            class: [_vm.checkSelectedItem(1)],
-            on: {
-              click: function($event) {
-                return _vm.addId(1)
-              }
-            }
-          },
-          [_c("h1", [_vm._v(_vm._s(_vm.selectedItem))])]
-        ),
-        _vm._v(" "),
-        _vm._m(2),
-        _vm._v(" "),
         _c("div", { staticClass: "row mt-2" }, [
           _c("div", { staticClass: "col" }, [
             _c("div", { staticClass: "card" }, [
               _c("h5", { staticClass: "card-header" }, [
                 _vm._v(
-                  "\n                                Editar Contenido\n                            "
+                  "\n                            Editar Contenido\n                        "
                 )
               ]),
               _vm._v(" "),
@@ -38849,69 +39106,72 @@ var render = function() {
                         !_vm.validateForm.value
                           ? _c("div", { staticClass: "invalid-feedback" }, [
                               _vm._v(
-                                "\n                                        " +
+                                "\n                                    " +
                                   _vm._s(_vm.textValueFeedback) +
-                                  "\n                                    "
+                                  "\n                                "
                               )
                             ])
                           : _vm._e(),
                         _vm._v(" "),
-                        _c(
-                          "select",
-                          {
-                            directives: [
+                        _vm.options.title
+                          ? _c(
+                              "select",
                               {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.form.size,
-                                expression: "form.size"
-                              }
-                            ],
-                            class: [
-                              "custom-select",
-                              "mr-sm-2",
-                              "mb-2",
-                              _vm.isvalidsize
-                            ],
-                            attrs: { name: "form.size", id: "sizeSelect" },
-                            on: {
-                              change: function($event) {
-                                var $$selectedVal = Array.prototype.filter
-                                  .call($event.target.options, function(o) {
-                                    return o.selected
-                                  })
-                                  .map(function(o) {
-                                    var val = "_value" in o ? o._value : o.value
-                                    return val
-                                  })
-                                _vm.$set(
-                                  _vm.form,
-                                  "size",
-                                  $event.target.multiple
-                                    ? $$selectedVal
-                                    : $$selectedVal[0]
-                                )
-                              }
-                            }
-                          },
-                          [
-                            _c("option", { attrs: { value: "" } }, [
-                              _vm._v(_vm._s(_vm.textSize))
-                            ]),
-                            _vm._v(" "),
-                            _c("option", { attrs: { value: "big" } }, [
-                              _vm._v("Grande")
-                            ]),
-                            _vm._v(" "),
-                            _c("option", { attrs: { value: "normal" } }, [
-                              _vm._v("normal")
-                            ]),
-                            _vm._v(" "),
-                            _c("option", { attrs: { value: "little" } }, [
-                              _vm._v("Chico")
-                            ])
-                          ]
-                        ),
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.form.size,
+                                    expression: "form.size"
+                                  }
+                                ],
+                                class: [
+                                  "custom-select",
+                                  "mr-sm-2",
+                                  "mb-2",
+                                  _vm.isvalidsize
+                                ],
+                                attrs: { name: "form.size", id: "sizeSelect" },
+                                on: {
+                                  change: function($event) {
+                                    var $$selectedVal = Array.prototype.filter
+                                      .call($event.target.options, function(o) {
+                                        return o.selected
+                                      })
+                                      .map(function(o) {
+                                        var val =
+                                          "_value" in o ? o._value : o.value
+                                        return val
+                                      })
+                                    _vm.$set(
+                                      _vm.form,
+                                      "size",
+                                      $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    )
+                                  }
+                                }
+                              },
+                              [
+                                _c("option", { attrs: { value: "" } }, [
+                                  _vm._v(_vm._s(_vm.textSize))
+                                ]),
+                                _vm._v(" "),
+                                _c("option", { attrs: { value: "big" } }, [
+                                  _vm._v("Grande")
+                                ]),
+                                _vm._v(" "),
+                                _c("option", { attrs: { value: "normal" } }, [
+                                  _vm._v("normal")
+                                ]),
+                                _vm._v(" "),
+                                _c("option", { attrs: { value: "little" } }, [
+                                  _vm._v("Chico")
+                                ])
+                              ]
+                            )
+                          : _vm._e(),
                         _vm._v(" "),
                         !_vm.validateForm.size
                           ? _c(
@@ -38922,7 +39182,7 @@ var render = function() {
                               },
                               [
                                 _vm._v(
-                                  "\n                                        Debes seleccionar un valor\n                                    "
+                                  "\n                                    Debes seleccionar un valor\n                                "
                                 )
                               ]
                             )
@@ -38988,7 +39248,7 @@ var render = function() {
                         !_vm.validateForm.align
                           ? _c("div", { staticClass: "invalid-feedback" }, [
                               _vm._v(
-                                "\n                                        Debes seleccionar un valor\n                                    "
+                                "\n                                    Debes seleccionar un valor\n                                "
                               )
                             ])
                           : _vm._e(),
@@ -39001,6 +39261,56 @@ var render = function() {
                           },
                           [_vm._v("Enviar")]
                         )
+                      ]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.options.image
+                  ? _c(
+                      "form",
+                      {
+                        attrs: { action: "", method: "post" },
+                        on: {
+                          submit: function($event) {
+                            $event.preventDefault()
+                            return _vm.storeImage($event)
+                          }
+                        }
+                      },
+                      [
+                        _c("div", { staticClass: "custom-file" }, [
+                          _c("input", {
+                            staticClass: "custom-file-input mb-2",
+                            attrs: {
+                              type: "file",
+                              id: "validatedCustomFile",
+                              required: ""
+                            },
+                            on: { change: _vm.fileUpload }
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "label",
+                            {
+                              staticClass: "custom-file-label",
+                              attrs: { for: "validatedCustomFile" }
+                            },
+                            [_vm._v(_vm._s(_vm.chooseFile))]
+                          ),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "invalid-feedback" }, [
+                            _vm._v("Example invalid custom file feedback")
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-primary",
+                              attrs: { type: "submit" }
+                            },
+                            [_vm._v("Subir")]
+                          )
+                        ])
                       ]
                     )
                   : _vm._e()
@@ -39016,14 +39326,21 @@ var render = function() {
             _c(
               "button",
               {
-                staticClass: "btn btn-primary mb-2",
+                staticClass: "btn btn-info mb-2",
                 on: {
                   click: function($event) {
                     return _vm.moveContent(_vm.post_id, "up")
                   }
                 }
               },
-              [_vm._v("Subir")]
+              [
+                _c("img", {
+                  attrs: {
+                    src: "http://localhost:8000/storage/icons/arriba.png",
+                    alt: "Arriba"
+                  }
+                })
+              ]
             )
           ]),
           _vm._v(" "),
@@ -39031,14 +39348,21 @@ var render = function() {
             _c(
               "button",
               {
-                staticClass: "btn btn-primary mb-2",
+                staticClass: "btn btn-info mb-2",
                 on: {
                   click: function($event) {
                     return _vm.moveContent(_vm.post_id, "down")
                   }
                 }
               },
-              [_vm._v("Bajar")]
+              [
+                _c("img", {
+                  attrs: {
+                    src: "http://localhost:8000/storage/icons/abajo.png",
+                    alt: "Abajo"
+                  }
+                })
+              ]
             )
           ]),
           _vm._v(" "),
@@ -39051,11 +39375,18 @@ var render = function() {
                 staticClass: "btn btn-danger",
                 on: {
                   click: function($event) {
-                    return _vm.deleteContent(_vm.content.id)
+                    return _vm.deleteContent()
                   }
                 }
               },
-              [_vm._v("Eliminar")]
+              [
+                _c("img", {
+                  attrs: {
+                    src: "http://localhost:8000/storage/icons/delete-30.png",
+                    alt: "Delete"
+                  }
+                })
+              ]
             )
           ])
         ])
@@ -39068,53 +39399,54 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "dropdown mb-2" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-primary dropdown-toggle",
+    return _c(
+      "button",
+      {
+        staticClass: "btn btn-info dropdown-toggle",
+        attrs: {
+          type: "button",
+          id: "dropdownMenu1",
+          "data-toggle": "dropdown",
+          "aria-haspopup": "true",
+          "aria-expanded": "false"
+        }
+      },
+      [
+        _c("img", {
           attrs: {
-            type: "button",
-            id: "dropdownMenu2",
-            "data-toggle": "dropdown",
-            "aria-haspopup": "true",
-            "aria-expanded": "false"
+            src: "http://localhost:8000/storage/icons/add-text-white.png",
+            alt: "text"
           }
-        },
-        [
-          _vm._v(
-            "\n                        Agregar Multimedia\n                    "
-          )
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "dropdown-menu",
-          attrs: { "aria-labelledby": "dropdownMenu2" }
-        },
-        [
-          _c(
-            "button",
-            { staticClass: "dropdown-item", attrs: { type: "button" } },
-            [_vm._v("Action")]
-          ),
-          _vm._v(" "),
-          _c(
-            "button",
-            { staticClass: "dropdown-item", attrs: { type: "button" } },
-            [_vm._v("Another action")]
-          ),
-          _vm._v(" "),
-          _c(
-            "button",
-            { staticClass: "dropdown-item", attrs: { type: "button" } },
-            [_vm._v("Something else here")]
-          )
-        ]
-      )
-    ])
+        })
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "btn btn-info dropdown-toggle",
+        attrs: {
+          type: "button",
+          id: "dropdownMenu2",
+          "data-toggle": "dropdown",
+          "aria-haspopup": "true",
+          "aria-expanded": "false"
+        }
+      },
+      [
+        _c("img", {
+          staticClass: "text-light",
+          attrs: {
+            src: "http://localhost:8000/storage/icons/add-image-white.png",
+            alt: "text"
+          }
+        })
+      ]
+    )
   },
   function() {
     var _vm = this
@@ -39124,7 +39456,7 @@ var staticRenderFns = [
       _c(
         "button",
         {
-          staticClass: "btn btn-primary dropdown-toggle",
+          staticClass: "btn btn-info dropdown-toggle",
           attrs: {
             type: "button",
             id: "dropdownMenu3",
@@ -39134,9 +39466,12 @@ var staticRenderFns = [
           }
         },
         [
-          _vm._v(
-            "\n                        Agregar Containers\n                    "
-          )
+          _c("img", {
+            attrs: {
+              src: "http://localhost:8000/storage/icons/add-proper-white.png",
+              alt: "text"
+            }
+          })
         ]
       ),
       _vm._v(" "),
@@ -39172,24 +39507,15 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("p", [
-      _vm._v("Asterisk icon on a button:\n                    "),
-      _c(
-        "button",
-        { staticClass: "btn btn-default btn-sm", attrs: { type: "button" } },
-        [
-          _c("span", { staticClass: "glyphicon glyphicon-asterisk" }),
-          _vm._v(" Asterisk\n                    ")
-        ]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row" }, [
-      _c("button", { staticClass: "btn btn-warning mb-2" }, [_vm._v("Editar")])
+      _c("button", { staticClass: "btn btn-warning mb-2" }, [
+        _c("img", {
+          attrs: {
+            src: "http://localhost:8000/storage/icons/editar-30.png",
+            alt: "Editar"
+          }
+        })
+      ])
     ])
   }
 ]
