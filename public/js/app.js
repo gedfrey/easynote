@@ -2008,6 +2008,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2102,6 +2105,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   methods: {
+    textSpanish: function textSpanish(value) {
+      if (value === 'title') {
+        return 'Titulo';
+      } else if (value === 'body_text') {
+        return 'Texto';
+      } else {
+        return value;
+      }
+    },
     storeImage: function () {
       var _storeImage = _asyncToGenerator(
       /*#__PURE__*/
@@ -38833,13 +38845,13 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container-fluid" }, [
     _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-3 d-flex flex-column" }, [
+      _c("div", { staticClass: "col-sm-12 col-md-3 d-flex flex-column" }, [
         _vm.validateForm.createContent === true
           ? _c("div", { staticClass: "alert alert-danger" }, [
               _vm._v(
-                "\n                " +
+                "\n                    " +
                   _vm._s(_vm.message.create) +
-                  "\n            "
+                  "\n                "
               )
             ])
           : _vm._e(),
@@ -38847,70 +38859,70 @@ var render = function() {
         _vm.validateForm.createContent === false
           ? _c("div", { staticClass: "alert alert-success" }, [
               _vm._v(
-                "\n                " +
+                "\n                    " +
                   _vm._s(_vm.message.create) +
-                  "\n            "
+                  "\n                "
               )
             ])
           : _vm._e(),
         _vm._v(" "),
-        _c("div", { staticClass: "dropdown mb-2" }, [
-          _vm._m(0),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "dropdown-menu",
-              attrs: { "aria-labelledby": "dropdownMenu1" }
-            },
-            _vm._l(_vm.type_texts, function(type) {
-              return _c(
-                "button",
-                {
-                  key: type.id,
-                  staticClass: "dropdown-item",
-                  attrs: { type: "button" },
-                  on: {
-                    click: function($event) {
-                      return _vm.optionText(type.name, type.id)
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "dropdown mb-2 col-12" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "dropdown-menu",
+                attrs: { "aria-labelledby": "dropdownMenu1" }
+              },
+              _vm._l(_vm.type_texts, function(type) {
+                return _c(
+                  "button",
+                  {
+                    key: type.id,
+                    staticClass: "dropdown-item",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.optionText(type.name, type.id)
+                      }
                     }
-                  }
-                },
-                [_vm._v(_vm._s(type.name))]
-              )
-            }),
-            0
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "dropdown mb-2" }, [
-          _vm._m(1),
+                  },
+                  [_vm._v(_vm._s(_vm.textSpanish(type.name)))]
+                )
+              }),
+              0
+            )
+          ]),
           _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "dropdown-menu",
-              attrs: { "aria-labelledby": "dropdownMenu2" }
-            },
-            [
-              _c(
-                "button",
-                {
-                  staticClass: "dropdown-item",
-                  attrs: { type: "button" },
-                  on: {
-                    click: function($event) {
-                      return _vm.optionImage()
+          _c("div", { staticClass: "dropdown mb-2 col-12" }, [
+            _vm._m(1),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "dropdown-menu",
+                attrs: { "aria-labelledby": "dropdownMenu2" }
+              },
+              [
+                _c(
+                  "button",
+                  {
+                    staticClass: "dropdown-item",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.optionImage()
+                      }
                     }
-                  }
-                },
-                [_vm._v("Imagen")]
-              )
-            ]
-          )
-        ]),
-        _vm._v(" "),
-        _vm._m(2)
+                  },
+                  [_vm._v("Imagen")]
+                )
+              ]
+            )
+          ])
+        ])
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "col" }, [
@@ -38919,7 +38931,7 @@ var render = function() {
             _c("div", { staticClass: "card" }, [
               _c("h5", { staticClass: "card-header" }, [
                 _vm._v(
-                  "\n                            Contenido del Post\n                        "
+                  "\n                                Contenido del Post\n                            "
                 )
               ]),
               _vm._v(" "),
@@ -38957,9 +38969,9 @@ var render = function() {
                                     },
                                     [
                                       _vm._v(
-                                        "\n                                                " +
+                                        "\n                                                    " +
                                           _vm._s(content.text.value) +
-                                          "\n                                            "
+                                          "\n                                                "
                                       )
                                     ]
                                   )
@@ -39020,7 +39032,7 @@ var render = function() {
             _c("div", { staticClass: "card" }, [
               _c("h5", { staticClass: "card-header" }, [
                 _vm._v(
-                  "\n                            Editar Contenido\n                        "
+                  "\n                                Editar Contenido\n                            "
                 )
               ]),
               _vm._v(" "),
@@ -39106,9 +39118,9 @@ var render = function() {
                         !_vm.validateForm.value
                           ? _c("div", { staticClass: "invalid-feedback" }, [
                               _vm._v(
-                                "\n                                    " +
+                                "\n                                        " +
                                   _vm._s(_vm.textValueFeedback) +
-                                  "\n                                "
+                                  "\n                                    "
                               )
                             ])
                           : _vm._e(),
@@ -39182,7 +39194,7 @@ var render = function() {
                               },
                               [
                                 _vm._v(
-                                  "\n                                    Debes seleccionar un valor\n                                "
+                                  "\n                                        Debes seleccionar un valor\n                                    "
                                 )
                               ]
                             )
@@ -39248,7 +39260,7 @@ var render = function() {
                         !_vm.validateForm.align
                           ? _c("div", { staticClass: "invalid-feedback" }, [
                               _vm._v(
-                                "\n                                    Debes seleccionar un valor\n                                "
+                                "\n                                        Debes seleccionar un valor\n                                    "
                               )
                             ])
                           : _vm._e(),
@@ -39326,7 +39338,7 @@ var render = function() {
             _c(
               "button",
               {
-                staticClass: "btn btn-info mb-2",
+                staticClass: "btn btn-light mb-2",
                 on: {
                   click: function($event) {
                     return _vm.moveContent(_vm.post_id, "up")
@@ -39336,7 +39348,7 @@ var render = function() {
               [
                 _c("img", {
                   attrs: {
-                    src: "http://localhost:8000/storage/icons/arriba.png",
+                    src: "http://localhost:8000/storage/icons/up-40.png",
                     alt: "Arriba"
                   }
                 })
@@ -39348,7 +39360,7 @@ var render = function() {
             _c(
               "button",
               {
-                staticClass: "btn btn-info mb-2",
+                staticClass: "btn btn-light mb-2",
                 on: {
                   click: function($event) {
                     return _vm.moveContent(_vm.post_id, "down")
@@ -39358,7 +39370,7 @@ var render = function() {
               [
                 _c("img", {
                   attrs: {
-                    src: "http://localhost:8000/storage/icons/abajo.png",
+                    src: "http://localhost:8000/storage/icons/down-40.png",
                     alt: "Abajo"
                   }
                 })
@@ -39366,7 +39378,7 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          _vm._m(3),
+          _vm._m(2),
           _vm._v(" "),
           _c("div", { staticClass: "row" }, [
             _c(
@@ -39382,7 +39394,7 @@ var render = function() {
               [
                 _c("img", {
                   attrs: {
-                    src: "http://localhost:8000/storage/icons/delete-30.png",
+                    src: "http://localhost:8000/storage/icons/delete-40.png",
                     alt: "Delete"
                   }
                 })
@@ -39402,7 +39414,7 @@ var staticRenderFns = [
     return _c(
       "button",
       {
-        staticClass: "btn btn-info dropdown-toggle",
+        staticClass: "btn btn-light dropdown-toggle",
         attrs: {
           type: "button",
           id: "dropdownMenu1",
@@ -39414,7 +39426,7 @@ var staticRenderFns = [
       [
         _c("img", {
           attrs: {
-            src: "http://localhost:8000/storage/icons/add-text-white.png",
+            src: "http://localhost:8000/storage/icons/texts-40.png",
             alt: "text"
           }
         })
@@ -39428,7 +39440,7 @@ var staticRenderFns = [
     return _c(
       "button",
       {
-        staticClass: "btn btn-info dropdown-toggle",
+        staticClass: "btn  dropdown-toggle",
         attrs: {
           type: "button",
           id: "dropdownMenu2",
@@ -39441,8 +39453,8 @@ var staticRenderFns = [
         _c("img", {
           staticClass: "text-light",
           attrs: {
-            src: "http://localhost:8000/storage/icons/add-image-white.png",
-            alt: "text"
+            src: "http://localhost:8000/storage/icons/files-40.png",
+            alt: "Archivo"
           }
         })
       ]
@@ -39452,66 +39464,11 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "dropdown mb-2" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-info dropdown-toggle",
-          attrs: {
-            type: "button",
-            id: "dropdownMenu3",
-            "data-toggle": "dropdown",
-            "aria-haspopup": "true",
-            "aria-expanded": "false"
-          }
-        },
-        [
-          _c("img", {
-            attrs: {
-              src: "http://localhost:8000/storage/icons/add-proper-white.png",
-              alt: "text"
-            }
-          })
-        ]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "dropdown-menu",
-          attrs: { "aria-labelledby": "dropdownMenu3" }
-        },
-        [
-          _c(
-            "button",
-            { staticClass: "dropdown-item", attrs: { type: "button" } },
-            [_vm._v("Action")]
-          ),
-          _vm._v(" "),
-          _c(
-            "button",
-            { staticClass: "dropdown-item", attrs: { type: "button" } },
-            [_vm._v("Another action")]
-          ),
-          _vm._v(" "),
-          _c(
-            "button",
-            { staticClass: "dropdown-item", attrs: { type: "button" } },
-            [_vm._v("Something else here")]
-          )
-        ]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row" }, [
       _c("button", { staticClass: "btn btn-warning mb-2" }, [
         _c("img", {
           attrs: {
-            src: "http://localhost:8000/storage/icons/editar-30.png",
+            src: "http://localhost:8000/storage/icons/edit-40.png",
             alt: "Editar"
           }
         })
@@ -51963,8 +51920,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/gedfrey/program/laravel/easynote/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/gedfrey/program/laravel/easynote/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/gedfrey/programacion/easynote/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/gedfrey/programacion/easynote/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

@@ -1,7 +1,7 @@
 <template>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-3 d-flex flex-column">
+            <div class="col-sm-12 col-md-3 d-flex flex-column">
 
                 <div class="alert alert-danger" v-if="validateForm.createContent === true">
                     {{message.create}}
@@ -11,32 +11,35 @@
                     {{message.create}}
                 </div>
 
-                <div class="dropdown mb-2">
-                    <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <img src="http://localhost:8000/storage/icons/add-text-white.png" alt="text">
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                        <button class="dropdown-item" v-for="type of type_texts" :key="type.id"  @click="optionText(type.name,type.id)" type="button">{{type.name}}</button>
+                <div class="row">
+                    <div class="dropdown mb-2 col-12">
+                        <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img src="http://localhost:8000/storage/icons/texts-40.png" alt="text">
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <button class="dropdown-item" v-for="type of type_texts" :key="type.id"  @click="optionText(type.name,type.id)" type="button">{{textSpanish(type.name)}}</button>
+                        </div>
                     </div>
-                </div>
-                <div class="dropdown mb-2">
-                    <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <img src="http://localhost:8000/storage/icons/add-image-white.png" alt="text" class="text-light">
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                        <button class="dropdown-item" @click="optionImage()" type="button">Imagen</button>
+                    <div class="dropdown mb-2 col-12">
+                        <button class="btn  dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img src="http://localhost:8000/storage/icons/files-40.png" alt="Archivo" class="text-light">
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                            <button class="dropdown-item" @click="optionImage()" type="button">Imagen</button>
+                        </div>
                     </div>
+<!--                    <div class="dropdown mb-2 col-12">-->
+<!--                        <button class="btn  dropdown-toggle" type="button" id="dropdownMenu3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+<!--                            <img src="http://localhost:8000/storage/icons/add-proper-white.png" alt="Otro">-->
+<!--                        </button>-->
+<!--                        <div class="dropdown-menu" aria-labelledby="dropdownMenu3">-->
+<!--                            <button class="dropdown-item" type="button">Action</button>-->
+<!--                            <button class="dropdown-item" type="button">Another action</button>-->
+<!--                            <button class="dropdown-item" type="button">Something else here</button>-->
+<!--                        </div>-->
+<!--                    </div>-->
                 </div>
-                <div class="dropdown mb-2">
-                    <button class="btn btn-info dropdown-toggle" type="button" id="dropdownMenu3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <img src="http://localhost:8000/storage/icons/add-proper-white.png" alt="text">
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenu3">
-                        <button class="dropdown-item" type="button">Action</button>
-                        <button class="dropdown-item" type="button">Another action</button>
-                        <button class="dropdown-item" type="button">Something else here</button>
-                    </div>
-                </div>
+
             </div>
             <div class="col">
                 <div class="row">
@@ -123,24 +126,24 @@
             <div class="col-2">
                 <div class="col-2">
                     <div class="row">
-                        <button class="btn btn-info mb-2" @click="moveContent(post_id,'up')">
-                            <img src="http://localhost:8000/storage/icons/arriba.png" alt="Arriba">
+                        <button class="btn btn-light mb-2" @click="moveContent(post_id,'up')">
+                            <img src="http://localhost:8000/storage/icons/up-40.png" alt="Arriba">
                         </button>
 
                     </div>
                     <div class="row">
-                        <button class="btn btn-info mb-2" @click="moveContent(post_id,'down')">
-                            <img src="http://localhost:8000/storage/icons/abajo.png" alt="Abajo">
+                        <button class="btn btn-light mb-2" @click="moveContent(post_id,'down')">
+                            <img src="http://localhost:8000/storage/icons/down-40.png" alt="Abajo">
                         </button>
                     </div>
                     <div class="row">
                         <button class="btn btn-warning mb-2">
-                            <img src="http://localhost:8000/storage/icons/editar-30.png" alt="Editar">
+                            <img src="http://localhost:8000/storage/icons/edit-40.png" alt="Editar">
                         </button>
                     </div>
                     <div class="row">
                         <button @click="deleteContent()" class="btn btn-danger">
-                            <img src="http://localhost:8000/storage/icons/delete-30.png" alt="Delete">
+                            <img src="http://localhost:8000/storage/icons/delete-40.png" alt="Delete">
                         </button>
                     </div>
                 </div>
@@ -243,6 +246,15 @@
             }
         },
         methods: {
+            textSpanish: function(value){
+                if(value === 'title'){
+                    return 'Titulo'
+                }else if(value === 'body_text'){
+                    return 'Texto'
+                }else{
+                    return value
+                }
+            },
             storeImage: async function(){
                 let orderNumber = 1
                 let order =  await axios('/post/contents/order/'+this.post_id)
