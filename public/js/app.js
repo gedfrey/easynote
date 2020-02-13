@@ -2010,11 +2010,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       selectedItem: 0,
+      selectedContent: {
+        id: 0
+      },
       message: {
         create: ''
       },
@@ -2505,25 +2507,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _editContent = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee6() {
-        var content;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee6$(_context6) {
           while (1) {
             switch (_context6.prev = _context6.next) {
               case 0:
-                if (!(this.selectedItem !== 0)) {
-                  _context6.next = 6;
-                  break;
-                }
+                if (this.selectedContent.type === 1) {
+                  this.optionText(this.selectedContent.text.type, this.selectedContent.id);
+                  this.form.value = this.selectedContent.text.value;
+                  this.form.align = this.selectedContent.text.align;
+                  this.form.size = this.selectedContent.text.size;
+                } else if (this.selectedContent.type === 2) {}
 
-                _context6.next = 3;
-                return axios.get('/contents/' + this.selectedItem);
-
-              case 3:
-                content = _context6.sent;
-                console.log(content);
-                this.selectedItem = 0;
-
-              case 6:
+              case 1:
               case "end":
                 return _context6.stop();
             }
@@ -2546,18 +2541,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context7.prev = _context7.next) {
               case 0:
-                if (!(this.selectedItem !== 0)) {
+                if (!(this.selectedContent.id !== 0)) {
                   _context7.next = 6;
                   break;
                 }
 
                 _context7.next = 3;
-                return axios["delete"]('/contents/' + this.selectedItem);
+                return axios["delete"]('/contents/' + this.selectedContent.id);
 
               case 3:
                 content = _context7.sent;
                 this.getContentsByPost();
-                this.selectedItem = 0;
+                this.selectedContent.id = 0;
 
               case 6:
               case "end":
@@ -2604,14 +2599,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           while (1) {
             switch (_context8.prev = _context8.next) {
               case 0:
-                if (!(this.selectedItem !== 0)) {
+                if (!(this.selectedContent.id !== 0)) {
                   _context8.next = 15;
                   break;
                 }
 
                 object = {
                   'post_id': post_id,
-                  'content_id': this.selectedItem
+                  'content_id': this.selectedContent.id
                 };
 
                 if (!(move === 'up')) {
@@ -2638,7 +2633,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 this.getContentsByPost();
 
               case 14:
-                this.selectedItem = 0;
+                this.selectedContent.id = 0;
 
               case 15:
               case "end":
@@ -2654,8 +2649,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       return moveContent;
     }(),
-    addId: function addId(id) {
-      this.selectedItem = id;
+    addContent: function addContent(content) {
+      console.log(content); // this.selectedContent.id = content.id;
+
+      this.selectedContent = content;
     },
     sizeTitle: function sizeTitle(size) {
       if (size === 'big') {
@@ -2667,7 +2664,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
     },
     checkSelectedItem: function checkSelectedItem(id) {
-      if (this.selectedItem === id) {
+      if (this.selectedContent.id === id) {
         return 'bg-info';
       }
     }
@@ -38845,7 +38842,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container-fluid" }, [
     _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-sm-12 col-md-3 d-flex flex-column" }, [
+      _c("div", { staticClass: "col-sm-12 col-md-1 d-flex flex-column" }, [
         _vm.validateForm.createContent === true
           ? _c("div", { staticClass: "alert alert-danger" }, [
               _vm._v(
@@ -38867,7 +38864,7 @@ var render = function() {
           : _vm._e(),
         _vm._v(" "),
         _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "dropdown mb-2 col-12" }, [
+          _c("div", { staticClass: "dropdown mb-2 col-3 col-md-12" }, [
             _vm._m(0),
             _vm._v(" "),
             _c(
@@ -38896,7 +38893,7 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "dropdown mb-2 col-12" }, [
+          _c("div", { staticClass: "dropdown mb-2 col-3 col-md-12" }, [
             _vm._m(1),
             _vm._v(" "),
             _c(
@@ -38925,7 +38922,7 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "col" }, [
+      _c("div", { staticClass: "col-md-10" }, [
         _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "col" }, [
             _c("div", { staticClass: "card" }, [
@@ -38953,7 +38950,7 @@ var render = function() {
                                 ],
                                 on: {
                                   click: function($event) {
-                                    return _vm.addId(content.id)
+                                    return _vm.addContent(content)
                                   }
                                 }
                               },
@@ -38990,7 +38987,7 @@ var render = function() {
                                 class: [_vm.checkSelectedItem(content.id)],
                                 on: {
                                   click: function($event) {
-                                    return _vm.addId(content.id)
+                                    return _vm.addContent(content.id)
                                   }
                                 }
                               },
@@ -39332,9 +39329,9 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "col-2" }, [
-        _c("div", { staticClass: "col-2" }, [
-          _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-1 col-sm-12 col-12 mt-2" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-3 col-sm-2 col-md-12" }, [
             _c(
               "button",
               {
@@ -39356,7 +39353,7 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-3 col-sm-2 col-md-12" }, [
             _c(
               "button",
               {
@@ -39378,9 +39375,29 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          _vm._m(2),
+          _c("div", { staticClass: "col-3 col-sm-2 col-md-12" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-warning mb-2",
+                on: {
+                  click: function($event) {
+                    return _vm.editContent(_vm.post_id)
+                  }
+                }
+              },
+              [
+                _c("img", {
+                  attrs: {
+                    src: "http://localhost:8000/storage/icons/edit-40.png",
+                    alt: "Editar"
+                  }
+                })
+              ]
+            )
+          ]),
           _vm._v(" "),
-          _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-3 col-sm-2 col-md-12" }, [
             _c(
               "button",
               {
@@ -39459,21 +39476,6 @@ var staticRenderFns = [
         })
       ]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("button", { staticClass: "btn btn-warning mb-2" }, [
-        _c("img", {
-          attrs: {
-            src: "http://localhost:8000/storage/icons/edit-40.png",
-            alt: "Editar"
-          }
-        })
-      ])
-    ])
   }
 ]
 render._withStripped = true

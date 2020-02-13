@@ -1,7 +1,7 @@
 <template>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-sm-12 col-md-3 d-flex flex-column">
+            <div class="col-sm-12 col-md-1 d-flex flex-column">
 
                 <div class="alert alert-danger" v-if="validateForm.createContent === true">
                     {{message.create}}
@@ -12,7 +12,7 @@
                 </div>
 
                 <div class="row">
-                    <div class="dropdown mb-2 col-12">
+                    <div class="dropdown mb-2 col-3 col-md-12">
                         <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <img src="http://localhost:8000/storage/icons/texts-40.png" alt="text">
                         </button>
@@ -20,7 +20,7 @@
                             <button class="dropdown-item" v-for="type of type_texts" :key="type.id"  @click="optionText(type.name,type.id)" type="button">{{textSpanish(type.name)}}</button>
                         </div>
                     </div>
-                    <div class="dropdown mb-2 col-12">
+                    <div class="dropdown mb-2 col-3 col-md-12">
                         <button class="btn  dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <img src="http://localhost:8000/storage/icons/files-40.png" alt="Archivo" class="text-light">
                         </button>
@@ -41,7 +41,7 @@
                 </div>
 
             </div>
-            <div class="col">
+            <div class="col-md-10">
                 <div class="row">
                     <div class="col">
                         <div class="card">
@@ -51,7 +51,7 @@
                             <div class="card-body">
                                 <div class="row" v-for="content of contents" :key="content.id">
                                     <div class="col" v-if="content.type === 1">
-                                        <div class="card" @click="addId(content.id)" :class="[checkSelectedItem(content.id),content.text.align]">
+                                        <div class="card" @click="addContent(content)" :class="[checkSelectedItem(content.id),content.text.align]">
                                             <div class="card-body">
                                                 <p :class="['card-text',sizeTitle(content.text.size)]">
                                                     {{content.text.value}}
@@ -60,7 +60,7 @@
                                         </div>
                                     </div>
                                     <div class="col" v-if="content.type === 2">
-                                        <div class="card" @click="addId(content.id)" :class="[checkSelectedItem(content.id)]">
+                                        <div class="card" @click="addContent(content.id)" :class="[checkSelectedItem(content.id)]">
                                             <div class="card-body d-flex justify-content-center align-item-center">
                                                 <img :src="'http://localhost:8000/storage/'+content.image.url" :alt="content.image.url">
                                             </div>
@@ -123,30 +123,29 @@
                 </div>
 
             </div>
-            <div class="col-2">
-                <div class="col-2">
+            <div class="col-md-1 col-sm-12 col-12 mt-2">
                     <div class="row">
-                        <button class="btn btn-light mb-2" @click="moveContent(post_id,'up')">
-                            <img src="http://localhost:8000/storage/icons/up-40.png" alt="Arriba">
-                        </button>
-
+                        <div class="col-3 col-sm-2 col-md-12">
+                            <button class="btn btn-light mb-2" @click="moveContent(post_id,'up')">
+                                <img src="http://localhost:8000/storage/icons/up-40.png" alt="Arriba">
+                            </button>
+                        </div>
+                        <div class="col-3 col-sm-2 col-md-12">
+                            <button class="btn btn-light mb-2" @click="moveContent(post_id,'down')">
+                                <img src="http://localhost:8000/storage/icons/down-40.png" alt="Abajo">
+                            </button>
+                        </div>
+                        <div class="col-3 col-sm-2 col-md-12">
+                            <button class="btn btn-warning mb-2" @click="editContent(post_id)">
+                                <img src="http://localhost:8000/storage/icons/edit-40.png" alt="Editar">
+                            </button>
+                        </div>
+                        <div class="col-3 col-sm-2 col-md-12">
+                            <button @click="deleteContent()" class="btn btn-danger">
+                                <img src="http://localhost:8000/storage/icons/delete-40.png" alt="Delete">
+                            </button>
+                        </div>
                     </div>
-                    <div class="row">
-                        <button class="btn btn-light mb-2" @click="moveContent(post_id,'down')">
-                            <img src="http://localhost:8000/storage/icons/down-40.png" alt="Abajo">
-                        </button>
-                    </div>
-                    <div class="row">
-                        <button class="btn btn-warning mb-2">
-                            <img src="http://localhost:8000/storage/icons/edit-40.png" alt="Editar">
-                        </button>
-                    </div>
-                    <div class="row">
-                        <button @click="deleteContent()" class="btn btn-danger">
-                            <img src="http://localhost:8000/storage/icons/delete-40.png" alt="Delete">
-                        </button>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -156,6 +155,9 @@
         data() {
             return {
                 selectedItem: 0,
+                selectedContent: {
+                    id : 0
+                },
                 message: {
                   create: ''
                 },
@@ -436,17 +438,20 @@
                 this.contents = listContents
             },
             editContent: async function(){
-                if(this.selectedItem !== 0){
-                    let content = await axios.get('/contents/'+this.selectedItem)
-                    console.log(content)
-                    this.selectedItem = 0
+                if(this.selectedContent.type === 1){
+                    this.optionText(this.selectedContent.text.type,this.selectedContent.id)
+                    this.form.value = this.selectedContent.text.value
+                    this.form.align = this.selectedContent.text.align
+                    this.form.size = this.selectedContent.text.size
+                }else if(this.selectedContent.type === 2){
+
                 }
             },
             deleteContent: async function(){
-                if(this.selectedItem !== 0){
-                    let content = await axios.delete('/contents/'+this.selectedItem)
+                if(this.selectedContent.id !== 0){
+                    let content = await axios.delete('/contents/'+this.selectedContent.id)
                     this.getContentsByPost()
-                    this.selectedItem = 0
+                    this.selectedContent.id = 0
                 }
 
             },
@@ -471,10 +476,10 @@
                 this.options.image = true
             },
             moveContent: async function(post_id,move){
-                if(this.selectedItem !== 0){
+                if(this.selectedContent.id !== 0){
                     let object = {
                         'post_id':post_id,
-                        'content_id':this.selectedItem
+                        'content_id':this.selectedContent.id
                     }
                     if(move === 'up'){
                         let post = await axios.post('/post/contents/up',object)
@@ -484,14 +489,16 @@
                         console.log(post)
                         this.getContentsByPost()
                     }
-                    this.selectedItem = 0
+                    this.selectedContent.id = 0
 
                 }
 
 
             },
-            addId: function(id){
-                this.selectedItem = id;
+            addContent: function(content){
+                console.log(content)
+                // this.selectedContent.id = content.id;
+                this.selectedContent = content;
             },
             sizeTitle: function(size){
                 if(size === 'big'){
@@ -503,7 +510,7 @@
                 }
             },
             checkSelectedItem: function(id){
-                if(this.selectedItem === id){
+                if(this.selectedContent.id === id){
                     return 'bg-info'
                 }
             },
