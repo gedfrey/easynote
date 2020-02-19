@@ -76,7 +76,7 @@
             <p class="m-0 lead">Actualmente estoy cursando la carrera de Ingenieria de ejecuciòn en informatica en la Universidad de Santiago de Chile, he trabajado en el area de soporte informatico y soy un fanatico de la programaciòn.</p>
         </div>
 
-        <h1 class="display-5 mb-4 mt-4 mr-2">Experiencia</h1>
+        <h1 class="display-5 mb-4 mt-4 mr-2 text-center">Experiencia</h1>
 
         <div class="container bg-white p-0">
             <div class="card w-100" style="width: 18rem;">
@@ -122,7 +122,7 @@
                             <img src="{{asset('storage/icons/point-30.png')}}" alt="point">
                         </div>
                         <div class="col-10">
-                            <p class="lead">Configuración de red de servidores linux y servicio openvpn para conectar sucursales o clientes fuera de la red local.</p>
+                            <p class="lead">Configuración de certificados SSL para paginas web en servidores linux y registros DNS.</p>
                         </div>
                     </div>
                     <div class="row justify-content-center">
@@ -134,15 +134,10 @@
             </div>
         </div>
 
-        <h1 class="display-5 mb-4 mt-4 mr-2">Estudios</h1>
+        <h1 class="display-5 mb-4 mt-4 mr-2 text-center">Estudios</h1>
 
-       {{-- <div class="container bg-white p-0">
-            <div class="card w-100" style="width: 18rem;">--}}
-{{--                <div class="card-header">--}}
-{{--                    <h1>Estudios</h1>--}}
-{{--                </div>--}}
-                <div class="card-body row justify-content-around">
-                    <div class="card col-12 col-md-4 mb-2 mb-md-0">
+                <div class="card-body row justify-content-center">
+                    <div class="card col-12 col-md-4 mb-2 mb-md-0 mr-0 mr-md-3">
                         <div class="card-body">
                             <h5 class="card-title font-weight-bold">Tecnólogo en Telecomunicaciones</h5>
                             <p class="lead">Universidad de Santiago de Chile</p>
@@ -162,10 +157,116 @@
    {{--         </div>
         </div>
 --}}
-        <h1 class="display-5 mb-4 mt-4 mr-2">Tecnologia y software utilizados</h1>
+        <h1 class="display-5 mb-4 mt-4 mr-2 text-center">Tecnologias, softwares y lenguajes de programación utilizados</h1>
+        <div class="container">
+            <div class="row align-items-center justify-content-center">
+
+                <div class="col-4">
+                    <img class="card-img-top" src="{{asset('storage/img/centos.png')}}" alt="Centos">
+                </div>
+
+                <div class="col-4">
+                    <img class="card-img-top" src="{{asset('storage/img/debian.jpg')}}" alt="Debian">
+                </div>
+                <div class="col-3">
+                    <img class="card-img-top" src="{{asset('storage/img/windows-10.png')}}" alt="Windows">
+                </div>
+
+            </div>
+            <div class="row align-items-center justify-content-center">
+
+                <div class="col-2">
+                    <img class="card-img-top" src="{{asset('storage/img/apache2.png')}}" alt="ApacheServer">
+                </div>
+                <div class="col-2">
+                    <img  class="card-img-top" src="{{asset('storage/img/nginx.png')}}" alt="Nginx">
+                </div>
+                <div class="col-2">
+                    <img  class="card-img-top" src="{{asset('storage/img/iis.png')}}" alt="ISS">
+                </div>
+                <div class="col-2">
+                    <img class="card-img-top" src="{{asset('storage/img/cpanel.png')}}" alt="CPANEL">
+                </div>
+                <div class="col-2">
+                    <img class="card-img-top" src="{{asset('storage/img/ispconfig.jpg')}}" alt="IspConfig">
+                </div>
+
+            </div>
+
+            <div class="row align-items-center justify-content-center mt-2">
+
+                <div class="col-2">
+                    <img class="card-img-top" src="{{asset('storage/img/asterisk.png')}}" alt="Asterisk">
+                </div>
+                <div class="col-2">
+                    <img class="card-img-top" src="{{asset('storage/img/issabel.png')}}" alt="Openvpn">
+                </div>
+                <div class="col-2">
+                    <img  class="card-img-top" src="{{asset('storage/img/postfix.png')}}" alt="Postfix">
+                </div>
+                <div class="col-2">
+                    <img  class="card-img-top" src="{{asset('storage/img/dovecot.png')}}" alt="Dovecot">
+                </div>
+                <div class="col-2">
+                    <img class="card-img-top" src="{{asset('storage/img/openvpn.png')}}" alt="Openvpn">
+                </div>
+            </div>
+
+            <div class="row align-items-center justify-content-center">
+
+                <div class="col-2">
+                    <img class="card-img-top" src="{{asset('storage/img/c.png')}}" alt="C">
+                </div>
+                <div class="col-2">
+                    <img  class="card-img-top" src="{{asset('storage/img/java.jpg')}}" alt="Java">
+                </div>
+                <div class="col-2">
+                    <img  class="card-img-top" src="{{asset('storage/img/python.png')}}" alt="Python">
+                </div>
+                <div class="col-2">
+                    <img class="card-img-top" src="{{asset('storage/img/php.png')}}" alt="PHP">
+                </div>
+                <div class="col-2">
+                    <img class="card-img-top" src="{{asset('storage/img/javascript.png')}}" alt="PHP">
+                </div>
+            </div>
+
+            <div class="row align-items-center justify-content-center">
+
+                <div class="col-3">
+                    <img class="card-img-top" src="{{asset('storage/img/mysql-5.svg')}}" alt="Mysql">
+                </div>
+                <div class="col-3">
+                    <img  class="card-img-top" src="{{asset('storage/img/postgres.png')}}" alt="Postgres">
+                </div>
+                <div class="col-3">
+                    <img  class="card-img-top" src="{{asset('storage/img/sqlserver.png')}}" alt="SQL Server">
+                </div>
+
+            </div>
+
+            <div class="row align-items-center justify-content-center mb-4">
+
+                <div class="col-2">
+                    <img class="card-img-top" src="{{asset('storage/img/Laravel-logo.png')}}" alt="Laravel">
+                </div>
+                <div class="col-2">
+                    <img  class="card-img-top" src="{{asset('storage/img/spring-boot.png')}}" alt="Spring Boot">
+                </div>
+                <div class="col-2">
+                    <img  class="card-img-top" src="{{asset('storage/img/Vue-logo.svg')}}" alt="Vue">
+                </div>
+                <div class="col-2">
+                    <img  class="card-img-top" src="{{asset('storage/img/django.png')}}" alt="Django">
+                </div>
+                <div class="col-2">
+                    <img  class="card-img-top" src="{{asset('storage/img/ionic.png')}}" alt="Ionic">
+                </div>
+
+            </div>
 
     </div>
-
+    </div>
 {{--    footer--}}
     <footer class="container-fluid bg-dark footer">
         <div class="row">
