@@ -73,10 +73,13 @@
 {{--body--}}
     <div class="container-fluid" style="background-color: #f5f5f5">
         <div class="container bg-white mt mb-2">
-            <p class="m-0 lead">Actualmente estoy cursando la carrera de Ingenieria de ejecuciòn en informatica en la Universidad de Santiago de Chile, he trabajado en el area de soporte informatico y soy un fanatico de la programaciòn.</p>
+            <p class="m-0 lead">Actualmente estoy cursando la carrera de Ingenieria de ejecución en informatica en la Universidad de Santiago de Chile, soy un entusiasta de la informática y principalmente de la programación, aunque recién estoy empezando en esto, para mi cada día es algo nuevo, un reto o simplemente otra manera de pensar las cosas.</p>
+            <p class="lead m-0">En el 2012 empecé mis estudios en la carrera de Tecnólogo en Telecomunicaciones de la misma Universidad, donde conoci la programación luego de eso me decidi a ingresar en ese mundo, ingresando en el 2017 a la carrera de Informatica</p>
         </div>
 
-        <h1 class="display-5 mb-4 mt-4 mr-2 text-center">Experiencia</h1>
+        <div class="container">
+            <h1 class="display-5 mb-4 mt-4 mr-2 text-center border border-top-0 border-right-0 border-left-0 border-dark">Experiencia Laboral</h1>
+        </div>
 
         <div class="container bg-white p-0">
             <div class="card w-100" style="width: 18rem;">
@@ -133,8 +136,9 @@
                 </div>
             </div>
         </div>
-
-        <h1 class="display-5 mb-4 mt-4 mr-2 text-center">Estudios</h1>
+        <div class="container">
+            <h1 class="display-5 mb-4 mt-4 mr-2 text-center border border-top-0 border-right-0 border-left-0 border-dark">Estudios</h1>
+        </div>
 
                 <div class="card-body row justify-content-center">
                     <div class="card col-12 col-md-4 mb-2 mb-md-0 mr-0 mr-md-3">
@@ -157,7 +161,9 @@
    {{--         </div>
         </div>
 --}}
-        <h1 class="display-5 mb-4 mt-4 mr-2 text-center">Tecnologias, softwares y lenguajes de programación utilizados</h1>
+        <div class="container">
+            <h1 class="display-5 mb-4 mt-4 mr-2 text-center border-right-0 border-left-0 border-dark">Tecnologias, softwares y lenguajes de programación utilizados</h1>
+        </div>
         <div class="container">
             <div class="row align-items-center justify-content-center">
 
