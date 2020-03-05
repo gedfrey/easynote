@@ -5,8 +5,8 @@
     {{--body--}}
     <div class="container-fluid" style="background-color: #f5f5f5">
         <div class="container bg-white mt mb-2">
-            <p class="m-0 lead">Actualmente estoy cursando la carrera de Ingenieria de ejecución en informatica en la Universidad de Santiago de Chile, soy un entusiasta de la informática y principalmente de la programación, aunque recién estoy empezando en esto, para mi cada día es algo nuevo, un reto o simplemente otra manera de pensar las cosas.</p>
-            <p class="lead m-0">En el 2012 empecé mis estudios en la carrera de Tecnólogo en Telecomunicaciones de la misma Universidad, donde conoci la programación luego de eso me decidi a ingresar en ese mundo, ingresando en el 2017 a la carrera de Informatica</p>
+            <p class="m-0 lead">Actualmente estoy cursando la carrera de Ingeniería de ejecución en informática en la Universidad de Santiago de Chile, soy un entusiasta de la informática y principalmente de la programación, aunque recién estoy empezando en esto, para mi cada día es algo nuevo, un reto o simplemente otra manera de pensar las cosas.</p>
+            <p class="lead m-0">En el 2012 empecé mis estudios en la carrera de Tecnólogo en Telecomunicaciones de la misma Universidad, donde conocí la programación luego de eso me decidí a ingresar en ese mundo, ingresando en el 2017 a la carrera de Informatica.</p>
         </div>
 
         <div class="container mt-5 mb-5" id="Experiencia">
@@ -19,7 +19,7 @@
                     <h1>Asesorías computacionales Proredes</h1>
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title text-center mb-5">Soporte Nivel 2 en telefonía IP y Webhosting.</h5>
+                    <h5 class="card-title text-center mb-5">Soporte Nivel 2 en telefonía IP y Webhosting <strong>(2015 - 2019)</strong></h5>
                     <div class="row">
                         <div class="col-auto">
                             <img src="{{asset('storage/icons/point-30.png')}}" alt="point">

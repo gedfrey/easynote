@@ -32,13 +32,13 @@
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <ul class="navbar-nav">
                             <li class="nav-item active">
-                                <a class="nav-link text-light text-center text-sm-center text-md-left"  href="#Experiencia">Experiencia<span class="sr-only">(current)</span></a>
+                                <a class="nav-link text-light text-center text-sm-center text-md-left"  href="{{route('welcome').'/#Experiencia'}}">Experiencia<span class="sr-only">(current)</span></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-light text-center text-sm-center text-md-left" href="#Estudios">Estudios</a>
+                                <a class="nav-link text-light text-center text-sm-center text-md-left" href="{{route('welcome').'/#Estudios'}}">Estudios</a>
                             </li>
                             <li class="nav-item text-light">
-                                <a class="nav-link text-light text-center text-sm-center text-md-left" href="#Tecnologias">Tecnologias</a>
+                                <a class="nav-link text-light text-center text-sm-center text-md-left" href="{{route('welcome').'/#Tecnologias'}}">Tecnologias</a>
                             </li>
                             <div class="dropdown dropleft text-center text-sm-center text-md-left">
                                 <button class="btn btn-dark dropdown-toggle text-light text-center text-sm-center text-md-left" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
