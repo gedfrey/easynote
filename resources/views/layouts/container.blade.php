@@ -84,65 +84,6 @@
             </div>
             <div class="row justify-content-center">
                 <div class="container col-md-auto">
-{{--                    <button class="btn" type="button" data-toggle="modal" data-target="#exampleModal">--}}
-{{--                        <img src="{{asset('storage/icons/email-50.png')}}" alt="email">--}}
-{{--                    </button>--}}
-
-{{--                                    modal--}}
-
-{{--                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">--}}
-{{--                        <div class="modal-dialog" role="document">--}}
-{{--                            <div class="modal-content">--}}
-{{--                                <div class="modal-header">--}}
-{{--                                    <h5 class="modal-title" id="exampleModalLabel">Formulario de Correo</h5>--}}
-
-
-{{--                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">--}}
-{{--                                        <span aria-hidden="true">&times;</span>--}}
-{{--                                    </button>--}}
-{{--                                </div>--}}
-{{--                                <div class="modal-body">--}}
-{{--                                    <form class="container" action="{{route('submit-contact')}}" method="post">--}}
-{{--                                        @csrf--}}
-{{--                                        <div class="row justify-content-center">--}}
-{{--                                            <div class="col-10">--}}
-{{--                                                <label for="inputSubject">Asunto </label>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                        <div class="row justify-content-center">--}}
-{{--                                            <div class="col-10">--}}
-{{--                                                <input class="w-100" id="subject" type="text" class="@error('subject') is-invalid @enderror">--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                        <div class="row justify-content-center">--}}
-{{--                                            <div class="col-10">--}}
-{{--                                                <label for="inputSubject">Email </label>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                        <div class="row justify-content-center mb-2">--}}
-{{--                                            <div class="col-10">--}}
-{{--                                                <input class="w-100" id="email" type="text">--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                        <div class="row justify-content-center">--}}
-{{--                                            <div class="col-10">--}}
-{{--                                                <textarea class="form-control" name="" id="" class="w-100" rows="10"></textarea>--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                        <div class="modal-footer">--}}
-{{--                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>--}}
-{{--                                            <button type="submit" class="btn btn-primary">Enviar</button>--}}
-{{--                                        </div>--}}
-{{--                                    </form>--}}
-{{--                                </div>--}}
-
-
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-
-
-                    <!--end-modal-->
                     <button class="btn" type="button">
                         <a href="{{route('form-contact')}}">
                             <img src="{{asset('storage/icons/email-50.png')}}" alt="email">
@@ -150,17 +91,17 @@
                     </button>
                     <button class="btn" type="button">
                         <a href="https://wa.me/56951359547">
-                            <img src="http://localhost:8000/storage/icons/whatsapp-white-50.png" alt="whatsapp">
+                            <img src="{{asset('storage/icons/whatsapp-white-50.png')}}" alt="whatsapp">
                         </a>
                     </button>
                     <button class="btn" type="button">
                         <a href="https://cl.linkedin.com/in/daniel-alvarez-leal-260131b7">
-                            <img src="http://localhost:8000/storage/icons/linkedin-white-50.png" alt="linkedin">
+                            <img src="{{asset('storage/icons/linkedin-white-50.png')}}" alt="linkedin">
                         </a>
                     </button>
                     <button class="btn" type="button">
                         <a href="https://www.facebook.com/daniel.alvarezleal.3">
-                            <img src="http://localhost:8000/storage/icons/facebook-white-50.png" alt="facebook">
+                            <img src="{{asset('storage/icons/facebook-white-50.png')}}" alt="facebook">
                         </a>
                     </button>
                 </div>
