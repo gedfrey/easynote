@@ -4,3 +4,12 @@
     height: 10vh;
     object-fit: cover;
 }
+
+body {
+    min-height: 100vh;
+}
+
+.flex-grow {
+    flex: 1;
+}
+

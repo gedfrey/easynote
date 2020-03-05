@@ -16,9 +16,18 @@ class NewNotification extends Mailable
      *
      * @return void
      */
-    public function __construct()
+
+    public $email;
+    public $subject;
+    public $body;
+
+
+    public function __construct($email,$subject,$body)
     {
         //
+        $this->email = $email;
+        $this->subject = $subject;
+        $this->body = $body;
     }
 
     /**

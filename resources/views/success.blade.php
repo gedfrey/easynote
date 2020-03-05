@@ -1,13 +1,11 @@
-<!doctype html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Mensaje Enviado con exito</h1>
-</body>
-</html>
+@extends('layouts.container')
+@section('body')
+    <div class="container mt-4">
+        <h1 class="display-4 text-center mt-4">Mensaje enviado con exito</h1>
+        <div class="d-flex justify-content-center mt-5">
+            <a href="{{route('welcome')}}">
+                <button type="button" class="btn btn-secondary">Regresar</button>
+            </a>
+        </div>
+    </div>
+@endsection

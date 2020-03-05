@@ -13,7 +13,7 @@
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('welcome');
 
 Auth::routes();
 
@@ -52,5 +52,9 @@ Route::post('/post/contents/down','ContentsEditController@down')
     ->middleware('auth');
 
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+
+Route::get('/form-contact','NotificationController@view')->name('form-contact');
+
+Route::post('/submit','NotificationController@send')->name('submit-contact');
 
 
