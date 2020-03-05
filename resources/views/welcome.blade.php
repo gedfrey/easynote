@@ -97,9 +97,9 @@
             <h1 class="display-5 mb-4 mt-4 mr-2 text-center border border-top-0 border-right-0 border-left-0 border-dark">Tecnologias</h1>
         </div>
         <div class="container">
-            <div class="row align-items-center justify-content-center mb-3">
+            <div class="row align-items-center justify-content-center mb-0 mb-md-3">
 
-                <div class="col-4 d-flex">
+                <div class="col-12 col-md-4 d-flex mb-2 mb-md-0">
                     <div class="card flex-fill">
                         <img class="card-img-top" src="{{asset('storage/img/html.jpeg')}}" alt="Card image cap">
                         <div class="card-body">
@@ -111,7 +111,7 @@
 
                 </div>
 
-                <div class="col-4 d-flex">
+                <div class="col-12 col-md-4 d-flex mb-2 mb-md-0">
                     <div class="card flex-fill">
                         <img class="card-img-top img-fluid" src="{{asset('storage/img/css.jpeg')}}" alt="Card image cap">
                         <div class="card-body">
@@ -122,7 +122,7 @@
                     </div>
                 </div>
 
-                <div class="col-4 d-flex">
+                <div class="col-12 col-md-4 d-flex mb-2 mb-md-0">
                     <div class="card flex-fill">
                         <img class="card-img-top img-fluid" src="{{asset('storage/img/js.png')}}" alt="Card image cap">
                         <div class="card-body">
@@ -134,9 +134,9 @@
                 </div>
 
             </div>
-            <div class="row align-items-center justify-content-center mt-2 mb-3">
+            <div class="row align-items-center justify-content-center mt-0 mb-0 mt-md-2 mb-md-3">
 
-                <div class="col-3 d-flex">
+                <div class="col-12 col-md-3 d-flex mb-2 mb-md-0">
                     <div class="card flex-fill">
                         <img class="card-img-top" src="{{asset('storage/img/c-language.jpg')}}" alt="Card image cap">
                         <div class="card-body">
@@ -148,7 +148,7 @@
 
                 </div>
 
-                <div class="col-3 d-flex">
+                <div class="col-12 col-md-3 d-flex mb-2 mb-md-0">
                     <div class="card flex-fill">
                         <img class="card-img-top img-fluid" src="{{asset('storage/img/java.jpg')}}" alt="Card image cap">
                         <div class="card-body">
@@ -159,7 +159,7 @@
                     </div>
                 </div>
 
-                <div class="col-3 d-flex">
+                <div class="col-12 col-md-3 d-flex mb-2 mb-md-0">
                     <div class="card flex-fill">
                         <img class="card-img-top img-fluid" src="{{asset('storage/img/php-programing.jpg')}}" alt="Card image cap">
                         <div class="card-body">
@@ -170,7 +170,7 @@
                     </div>
                 </div>
 
-                <div class="col-3 d-flex">
+                <div class="col-12 col-md-3 d-flex mb-2 mb-md-0">
                     <div class="card flex-fill">
                         <img class="card-img-top img-fluid" src="{{asset('storage/img/python-programing.png')}}" alt="Card image cap">
                         <div class="card-body">
@@ -182,9 +182,9 @@
                 </div>
 
             </div>
-            <div class="row align-items-center justify-content-center mt-2 mb-3">
+            <div class="row align-items-center justify-content-center mt-0 mb-0 mt-md-2 mb-md-3">
 
-                <div class="col-3 d-flex">
+                <div class="col-12 col-md-3 d-flex mb-2 mb-md-0">
                     <div class="card flex-fill">
                         <img class="card-img-top" src="{{asset('storage/img/Laravel-logo.png')}}" alt="Card image cap">
                         <div class="card-body">
@@ -196,7 +196,7 @@
 
                 </div>
 
-                <div class="col-3 d-flex">
+                <div class="col-12 col-md-3 d-flex mb-2 mb-md-0">
                     <div class="card flex-fill">
                         <img class="card-img-top img-fluid" src="{{asset('storage/img/Vue-logo.svg')}}" alt="Card image cap">
                         <div class="card-body">
@@ -207,7 +207,7 @@
                     </div>
                 </div>
 
-                <div class="col-3 d-flex">
+                <div class="col-12 col-md-3 d-flex mb-2 mb-md-0">
                     <div class="card flex-fill">
                         <img class="card-img-top img-fluid" src="{{asset('storage/img/spring-boot.png')}}" alt="Card image cap">
                         <div class="card-body">
@@ -218,7 +218,7 @@
                     </div>
                 </div>
 
-                <div class="col-3 d-flex">
+                <div class="col-12 col-md-3 d-flex mb-2 mb-md-0">
                     <div class="card flex-fill">
                         <img class="card-img-top img-fluid" src="{{asset('storage/img/django.png')}}" alt="Card image cap">
                         <div class="card-body">
