@@ -83,7 +83,7 @@
             </div>
             <div class="card col-12 col-md-4 mb-2 mb-md-0">
                 <div class="card-body">
-                    <h5 class="card-title font-weight-bold">Ingenieria de ejecucíon informatica</h5>
+                    <h5 class="card-title font-weight-bold">Ingenieria de ejecucíon en informatica</h5>
                     <p class="lead">Universidad de Santiago de Chile</p>
                     <p class="lead">Inicio: 2017</p>
                     <p class="lead">Actualmente cursando el septimo semestre</p>

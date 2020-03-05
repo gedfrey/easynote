@@ -5,6 +5,7 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/layouts/container.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/layouts/container.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/views/welcome.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/welcome.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -219,7 +220,7 @@
       <workItem from="1583187541930" duration="5062000" />
       <workItem from="1583338711127" duration="9278000" />
       <workItem from="1583362848333" duration="16854000" />
-      <workItem from="1583419361253" duration="13056000" />
+      <workItem from="1583419361253" duration="15663000" />
     </task>
     <servers />
   </component>

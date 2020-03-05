@@ -51,7 +51,7 @@ Route::post('/post/contents/down','ContentsEditController@down')
     ->name('post.contents.down')
     ->middleware('auth');
 
-Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+//Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 
 Route::get('/form-contact','NotificationController@view')->name('form-contact');
 
