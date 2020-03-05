@@ -12,6 +12,10 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 
+    @section('head')
+
+    @endsection
+
 </head>
 <body id="app" class="d-flex flex-column">
 {{--<div id="app" class="d-flex flex-column">--}}

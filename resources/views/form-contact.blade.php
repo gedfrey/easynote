@@ -1,4 +1,15 @@
 @extends('layouts.container')
+
+@section('head')
+
+{{--    <script src="https://www.google.com/recaptcha/api.js?render=6LepAt8UAAAAAH5pRnRi3hR9L88DmSQQS67sXoeV"></script>--}}
+
+
+
+
+@endsection
+
+
 @section('body')
 
     <div class="container mt-5 mb-5">
@@ -44,6 +55,7 @@
                 </div>
                 @enderror
             </div>
+            <input type="hidden" name="recaptcha_response" id="recaptchaResponse">
             <div class="row justify-content-center">
                 <div class="col-10 d-flex justify-content-around">
                     <a href="{{route('welcome')}}">
@@ -57,5 +69,15 @@
 
     </div>
 
+    <script src='https://www.google.com/recaptcha/api.js?render=6LepAt8UAAAAAH5pRnRi3hR9L88DmSQQS67sXoeV'>
+    </script>
+    <script>
+        grecaptcha.ready(function() {
+            grecaptcha.execute('6LepAt8UAAAAAH5pRnRi3hR9L88DmSQQS67sXoeV', {action: 'formulario'})
+                .then(function(token) {
+                    var recaptchaResponse = document.getElementById('recaptchaResponse');
+                    recaptchaResponse.value = token;
+                });});
+    </script>
 
 @endsection
