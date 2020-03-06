@@ -19,37 +19,79 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::resource('posts','PostController')->middleware('auth');
+Route::middleware(['auth'])->group(function () {
 
-Route::resource('contents','ContentController')->middleware('auth');
+    Route::get('/approval', 'HomeController@approval')->name('approval');
 
-Route::resource('texts','TextController')->middleware('auth');
+    Route::middleware(['approved'])->group(function () {
 
-Route::resource('type-texts','TypeTextController');
+        Route::resource('posts','PostController');
+        Route::resource('contents','ContentController');
+        Route::resource('texts','TextController');
+        Route::resource('type-texts','TypeTextController');
+        Route::resource('images','ImageController');
 
-Route::resource('images','ImageController');
+        Route::get('/post/contents/{id}','ContentsEditController@edit')
+            ->name('post.contents.edit')
+            ->where('id','[0-9)]+');
 
-Route::get('/post/contents/{id}','ContentsEditController@edit')
-    ->name('post.contents.edit')
-    ->where('id','[0-9)]+')
-    ->middleware('auth');
+        Route::get('/post/contents/list/{id}','ContentsEditController@listById')
+            ->name('post.contents.getAllByID')
+            ->where('id','[0-9]+');
 
-Route::get('/post/contents/list/{id}','ContentsEditController@listById')
-    ->name('post.contents.getAllByID')
-    ->where('id','[0-9]+')
-    ->middleware('auth');
+        Route::get('/post/contents/order/{id}','ContentsEditController@getOrder')
+            ->name('post.contents.order')
+            ->where('id','[0-9]+');
 
-Route::get('/post/contents/order/{id}','ContentsEditController@getOrder')
-    ->name('post.contents.order')
-    ->where('id','[0-9]+');
+        Route::post('/post/contents/up','ContentsEditController@up')
+            ->name('post.contents.up')
+            ->middleware('auth');
 
-Route::post('/post/contents/up','ContentsEditController@up')
-    ->name('post.contents.up')
-    ->middleware('auth');
+        Route::post('/post/contents/down','ContentsEditController@down')
+            ->name('post.contents.down')
+            ->middleware('auth');
 
-Route::post('/post/contents/down','ContentsEditController@down')
-    ->name('post.contents.down')
-    ->middleware('auth');
+    });
+
+    Route::middleware(['admin'])->group(function () {
+        Route::get('/admin-register', 'UserController@index')->name('admin.users.index');
+        Route::get('/admin-register/approve/{user_id}', 'UserController@approve')->name('admin.users.approve');
+    });
+
+});
+
+
+//Route::resource('posts','PostController')->middleware('auth');
+//
+//Route::resource('contents','ContentController')->middleware('auth');
+//
+//Route::resource('texts','TextController')->middleware('auth');
+//
+//Route::resource('type-texts','TypeTextController');
+//
+//Route::resource('images','ImageController');
+
+//Route::get('/post/contents/{id}','ContentsEditController@edit')
+//    ->name('post.contents.edit')
+//    ->where('id','[0-9)]+')
+//    ->middleware('auth');
+//
+//Route::get('/post/contents/list/{id}','ContentsEditController@listById')
+//    ->name('post.contents.getAllByID')
+//    ->where('id','[0-9]+')
+//    ->middleware('auth');
+//
+//Route::get('/post/contents/order/{id}','ContentsEditController@getOrder')
+//    ->name('post.contents.order')
+//    ->where('id','[0-9]+');
+//
+//Route::post('/post/contents/up','ContentsEditController@up')
+//    ->name('post.contents.up')
+//    ->middleware('auth');
+//
+//Route::post('/post/contents/down','ContentsEditController@down')
+//    ->name('post.contents.down')
+//    ->middleware('auth');
 
 //Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 

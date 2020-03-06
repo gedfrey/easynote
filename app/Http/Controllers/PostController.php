@@ -15,7 +15,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = App\Post::all();
+        $posts = App\Post::where('user_id',Auth::id())->get();
         return view('home',compact('posts'));
     }
 
@@ -46,7 +46,7 @@ class PostController extends Controller
         $postCreate = new App\Post;
         $postCreate->title = $request->title;
         $postCreate->description = $request->description;
-        $postCreate->user_id =Auth::id();
+        $postCreate->user_id = Auth::id();
         $postCreate->save();
         $post = $postCreate;
         return view('post.details',compact('post'));
