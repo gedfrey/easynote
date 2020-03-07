@@ -40,23 +40,26 @@
                             <li class="nav-item text-light">
                                 <a class="nav-link text-light text-center text-sm-center text-md-left" href="{{route('welcome').'/#Tecnologias'}}">Tecnologías</a>
                             </li>
-                            <div class="dropdown dropleft text-center text-sm-center text-md-left">
-                                <button class="btn btn-dark dropdown-toggle text-light text-center text-sm-center text-md-left" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Blog
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    @if (Route::has('login'))
-                                        @auth
-                                            <a class="dropdown-item" href="#">ir al Blog</a>
-                                        @else
-                                            <a class="dropdown-item" href="#">Login</a>
-                                            @if (Route::has('register'))
-                                                <a class="dropdown-item" href="#">Registrar</a>
-                                            @endif
-                                        @endauth
-                                    @endif
-                                </div>
-                            </div>
+{{--                            <div class="dropdown dropleft text-center text-sm-center text-md-left">--}}
+{{--                                <button class="btn btn-dark dropdown-toggle text-light text-center text-sm-center text-md-left" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--}}
+{{--                                    Blog--}}
+{{--                                </button>--}}
+{{--                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">--}}
+{{--                                    @if (Route::has('login'))--}}
+{{--                                        @auth--}}
+{{--                                            <a class="dropdown-item" href="#">ir al Blog</a>--}}
+{{--                                        @else--}}
+{{--                                            <a class="dropdown-item" href="#">Login</a>--}}
+{{--                                            @if (Route::has('register'))--}}
+{{--                                                <a class="dropdown-item" href="#">Registrar</a>--}}
+{{--                                            @endif--}}
+{{--                                        @endauth--}}
+{{--                                    @endif--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+                            <li class="nav-item">
+                                <a class="nav-link text-light text-center text-sm-center text-md-left" href="{{route('home')}}">Blog</a>
+                            </li>
                         </ul>
                     </div>
                 </nav>
