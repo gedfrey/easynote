@@ -69,11 +69,11 @@
 
     </div>
 
-    <script src='https://www.google.com/recaptcha/api.js?render=6LepAt8UAAAAAH5pRnRi3hR9L88DmSQQS67sXoeV'>
+    <script src='https://www.google.com/recaptcha/api.js?render=6Lfybd8UAAAAAKwexbjO3fDqV0gIiZLjp6I64BT-'>
     </script>
     <script>
         grecaptcha.ready(function() {
-            grecaptcha.execute('6LepAt8UAAAAAH5pRnRi3hR9L88DmSQQS67sXoeV', {action: 'formulario'})
+            grecaptcha.execute('6Lfybd8UAAAAAKwexbjO3fDqV0gIiZLjp6I64BT-', {action: 'formulario'})
                 .then(function(token) {
                     var recaptchaResponse = document.getElementById('recaptchaResponse');
                     recaptchaResponse.value = token;
