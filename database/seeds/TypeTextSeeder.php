@@ -12,18 +12,23 @@ class TypeTextSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('type__texts')->insert([
-            'name' => 'title',
-            'created_at' => date("Y-m-d H:i:s")
-        ]);
+//        DB::table('type__texts')->insert([
+//            'name' => 'title',
+//            'created_at' => date("Y-m-d H:i:s")
+//        ]);
+//
+//        DB::table('type__texts')->insert([
+//           'name' => 'body_text',
+//            'created_at' => date("Y-m-d H:i:s")
+//        ]);
 
-        DB::table('type__texts')->insert([
-           'name' => 'body_text',
+        DB::table('types')->insert([
+            'name' => 'text',
             'created_at' => date("Y-m-d H:i:s")
         ]);
 
         DB::table('types')->insert([
-            'name' => 'text',
+            'name' => 'title',
             'created_at' => date("Y-m-d H:i:s")
         ]);
 
@@ -37,9 +42,5 @@ class TypeTextSeeder extends Seeder
             'created_at' => date("Y-m-d H:i:s")
         ]);
 
-        DB::table('types')->insert([
-            'name' => 'property',
-            'created_at' => date("Y-m-d H:i:s")
-        ]);
     }
 }

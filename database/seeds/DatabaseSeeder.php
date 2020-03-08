@@ -14,5 +14,8 @@ class DatabaseSeeder extends Seeder
         // $this->call(UsersTableSeeder::class);
         $this->call('TypeTextSeeder');
         $this->call('AdminSeeder');
+        $this->call('ColorSeeder');
+        $this->call('AlignSeeder');
+        $this->call('SizeSeeder');
     }
 }
