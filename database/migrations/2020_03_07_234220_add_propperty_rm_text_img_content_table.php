@@ -20,6 +20,7 @@ class AddProppertyRmTextImgContentTable extends Migration
             $table->dropColumn('image_id');
             $table->dropForeign('contents_text_id_foreign');
             $table->dropColumn('text_id');
+            $table->text('value');
         });
     }
 

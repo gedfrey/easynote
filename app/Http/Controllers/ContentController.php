@@ -38,13 +38,61 @@ class ContentController extends Controller
     {
         $newContent = new App\Content;
         $newContent->order = $request->order;
+        $newContent->value = $request->value;
         $newContent->post_id = $request->post_id;
         $newContent->type_id = $request->type_id;
-        $newContent->text_id = $request->text_id;
-        $newContent->image_id = $request->image_id;
+        $newContent->property_id = $request->property_id;
         $newContent->save();
 
         return $newContent;
+    }
+
+    public function create_content($content,$property_id)
+    {
+        $newContent = new App\Content;
+        $newContent->order = $content->order;
+        $newContent->value = $content->value;
+        $newContent->post_id = $content->post_id;
+        $newContent->type_id = $content->type_id;
+        $newContent->property_id = $property_id;
+        $newContent->save();
+
+        return $newContent;
+    }
+
+    public function createContent($content)
+    {
+//        $request->validate([
+//            'order' => 'required',
+//            'post_id' => 'required|exists:posts',
+//            'type_id' => 'required|exists:types',
+//            'property' => 'required|array',
+//            'value' => 'required|min:10'
+//        ]);
+
+        $properties = new PropertyController();
+        $property = $properties->store($content->property);
+
+        $content = $this->create_content($content,$property->id);
+        return $content;
+
+    }
+
+    public function createContents(Request $request)
+    {
+        $request->validate([
+            'contents.*.order' => 'required',
+            'contents.*.post_id' => 'required|exists:posts',
+            'contents.*.type_id' => 'required|exists:types',
+            'contents.*.value' => 'required|min:10'
+        ]);
+
+        foreach ($request->contents as $content)
+        {
+            $this->createContent($content);
+        }
+
+        return true;
     }
 
     /**

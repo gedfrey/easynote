@@ -27,9 +27,21 @@ Route::middleware(['auth'])->group(function () {
 
         Route::resource('posts','PostController');
         Route::resource('contents','ContentController');
-        Route::resource('texts','TextController');
-        Route::resource('type-texts','TypeTextController');
-        Route::resource('images','ImageController');
+//        Route::resource('texts','TextController');
+//        Route::resource('type-texts','TypeTextController');
+//        Route::resource('images','ImageController');
+
+        Route::get('types','TypeController@index')
+            ->name('types');
+
+        Route::get('colors','ColorController@index')
+            ->name('colors');
+
+        Route::get('sizes','SizeController@index')
+            ->name('sizes');
+
+        Route::get('aligns','AlignController@index')
+            ->name('aligns');
 
         Route::get('/post/contents/{id}','ContentsEditController@edit')
             ->name('post.contents.edit')

@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="container-fluid" id="app">
-        <content-edit :post_id="{{json_encode($id)}}"></content-edit>
+        <post-edit :post_id="{{json_encode($id)}}" v-bind:url_path="{{json_encode(asset('/storage'))}}"></post-edit>
     </div>
 
 @endsection
