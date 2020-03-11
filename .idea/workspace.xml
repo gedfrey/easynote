@@ -2,19 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4dd288a1-2288-4000-a76c-a02e0a8ac5fe" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/resources/js/components/EditPostComponent.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/components/FormComponent.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/resources/js/components/ListContentsComponent.vue" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/resources/views/contents/success.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ContentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ContentController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/migrations/2020_03_07_234220_add_propperty_rm_text_img_content_table.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/migrations/2020_03_07_234220_add_propperty_rm_text_img_content_table.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/PropertyController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/PropertyController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/contents/edit.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/contents/edit.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/EditPostComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/EditPostComponent.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/FormComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/FormComponent.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/ListContentsComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/ListContentsComponent.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webpack.mix.js" beforeDir="false" afterPath="$PROJECT_DIR$/webpack.mix.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -235,7 +231,9 @@
       <workItem from="1583681369486" duration="42528000" />
       <workItem from="1583787036876" duration="1010000" />
       <workItem from="1583798297149" duration="4148000" />
-      <workItem from="1583804254266" duration="7071000" />
+      <workItem from="1583804254266" duration="7439000" />
+      <workItem from="1583878100890" duration="11545000" />
+      <workItem from="1583968211053" duration="2117000" />
     </task>
     <servers />
   </component>
@@ -275,13 +273,13 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state width="1807" height="278" key="GridCell.Tab.0.right/67.27.1853.1053/1920.0.1920.1080@67.27.1853.1053" timestamp="1583634802561" />
-    <state x="574" y="340" key="com.intellij.ide.util.TipDialog" timestamp="1583804254309">
+    <state x="574" y="340" key="com.intellij.ide.util.TipDialog" timestamp="1583968224525">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="280" y="263" key="com.intellij.ide.util.TipDialog/1024.0.1920.1080/0.35.1024.768@0.35.1024.768" timestamp="1581534349988" />
     <state x="1549" y="321" key="com.intellij.ide.util.TipDialog/1024.0.1920.1080/0.35.1024.768@1024.0.1920.1080" timestamp="1582660553691" />
     <state x="2445" y="321" key="com.intellij.ide.util.TipDialog/67.27.1853.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1583363832675" />
-    <state x="574" y="340" key="com.intellij.ide.util.TipDialog/67.27.1853.1053/1920.0.1920.1080@67.27.1853.1053" timestamp="1583804254309" />
+    <state x="574" y="340" key="com.intellij.ide.util.TipDialog/67.27.1853.1053/1920.0.1920.1080@67.27.1853.1053" timestamp="1583968224525" />
     <state x="573" y="345" key="com.intellij.ide.util.TipDialog/67.34.1853.1046@67.34.1853.1046" timestamp="1577711372184" />
     <state x="575" y="340" key="com.intellij.ide.util.TipDialog/70.27.1850.1053/1920.0.1024.768@70.27.1850.1053" timestamp="1579742621961" />
   </component>

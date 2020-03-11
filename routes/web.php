@@ -55,13 +55,19 @@ Route::middleware(['auth'])->group(function () {
             ->name('post.contents.order')
             ->where('id','[0-9]+');
 
-        Route::post('/post/contents/up','ContentsEditController@up')
-            ->name('post.contents.up')
-            ->middleware('auth');
+//        Route::post('/post/contents/up','ContentsEditController@up')
+//            ->name('post.contents.up')
+//            ->middleware('auth');
+//
+//        Route::post('/post/contents/down','ContentsEditController@down')
+//            ->name('post.contents.down')
+//            ->middleware('auth');
 
-        Route::post('/post/contents/down','ContentsEditController@down')
-            ->name('post.contents.down')
-            ->middleware('auth');
+        Route::post('/publish','ContentController@createContents');
+
+        Route::get('/publish/success/{post_id}','ContentController@success')
+            ->name('publish.success')
+            ->where('post_id','[0-9]');
 
     });
 
@@ -105,7 +111,7 @@ Route::middleware(['auth'])->group(function () {
 //    ->name('post.contents.down')
 //    ->middleware('auth');
 
-//Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 
 Route::get('/form-contact','NotificationController@view')->name('form-contact');
 

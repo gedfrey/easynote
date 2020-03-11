@@ -34,12 +34,12 @@ class PropertyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store($color)
+    public function store($prop)
     {
         $property = new App\Property;
-        $property->color_id = $color->color_id;
-        $property->size_id = $color->size_id;
-        $property->align_id = $color->align_id;
+        $property->color_id = $prop['color_id'];
+        $property->size_id = $prop['size_id'];
+        $property->align_id = $prop['align_id'];
         $property->save();
 
         return $property;

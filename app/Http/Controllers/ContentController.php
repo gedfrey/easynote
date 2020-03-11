@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App;
+use Illuminate\Support\Facades\Validator;
+
 
 class ContentController extends Controller
 {
@@ -50,10 +52,10 @@ class ContentController extends Controller
     public function create_content($content,$property_id)
     {
         $newContent = new App\Content;
-        $newContent->order = $content->order;
-        $newContent->value = $content->value;
-        $newContent->post_id = $content->post_id;
-        $newContent->type_id = $content->type_id;
+        $newContent->order = $content['order'];
+        $newContent->value = $content['value'];
+        $newContent->post_id = $content['post_id'];
+        $newContent->type_id = $content['type_id'];
         $newContent->property_id = $property_id;
         $newContent->save();
 
@@ -71,7 +73,7 @@ class ContentController extends Controller
 //        ]);
 
         $properties = new PropertyController();
-        $property = $properties->store($content->property);
+        $property = $properties->store($content['property']);
 
         $content = $this->create_content($content,$property->id);
         return $content;
@@ -80,19 +82,29 @@ class ContentController extends Controller
 
     public function createContents(Request $request)
     {
-        $request->validate([
+
+        $validator = Validator::make($request->all(), [
+            'contents' => 'required|array',
             'contents.*.order' => 'required',
-            'contents.*.post_id' => 'required|exists:posts',
-            'contents.*.type_id' => 'required|exists:types',
-            'contents.*.value' => 'required|min:10'
+            'contents.*.post_id' => 'required|exists:posts,id',
+            'contents.*.type_id' => 'required|exists:types,id',
+            'contents.*.value' => 'required|min:4'
         ]);
 
+        if($validator->fails()){
+            return response()->json(['error'=>$validator->errors()->all()]);
+
+        }
+
+//        return 'hola mundo';
+//        return $request->contents[0]['property'];
+//
         foreach ($request->contents as $content)
         {
             $this->createContent($content);
         }
 
-        return true;
+        return 'Creado Correctamente';
     }
 
     /**
@@ -141,5 +153,10 @@ class ContentController extends Controller
         $content = App\Content::findOrFail($id);
         $content->delete();
         return $id;
+    }
+
+    public function success($post_id)
+    {
+        return view('contents.success',compact($post_id));
     }
 }

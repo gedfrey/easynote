@@ -222,9 +222,9 @@ export default {
                         return element.name === value
                     }).id,
                     property: {
-                        align: this.property.align,
-                        color: this.property.color,
-                        size: this.property.size
+                        align_id: this.aligns.find(element => element.value === this.property.align).id,
+                        color_id: this.colors.find(element => element.value === this.property.color).id,
+                        size_id: this.sizes.find( element => element.value === this.property.size).id
                     }
                 })
                 this.$emit('alert','agregado con exito','alert-success')
@@ -246,9 +246,9 @@ export default {
                         return element.name === value
                     }).id,
                     property: {
-                        align: this.property.align,
-                        color: this.property.color,
-                        size: this.property.size
+                        align_id: this.aligns.find(element => element.value === this.property.align).id,
+                        color_id: this.colors.find(element => element.value === this.property.color).id,
+                        size_id: this.sizes.find( element => element.value === this.property.size).id
                     }
                 })
                 this.$emit('alert','actualizado con exito','alert-success')

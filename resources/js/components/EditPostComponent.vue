@@ -6,21 +6,23 @@
 <!--            left-->
 
             <div class="col-12 col-md-2">
-                <div class="container">
+                <div class="container d-flex flex-column justify-content-center align-items-center">
                     <div v-if="alert.status" :class="['alert', alert.type,'mt-0','mt-md-2']" role="alert">
                         {{alert.message}}
                     </div>
 
-                    <div class="dropdown mb-2 col-3 col-md-12">
-                        <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button class="btn btn-primary mb-5" @click="publish">Publicar</button>
+
+                    <div class="dropdown mb-2 ">
+                        <button class="btn btn-light dropdown-toggle border" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <img :src="url_path+'/icons/texts-40.png'" alt="text">
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenu1">
                             <button class="dropdown-item" v-for="(type,index) of type_texts" :key="type.index"  @click="activeForm(type)" type="button">{{typeText(type)}}</button>
                         </div>
                     </div>
-                    <div class="dropdown mb-2 col-3 col-md-12">
-                        <button class="btn  dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <div class="dropdown mb-2">
+                        <button class="btn  dropdown-toggle border" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <img :src="url_path+'/icons/files-40.png'" alt="imagen" class="text-light">
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
@@ -48,22 +50,22 @@
             <div class="col-12 col-md-2">
                 <div class="row">
                     <div class="col-3 col-sm-2 col-md-12">
-                        <button class="btn btn-light mb-2" @click="move('up')">
+                        <button class="btn btn-light mb-2 border" @click="move('up')">
                             <img :src="url_path+'/icons/up-40.png'" alt="Arriba">
                         </button>
                     </div>
                     <div class="col-3 col-sm-2 col-md-12">
-                        <button class="btn btn-light mb-2" @click="move('down')">
+                        <button class="btn btn-light mb-2 border" @click="move('down')">
                             <img :src="url_path+'/icons/down-40.png'" alt="Abajo">
                         </button>
                     </div>
                     <div class="col-3 col-sm-2 col-md-12">
-                        <button class="btn btn-warning mb-2" @click="editContent()">
+                        <button class="btn btn-warning border mb-2" @click="editContent()">
                             <img :src="url_path+'/icons/edit-40.png'" alt="Editar">
                         </button>
                     </div>
-                    <div class="col-3 col-sm-2 col-md-12">
-                        <button @click="deleteContent" class="btn btn-danger">
+                    <div class="col-3 col-sm-2  col-md-12">
+                        <button @click="deleteContent" class="btn btn-danger border">
                             <img :src="url_path+'/icons/delete-40.png'" alt="Delete">
                         </button>
                     </div>
@@ -145,6 +147,24 @@ export default {
                 this.types = element.data
             })
         },
+        publish(){
+            let contents = this.$store.getters.getContents
+            contents.forEach((element, index) => {
+                element.order = index
+                element.post_id = this.post_id
+            })
+            contents = {
+                contents : contents
+            }
+            console.log(contents)
+            axios.post('/publish',contents).then( (res) => {
+                console.log(res)
+                console.log('vamos a redireccionar')
+                this.$router.push({path: `/publish/success/${post_id}`})
+            }).catch( (error) => {
+                console.log(error.response)
+            })
+        }
 
 
     },
