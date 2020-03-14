@@ -8,7 +8,7 @@
                     <p :class="[align(content.property.align_id),size_title(content.property.size_id)]">{{content.value}}</p>
                 </div>
                 <div class="container" v-if="types.find(function(element) {return element.id === content.type_id}).name === 'text'">
-                    <p :class="[align(1)]">{{content.value}}</p>
+                    <p :class="[align(content.property.align_id)]">{{content.value}}</p>
                 </div>
             </div>
         </div>

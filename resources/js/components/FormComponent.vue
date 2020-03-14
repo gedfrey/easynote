@@ -3,10 +3,15 @@
         <h1 class="card-header">{{update}} {{title}}</h1>
         <div class="card-body">
             <form v-on:submit.prevent="onSubmitText" v-if="(form.value === 'title' || form.value === 'text') && !form.update">
-                <div class="form-group">
+                <div class="form-group" v-if="form.value === 'title'">
                     <label for="inputTitle">{{title}}</label>
                     <input type="text" class="form-control" v-model="content.value">
                 </div>
+                <div class="form-group" v-if="form.value === 'text'">
+                    <label for="inputTitle">{{title}}</label>
+                    <textarea name="" id="" type="text" class="form-control" v-model="content.value" cols="30" rows="10"></textarea>
+                </div>
+                {{content.value}}
                 <div class="form group" v-if="form.value === 'title'">
                     <label for="size">Tamaño</label>
                     <select name="" id="" class="form-control" v-model="property.size">
@@ -28,9 +33,13 @@
                 <button class="btn btn-primary" type="submit">Enviar</button>
             </form>
             <form v-on:submit.prevent="onSubmitUpdateText" v-if="(form.value === 'title' || form.value === 'text') && form.update">
-                <div class="form-group">
+                <div class="form-group" v-if="form.value === 'title'">
                     <label for="inputTitle">{{title}}</label>
                     <input type="text" class="form-control" v-model="content.value">
+                </div>
+                <div class="form-group" v-if="form.value === 'text'">
+                    <label for="inputTitle">{{title}}</label>
+                    <textarea name="" id="" type="text" class="form-control" v-model="content.value" cols="30" rows="10"></textarea>
                 </div>
                 <div class="form group" v-if="form.value === 'title'">
                     <label for="size">Tamaño</label>
@@ -190,7 +199,7 @@ export default {
 
         },
         valideText(){
-            if(this.content.value.length <= 4 || this.content.value.length >= 250){
+            if(this.content.value.length <= 4 || this.content.value.length >= 1000){
                 this.errors.push({
                     type: 'value',
                     message: 'Se exedio el tamaño maximo'
