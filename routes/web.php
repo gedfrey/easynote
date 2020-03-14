@@ -89,6 +89,7 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['admin'])->group(function () {
         Route::get('/admin-register', 'UserController@index')->name('admin.users.index');
         Route::get('/admin-register/approve/{user_id}', 'UserController@approve')->name('admin.users.approve');
+        Route::get('/admin-register/dissapprove/{user_id}', 'UserController@dissApprove')->name('admin.users.dissapprove');
     });
 
 });

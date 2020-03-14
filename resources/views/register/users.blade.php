@@ -13,6 +13,8 @@
                 <th scope="col">#</th>
                 <th scope="col">Name</th>
                 <th scope="col">Email</th>
+                <th scope="col">Estado</th>
+                <th scope="col">Acción</th>
             </tr>
             </thead>
             <tbody>
@@ -22,6 +24,19 @@
                     <td>{{$user->id}}</td>
                     <td>{{$user->name}}</td>
                     <td>{{$user->email}}</td>
+                    @if(!is_null($user->approved_at))
+                        <td>Activo</td>
+                    @else
+                        <td>Inactivo</td>
+                    @endif
+                    <td>
+                        <a href="{{route('admin.users.approve',$user->id)}}">
+                            <button type="button" class="btn btn-primary">A</button>
+                        </a>
+                        <a href="{{route('admin.users.dissapprove',$user->id)}}">
+                            <button type="button" class="btn btn-danger">D</button>
+                        </a>
+                    </td>
                 </tr>
             @endforeach
             </tbody>
