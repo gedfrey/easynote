@@ -32,7 +32,7 @@
                     <label for="inputTitle">{{title}}</label>
                     <input type="text" class="form-control" v-model="content.value">
                 </div>
-                <div class="form group" v-if="form.value === 'title-update'">
+                <div class="form group" v-if="form.value === 'title'">
                     <label for="size">Tamaño</label>
                     <select name="" id="" class="form-control" v-model="property.size">
                         <option v-for="(size, index) in sizes" :key="index" :value="size.value">{{sizef(size.value)}}</option>
@@ -118,9 +118,9 @@ export default {
             if(this.form.update){
                 let content = this.$store.getters.getContent
                 this.content.value = content.value
-                this.property.align = content.property.align
-                this.property.size = content.property.size
-                this.property.color = content.property.color
+                this.property.align = this.aligns.find( element => element.id === content.property.align_id).value
+                this.property.size = this.sizes.find( element => element.id === content.property.size_id).value
+                this.property.color = this.colors.find( element => element.id === content.property.color_id).value
             }
         },
         getTypes(){
@@ -217,7 +217,8 @@ export default {
                 let value = this.form.value
                 this.addContent({
                     value: this.content.value,
-                    order: this.$store.getters.getOrder,
+                    // order: this.$store.getters.getOrder,
+                    order: 0,
                     type_id: this.types.find( function(element){
                         return element.name === value
                     }).id,

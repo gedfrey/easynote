@@ -155,8 +155,87 @@ class ContentController extends Controller
         return $id;
     }
 
+    public function destroyList(Request $request)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'contents' => 'required|array',
+            'contents.*.id' => 'required|exists:contents,id'
+        ]);
+
+        if($validator->fails()){
+//            return response('error',404)->json(['error'=>$validator->errors()->all()]);
+            return response('error validation',404);
+
+        }
+//
+//        return $request->contents[0]['id'];
+
+        foreach ($request->contents as $content)
+        {
+
+            $this->destroy($content['id']);
+        }
+        return response('Eliminados',200);
+    }
+
     public function success($post_id)
     {
-        return view('contents.success',compact($post_id));
+//        dd($post_id);
+        return view('contents.success',compact('post_id'));
+    }
+
+    public function getContents($post_id)
+    {
+        return App\Content::with('property')->where('post_id',$post_id)->get();
+    }
+
+    public function getContentsProperty($post_id)
+    {
+        $contents = $this->getContents($post_id);
+
+        foreach ($contents as $content){
+            if(isset($content['property']['size_id'])){
+                if($content['property']['size_id'] == 1){
+                    $content['property']['size_id'] = "display-1";
+                }else if($content['property']['size_id'] == 2){
+                    $content['property']['size_id'] = "display-2";
+                }else if($content['property']['size_id'] == 3){
+                    $content['property']['size_id'] = "display-4";
+                }else {
+                    $content['property']['size_id'] = "display-4";
+                }
+            }
+
+            if(isset($content['property']['align_id'])){
+                if($content['property']['align_id'] == 1){
+                    $content['property']['align_id'] = "text-center";
+                }else if($content['property']['align_id'] == 2){
+                    $content['property']['align_id'] = "text-left";
+                }else if($content['property']['align_id'] == 3){
+                    $content['property']['align_id'] = "text-right";
+                }else if($content['property']['align_id'] == 4){
+                    $content['property']['align_id'] = "text-justify";
+                }else {
+                    $content['property']['align_id'] = "text-left";
+                }
+            }
+
+            if(isset($content['property']['color_id'])){
+                if($content['property']['color_id'] == 1){
+                    $content['property']['color_id'] = "red";
+                }else if($content['property']['color_id'] == 2){
+                    $content['property']['color_id'] = "black";
+                }else if($content['property']['color_id'] == 3){
+                    $content['property']['color_id'] = "blue";
+                }else {
+                    $content['property']['color_id'] = "black";
+                }
+            }
+
+        }
+
+        return $contents;
+
     }
 }

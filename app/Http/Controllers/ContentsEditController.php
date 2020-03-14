@@ -12,6 +12,10 @@ class ContentsEditController extends Controller
         return view('contents.edit',compact('id'));
     }
 
+    public function create($id){
+        return view('contents.create',compact('id'));
+    }
+
     public function listById($id){
         $contents = App\Content::where('post_id',$id)
             ->orderBy('order','asc')

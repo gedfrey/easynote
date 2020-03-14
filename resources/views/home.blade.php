@@ -16,7 +16,12 @@
 
                     <div class="card-body">
                         <p class="card-text">{{$post->description}}</p>
-                        <a href="{{route('posts.show',$post->id)}}" class="btn btn-primary">ir al post</a>
+
+                        @if($edit)
+                        <a href="{{route('posts.show',$post->id)}}" class="btn btn-primary">editar post</a>
+                        @else
+                        <a href="{{route('post.view',$post->id)}}" class="btn btn-primary">ir al post</a>
+                        @endif
                     </div>
                 </div>
             </div>

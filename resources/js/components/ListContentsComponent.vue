@@ -8,7 +8,7 @@
                     <p :class="[align(content.property.align_id),size_title(content.property.size_id)]">{{content.value}}</p>
                 </div>
                 <div class="container" v-if="types.find(function(element) {return element.id === content.type_id}).name === 'text'">
-                    <p :class="[align(content.property.align)]">{{content.value}}</p>
+                    <p :class="[align(1)]">{{content.value}}</p>
                 </div>
             </div>
         </div>
@@ -32,6 +32,9 @@ export default {
            'addSelected'
         ]),
         align: function(value){
+            console.log(this.contents)
+            console.log(value)
+            console.log(this.aligns)
             let align = this.aligns.find(element => element.id === value).value
             console.log('revisando alinamiento')
             console.log(align)

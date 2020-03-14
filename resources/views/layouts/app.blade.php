@@ -56,6 +56,10 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    @if( Auth::user()->admin)
+                                        <a href="{{route('admin.users.index')}}" class="dropdown-item">Usuarios</a>
+                                        <div class="dropdown-divider"></div>
+                                    @endif
                                     <a class="dropdown-item" href="{{route('posts.index')}}">Mis Post</a>
                                     <a class="dropdown-item" href="{{route('posts.create')}}">Crear Post</a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"

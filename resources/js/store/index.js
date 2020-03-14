@@ -8,6 +8,7 @@ export default {
             return state.contents
         },
         getOrder: (state) => {
+            console.log('getOrder')
             return state.contents.length
         },
         getContent: (state)  => {
@@ -22,21 +23,27 @@ export default {
         addSelected(state,index){
             if(state.selected != undefined){
                 state.contents[state.selected].selected = false
+                // Vue.set(state.contents[state.selected],'selected',false)
             }
             state.selected = index
             Vue.set(state.contents[index],'selected',true)
         },
         updateContent(state,content){
-            state.contents[state.selected].property.align = content.property.align
-            state.contents[state.selected].property.size = content.property.size
-            state.contents[state.selected].property.color = content.property.color
+            console.log(content)
+            state.contents[state.selected].property.align_id = content.property.align_id
+            state.contents[state.selected].property.size_id = content.property.size_id
+            state.contents[state.selected].property.color_id = content.property.color_id
             state.contents[state.selected].value = content.value
             state.contents[state.selected].type_id = content.type_id
+            console.log(state.contents[state.selected])
         },
         deleteContent(state){
             let index = state.selected
             state.selected = undefined
             state.contents.splice(index,1)
+        },
+        uploadContent(state,contents){
+            state.contents = contents
         }
     },
     actions:{
@@ -49,11 +56,12 @@ export default {
                     let content = {
                         value: state.contents[index].value,
                         type_id: state.contents[index].type_id,
-                        property: {
-                            align: state.contents[index].property.align,
-                            size: state.contents[index].property.size,
-                            color: state.contents[index].property.color
-                        }
+                        // property: {
+                        //     align: state.contents[index].property.align,
+                        //     size: state.contents[index].property.size,
+                        //     color: state.contents[index].property.color
+                        // }
+                        property: state.contents[index].property
                     }
                     console.log(state.contents)
                     console.log(content)
@@ -69,11 +77,12 @@ export default {
                     let content = {
                         value: state.contents[index].value,
                         type_id: state.contents[index].type_id,
-                        property: {
-                            align: state.contents[index].property.align,
-                            size: state.contents[index].property.size,
-                            color: state.contents[index].property.color
-                        }
+                        // property: {
+                        //     align: state.contents[index].property.align,
+                        //     size: state.contents[index].property.size,
+                        //     color: state.contents[index].property.color
+                        // }
+                        property: state.contents[index].property
                     }
                     commit('deleteContent')
                     state.contents.splice(index-1,0,content)

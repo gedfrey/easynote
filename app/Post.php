@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
-    public function content()
+    public function contents()
     {
         return $this->hasMany(Content::class);
     }

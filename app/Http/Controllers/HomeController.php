@@ -24,8 +24,8 @@ class HomeController extends Controller
      */
     public function index()
     {   $posts = App\Post::all();
-
-        return view('home',compact('posts'));
+        $edit = false;
+        return view('home',compact('posts','edit'));
     }
 
     public function approval()

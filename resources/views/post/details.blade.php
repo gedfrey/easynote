@@ -26,9 +26,10 @@
                     Contenido del Post
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title">Special title treatment</h5>
-                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                    <a href="{{route('post.contents.edit',$post->id)}}" class="btn btn-warning">Modificar</a>
+{{--                    <h5 class="card-title">Special title treatment</h5>--}}
+{{--                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>--}}
+                    @include('post.components.view')
+                    <a href="{{route('post.contents.edit',$post->id)}}" class="btn btn-warning mt-2">Modificar</a>
                 </div>
             </div>
         </div>

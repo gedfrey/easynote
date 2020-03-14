@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\CheckContentsPost;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -63,6 +64,7 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'approved' => \App\Http\Middleware\CheckApproved::class,
         'admin' => \App\Http\Middleware\CheckAdmin::class,
+        'checkContents' => \App\Http\Middleware\CheckContentsPost::class,
     ];
 
     /**

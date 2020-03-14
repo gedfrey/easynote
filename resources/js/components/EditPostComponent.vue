@@ -11,7 +11,9 @@
                         {{alert.message}}
                     </div>
 
-                    <button class="btn btn-primary mb-5" @click="publish">Publicar</button>
+                    <button class="btn btn-primary mb-5" v-if="!post_update" @click="publish">Publicar</button>
+
+                    <button class="btn btn-primary mb-5" v-if="post_update" @click="updatePublish">Actualizar</button>
 
                     <div class="dropdown mb-2 ">
                         <button class="btn btn-light dropdown-toggle border" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -101,7 +103,7 @@ export default {
             types: []
         }
     },
-    props: ['post_id','url_path'],
+    props: ['post_id','url_path','post_update'],
     computed: {
         ...mapGetters([
             'getContents'
@@ -109,9 +111,8 @@ export default {
     },
     methods: {
         ...mapMutations([
-            // 'move',
             'deleteContent',
-            // 'updateContent'
+            'uploadContent'
         ]),
         ...mapActions([
            'move'
@@ -147,29 +148,81 @@ export default {
                 this.types = element.data
             })
         },
-        publish(){
-            let contents = this.$store.getters.getContents
+        async getContentsByDB(){
+            let url = '/post/contents/properties/'+this.post_id
+            // axios.get(url).then( (res) => {
+            //     return res.data
+            // }).catch( (error) => {
+            //     console.log('error no hay data')
+            // })
+            return await axios.get(url)
+        },
+        async destroyContentsDB(contents){
+              // axios.post('/post/contents/destroy',{
+              //     contents : contents
+              // }).then( (res) => {
+              //     console.log('res from destroy contents')
+              //     console.log(res)
+              //     return true;
+              // }).catch( (error) => {
+              //     console.log('error from destroy contents')
+              //     console.log(error.response)
+              //     return false;
+              // })
+            return await axios.post('/posts/contents/destroy',{
+                contents: contents
+            })
+        },
+        async saveContentsDB(contents){
             contents.forEach((element, index) => {
                 element.order = index
                 element.post_id = this.post_id
             })
-            contents = {
-                contents : contents
+            let payload = {
+                contents: contents
             }
+            return await axios.post('/publish',payload)
+                // .then( (res) => {
+            //     return res.status;
+            // }).catch( (error) => {
+            //     return error.response.status;
+            // })
+        },
+        async loadContents(update){
+            if(update){
+                let contents = await this.getContentsByDB()
+                if(contents != undefined){
+                    this.uploadContent(contents.data)
+                }
+            }
+        },
+        async publish(){
+            let contents = this.$store.getters.getContents
+            let res = await this.saveContentsDB(contents)
+            console.log(res)
+            if(res){
+                let url = '/publish/success/'+this.post_id
+                window.location.pathname = url
+            }else{
+                this.alertActive('No existe contenido anterior','alert-danger')
+            }
+        },
+        async updatePublish(){
+            let contentsDB = await this.getContentsByDB();
+            let contents = this.$store.getters.getContents
+            console.log('contenidos')
             console.log(contents)
-            axios.post('/publish',contents).then( (res) => {
-                console.log(res)
-                console.log('vamos a redireccionar')
-                this.$router.push({path: `/publish/success/${post_id}`})
-            }).catch( (error) => {
-                console.log(error.response)
-            })
+            await this.saveContentsDB(contents);
+            await this.destroyContentsDB(contentsDB.data)
+            this.alertActive('Contenido Actualizado','alert-success')
+
         }
 
 
     },
     mounted() {
         this.types = this.getTypes()
+        this.loadContents(this.post_update)
     }
 }
 </script>

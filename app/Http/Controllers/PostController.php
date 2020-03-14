@@ -16,7 +16,8 @@ class PostController extends Controller
     public function index()
     {
         $posts = App\Post::where('user_id',Auth::id())->get();
-        return view('home',compact('posts'));
+        $edit = true;
+        return view('home',compact('posts','edit'));
     }
 
     /**
@@ -48,8 +49,10 @@ class PostController extends Controller
         $postCreate->description = $request->description;
         $postCreate->user_id = Auth::id();
         $postCreate->save();
-        $post = $postCreate;
-        return view('post.details',compact('post'));
+        $id = $postCreate->id;
+//        return view('post.details',compact('post'));
+//        return view('contents.create',compact('id'));
+        return redirect()->route('post.contents.create',$id);
     }
 
     /**
@@ -61,7 +64,9 @@ class PostController extends Controller
     public function show($id)
     {
         $post = App\Post::findOrFail($id);
-        return view('post.details',compact('post'));
+        $contentController = new ContentController();
+        $contents = $contentController->getContentsProperty($id);
+        return view('post.details',compact('post','contents'));
     }
 
     /**
@@ -109,5 +114,13 @@ class PostController extends Controller
         $postDelete->delete();
         $posts = App\Post::all();
         return view('home',compact('posts'));
+    }
+
+    public function view($id)
+    {
+        $contentController = new ContentController();
+        $contents = $contentController->getContentsProperty($id);
+
+        return view('post.view',compact('contents'));
     }
 }

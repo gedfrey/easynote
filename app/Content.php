@@ -15,4 +15,9 @@ class Content extends Model
     {
         return $this->belongsTo('App\Type');
     }
+
+    public function property()
+    {
+        return $this->belongsTo('App\Property');
+    }
 }

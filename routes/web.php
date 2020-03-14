@@ -47,6 +47,14 @@ Route::middleware(['auth'])->group(function () {
             ->name('post.contents.edit')
             ->where('id','[0-9)]+');
 
+        Route::middleware(['checkContents'])->group(function () {
+
+            Route::get('/post/contents/create/{id}','ContentsEditController@create')
+                ->name('post.contents.create')
+                ->where('id','[0-9)]+');
+
+        });
+
         Route::get('/post/contents/list/{id}','ContentsEditController@listById')
             ->name('post.contents.getAllByID')
             ->where('id','[0-9]+');
@@ -55,19 +63,26 @@ Route::middleware(['auth'])->group(function () {
             ->name('post.contents.order')
             ->where('id','[0-9]+');
 
-//        Route::post('/post/contents/up','ContentsEditController@up')
-//            ->name('post.contents.up')
-//            ->middleware('auth');
-//
-//        Route::post('/post/contents/down','ContentsEditController@down')
-//            ->name('post.contents.down')
-//            ->middleware('auth');
-
         Route::post('/publish','ContentController@createContents');
 
         Route::get('/publish/success/{post_id}','ContentController@success')
             ->name('publish.success')
             ->where('post_id','[0-9]');
+
+        Route::get('/post/{id}','PostController@view')
+            ->name('post.view')
+            ->where('id','[0-9]');
+
+        Route::get('/contentsWithProperty','ContentController@getContentsProperty')
+            ->name('contents.properties')
+            ->where('id','[0-9]');
+
+        Route::get('/post/contents/properties/{id}','ContentController@getContents')
+            ->name('contents')
+            ->where('id','[0-9]');
+
+        Route::post('/posts/contents/destroy','ContentController@destroyList')
+            ->name('contents.destroy');
 
     });
 
@@ -78,38 +93,6 @@ Route::middleware(['auth'])->group(function () {
 
 });
 
-
-//Route::resource('posts','PostController')->middleware('auth');
-//
-//Route::resource('contents','ContentController')->middleware('auth');
-//
-//Route::resource('texts','TextController')->middleware('auth');
-//
-//Route::resource('type-texts','TypeTextController');
-//
-//Route::resource('images','ImageController');
-
-//Route::get('/post/contents/{id}','ContentsEditController@edit')
-//    ->name('post.contents.edit')
-//    ->where('id','[0-9)]+')
-//    ->middleware('auth');
-//
-//Route::get('/post/contents/list/{id}','ContentsEditController@listById')
-//    ->name('post.contents.getAllByID')
-//    ->where('id','[0-9]+')
-//    ->middleware('auth');
-//
-//Route::get('/post/contents/order/{id}','ContentsEditController@getOrder')
-//    ->name('post.contents.order')
-//    ->where('id','[0-9]+');
-//
-//Route::post('/post/contents/up','ContentsEditController@up')
-//    ->name('post.contents.up')
-//    ->middleware('auth');
-//
-//Route::post('/post/contents/down','ContentsEditController@down')
-//    ->name('post.contents.down')
-//    ->middleware('auth');
 
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 
