@@ -30,4 +30,8 @@ class UserController extends Controller
 
         return redirect()->route('admin.users.index')->withMessage('User dissapproved successfully');
     }
+
+    public function errorOwner(){
+        return view('error-ownership');
+    }
 }

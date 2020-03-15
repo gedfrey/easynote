@@ -11,7 +11,6 @@
                     <label for="inputTitle">{{title}}</label>
                     <textarea name="" id="" type="text" class="form-control" v-model="content.value" cols="30" rows="10"></textarea>
                 </div>
-                {{content.value}}
                 <div class="form group" v-if="form.value === 'title'">
                     <label for="size">Tamaño</label>
                     <select name="" id="" class="form-control" v-model="property.size">
@@ -108,9 +107,7 @@ export default {
     watch:{
         form: {
             handler(value){
-                console.log('realizando cambios')
                 if(value.update){
-                    console.log('es update')
                     this.updateData()
                 }
             },
@@ -139,15 +136,10 @@ export default {
         },
         async getSizes(){
             let data = await axios('/sizes')
-            console.log('imprimiendo tamaños')
-            console.log(data.data)
             this.sizes = data.data
-            // this.sizes = data.data
         },
         async getAligns(){
             let data = await axios('/aligns')
-            console.log('imprimiendo aligns')
-            console.log(data.data)
             this.aligns = data.data
         },
         async getColors(){
@@ -205,7 +197,6 @@ export default {
                     message: 'Se exedio el tamaño maximo'
                 })
             }else{
-                console.log('no hay error')
                 let index = this.errors.findIndex( function(element){
                     return element.type === 'value'
                 })
@@ -214,19 +205,13 @@ export default {
             }
         },
         onSubmitText(){
-            console.log('contenido')
-            console.log(this.content)
-            console.log('propiedades')
-            console.log(this.property)
             this.valideText()
             let count = this.errors.length
             if(count <= 0){
-                console.log('no existe error')
                 let tipos = this.types
                 let value = this.form.value
                 this.addContent({
                     value: this.content.value,
-                    // order: this.$store.getters.getOrder,
                     order: 0,
                     type_id: this.types.find( function(element){
                         return element.name === value
@@ -246,7 +231,6 @@ export default {
         },
         onSubmitUpdateText(){
             this.valideText()
-            console.log('ejecutando submitupdate')
             if(this.errors.length === 0){
                 let value = this.form.value
                 this.updateContent({
@@ -276,12 +260,5 @@ export default {
         this.getColors()
 
     },
-    // created(){
-    //     console.log('el contenido actual de content.value')
-    //     console.log(this.content.value)
-    //     this.updateData()
-    //     console.log('el contenido despues')
-    //     console.log(this.content.value)
-    // }
 }
 </script>

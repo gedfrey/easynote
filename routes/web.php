@@ -25,8 +25,37 @@ Route::middleware(['auth'])->group(function () {
 
     Route::middleware(['approved'])->group(function () {
 
-        Route::resource('posts','PostController');
-        Route::resource('contents','ContentController');
+        Route::middleware(['checkUserOwnership'])->group(function () {
+
+            Route::resource('contents','ContentController');
+            Route::resource('posts','PostController');
+
+            Route::get('/post/contents/{id}','ContentsEditController@edit')
+                ->name('post.contents.edit')
+                ->where('id','[0-9)]+');
+
+            Route::get('/post/contents/list/{id}','ContentsEditController@listById')
+                ->name('post.contents.getAllByID')
+                ->where('id','[0-9]+');
+
+            Route::get('/post/contents/order/{id}','ContentsEditController@getOrder')
+                ->name('post.contents.order')
+                ->where('id','[0-9]+');
+
+            Route::middleware(['checkContents'])->group(function () {
+
+                Route::get('/post/contents/create/{id}','ContentsEditController@create')
+                    ->name('post.contents.create')
+                    ->where('id','[0-9)]+');
+
+            });
+
+        });
+
+
+//        Route::resource('posts','PostController');
+//            ->middleware('checkUserOwnership');
+//        Route::resource('contents','ContentController');
 //        Route::resource('texts','TextController');
 //        Route::resource('type-texts','TypeTextController');
 //        Route::resource('images','ImageController');
@@ -43,25 +72,18 @@ Route::middleware(['auth'])->group(function () {
         Route::get('aligns','AlignController@index')
             ->name('aligns');
 
-        Route::get('/post/contents/{id}','ContentsEditController@edit')
-            ->name('post.contents.edit')
-            ->where('id','[0-9)]+');
+//        Route::get('/post/contents/{id}','ContentsEditController@edit')
+//            ->name('post.contents.edit')
+//            ->where('id','[0-9)]+');
 
-        Route::middleware(['checkContents'])->group(function () {
+//        Route::middleware(['checkContents'])->group(function () {
+//
+//            Route::get('/post/contents/create/{id}','ContentsEditController@create')
+//                ->name('post.contents.create')
+//                ->where('id','[0-9)]+');
+//
+//        });
 
-            Route::get('/post/contents/create/{id}','ContentsEditController@create')
-                ->name('post.contents.create')
-                ->where('id','[0-9)]+');
-
-        });
-
-        Route::get('/post/contents/list/{id}','ContentsEditController@listById')
-            ->name('post.contents.getAllByID')
-            ->where('id','[0-9]+');
-
-        Route::get('/post/contents/order/{id}','ContentsEditController@getOrder')
-            ->name('post.contents.order')
-            ->where('id','[0-9]+');
 
         Route::post('/publish','ContentController@createContents');
 
@@ -69,9 +91,7 @@ Route::middleware(['auth'])->group(function () {
             ->name('publish.success')
             ->where('post_id','[0-9]');
 
-        Route::get('/post/{id}','PostController@view')
-            ->name('post.view')
-            ->where('id','[0-9]');
+
 
         Route::get('/contentsWithProperty','ContentController@getContentsProperty')
             ->name('contents.properties')
@@ -84,6 +104,10 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/posts/contents/destroy','ContentController@destroyList')
             ->name('contents.destroy');
 
+        Route::get('/post/{id}','PostController@view')
+            ->name('post.view')
+            ->where('id','[0-9]');
+
     });
 
     Route::middleware(['admin'])->group(function () {
@@ -94,6 +118,8 @@ Route::middleware(['auth'])->group(function () {
 
 });
 
+Route::get('/error-ownership','UserController@errorOwner')
+    ->name('error-owner');
 
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 

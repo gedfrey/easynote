@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Rules\PostUserOwnership;
 use Illuminate\Http\Request;
 use App;
 use Illuminate\Support\Facades\Validator;
@@ -86,13 +87,14 @@ class ContentController extends Controller
         $validator = Validator::make($request->all(), [
             'contents' => 'required|array',
             'contents.*.order' => 'required',
-            'contents.*.post_id' => 'required|exists:posts,id',
+            'contents.*.post_id' => ['required','exists:types,id',new PostUserOwnership()],
             'contents.*.type_id' => 'required|exists:types,id',
             'contents.*.value' => 'required|min:4'
         ]);
 
+
         if($validator->fails()){
-            return response()->json(['error'=>$validator->errors()->all()]);
+            return response()->json(['error'=>$validator->errors()->all()],400);
 
         }
 

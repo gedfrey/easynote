@@ -39,7 +39,7 @@
 
             <div class="col-12 col-md-8">
                 <div class="container mb-2">
-                    <ListContents :contents="getContents" />
+                    <ListContents :contents="getContents"/>
 <!--                    <button class="btn btn-primary" @click="alertActive('HOla mundo','alert-danger')">Click Me</button>-->
                 </div>
                 <div class="container">
@@ -115,7 +115,8 @@ export default {
             'uploadContent'
         ]),
         ...mapActions([
-           'move'
+           'move',
+           'loadProperties'
         ]),
         typeText(value){
             if(value === 'title'){
@@ -150,30 +151,14 @@ export default {
         },
         async getContentsByDB(){
             let url = '/post/contents/properties/'+this.post_id
-            // axios.get(url).then( (res) => {
-            //     return res.data
-            // }).catch( (error) => {
-            //     console.log('error no hay data')
-            // })
             return await axios.get(url)
         },
         async destroyContentsDB(contents){
-              // axios.post('/post/contents/destroy',{
-              //     contents : contents
-              // }).then( (res) => {
-              //     console.log('res from destroy contents')
-              //     console.log(res)
-              //     return true;
-              // }).catch( (error) => {
-              //     console.log('error from destroy contents')
-              //     console.log(error.response)
-              //     return false;
-              // })
             return await axios.post('/posts/contents/destroy',{
                 contents: contents
             })
         },
-        async saveContentsDB(contents){
+        saveContentsDB(contents){
             contents.forEach((element, index) => {
                 element.order = index
                 element.post_id = this.post_id
@@ -181,12 +166,7 @@ export default {
             let payload = {
                 contents: contents
             }
-            return await axios.post('/publish',payload)
-                // .then( (res) => {
-            //     return res.status;
-            // }).catch( (error) => {
-            //     return error.response.status;
-            // })
+            return axios.post('/publish',payload)
         },
         async loadContents(update){
             if(update){
@@ -198,27 +178,34 @@ export default {
         },
         async publish(){
             let contents = this.$store.getters.getContents
-            let res = await this.saveContentsDB(contents)
-            console.log(res)
-            if(res){
-                let url = '/publish/success/'+this.post_id
-                window.location.pathname = url
-            }else{
-                this.alertActive('No existe contenido anterior','alert-danger')
+            try {
+                let res = await this.saveContentsDB(contents)
+            }catch (e) {
+                this.alertActive('Error al intentar salvar el contenido','alert-danger')
             }
         },
         async updatePublish(){
             let contentsDB = await this.getContentsByDB();
             let contents = this.$store.getters.getContents
-            console.log('contenidos')
-            console.log(contents)
-            await this.saveContentsDB(contents);
-            await this.destroyContentsDB(contentsDB.data)
-            this.alertActive('Contenido Actualizado','alert-success')
-
+            try {
+                let save = await this.saveContentsDB(contents);
+                await this.destroyContentsDB(contentsDB.data)
+                this.alertActive('Contenido Actualizado','alert-success')
+            }catch (e) {
+                if(e.response.data.hasOwnProperty('error')){
+                    let errors = ''
+                    e.response.data.error.forEach( (element,index) => {
+                        errors = element+' for index '+index+'\n'+errors
+                    })
+                    this.alertActive('Existen los siguientes errores: \n'+errors,'alert-danger')
+                }
+            }
         }
 
 
+    },
+    created() {
+        this.loadProperties()
     },
     mounted() {
         this.types = this.getTypes()

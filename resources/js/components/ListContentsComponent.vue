@@ -1,22 +1,29 @@
 <template>
-    <div class="card">
-        <h1 class="card-header">Vista Preliminar</h1>
-        <div class="card-body">
+    <div>
+        <div class="card" v-if="!pending">
+            <h1 class="card-header">Vista Preliminar</h1>
+            <div class="card-body">
+                <div v-for="(content,index) in contents" :key="index" :class="['container',checkSelected(content)]" @click="addSelected(index)">
+                    <div class="container" v-if="types.find(function(element) {return element.id === content.type_id}).name === 'title'">
+                        <p :class="[align(content.property.align_id), size_title(content.property.size_id)]">{{content.value}}</p>
+                    </div>
+                    <div class="container" v-if="types.find(function(element) {return element.id === content.type_id}).name === 'text'">
+                        <p :class="[align(content.property.align_id)]">{{content.value}}</p>
+                    </div>
+                </div>
 
-            <div v-for="(content,index) in contents" :key="index" :class="['container',checkSelected(content)]" @click="addSelected(index)">
-                <div class="container" v-if="types.find(function(element) {return element.id === content.type_id}).name === 'title'">
-                    <p :class="[align(content.property.align_id),size_title(content.property.size_id)]">{{content.value}}</p>
-                </div>
-                <div class="container" v-if="types.find(function(element) {return element.id === content.type_id}).name === 'text'">
-                    <p :class="[align(content.property.align_id)]">{{content.value}}</p>
-                </div>
+            </div>
+        </div>
+        <div v-if="pending" class="container text-center mt-5">
+            <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
             </div>
         </div>
     </div>
 </template>
 <script>
 import axios from "axios";
-import { mapMutations} from 'vuex';
+import { mapMutations, mapActions} from 'vuex';
 export default {
     props: ['contents'],
     data(){
@@ -24,20 +31,20 @@ export default {
             types: [],
             sizes: [],
             aligns: [],
-            colors: []
+            colors: [],
+            pending: true
         }
     },
     methods: {
         ...mapMutations([
            'addSelected'
         ]),
+        ...mapActions([
+           'loadProperties'
+        ]),
         align: function(value){
-            console.log(this.contents)
-            console.log(value)
-            console.log(this.aligns)
             let align = this.aligns.find(element => element.id === value).value
-            console.log('revisando alinamiento')
-            console.log(align)
+
             if(align === "center"){
                 return "text-center"
             }else if(align === "left"){
@@ -56,22 +63,17 @@ export default {
                 return "display-4"
             }
         },
-        getTypes(){
-            axios('/types').then( (element) => {
-                this.types = element.data
-            })
+        getTypes: function(){
+            return axios('/types')
         },
-        async getSizes(){
-            let data = await axios('/sizes')
-            this.sizes = data.data
+        getSizes(){
+            return axios('/sizes')
         },
-        async getAligns(){
-            let data = await axios('/aligns')
-            this.aligns = data.data
+        getAligns(){
+            return axios('/aligns')
         },
-        async getColors(){
-            let data = await axios('/colors')
-            this.colors = data.data
+        getColors(){
+            return axios('/colors')
         },
         checkSelected(obj){
             if(obj.hasOwnProperty('selected')){
@@ -79,13 +81,24 @@ export default {
                     return "bg-primary"
                 }
             }
+        },
+        async requestData(){
+            this.pending = true
+            await this.loadProperties()
+
+            this.types = await this.$store.getters.getTypes
+            this.sizes = await  this.$store.getters.getSizes
+            this.aligns = await this.$store.getters.getAligns
+            this.colors = await this.$store.getters.getColors
+            this.pending = false
         }
     },
     mounted(){
-        this.getTypes()
-        this.getSizes()
-        this.getAligns()
-        this.getColors()
+        this.requestData()
     }
+
+
+
+
 }
 </script>

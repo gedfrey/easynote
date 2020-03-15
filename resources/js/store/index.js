@@ -1,7 +1,14 @@
+import axios from 'axios'
 export default {
+
+
     state: {
         contents: [],
-        selected: undefined
+        selected: undefined,
+        sizes: [],
+        aligns: [],
+        types: [],
+        colors: []
     },
     getters:{
         getContents: (state) => {
@@ -13,7 +20,20 @@ export default {
         },
         getContent: (state)  => {
             return state.contents[state.selected]
+        },
+        getSizes: (state) => {
+            return state.sizes
+        },
+        getAligns: (state) => {
+            return state.aligns
+        },
+        getTypes: (state) => {
+            return state.types
+        },
+        getColors: (state) => {
+            return state.colors
         }
+
 
     },
     mutations: {
@@ -29,13 +49,11 @@ export default {
             Vue.set(state.contents[index],'selected',true)
         },
         updateContent(state,content){
-            console.log(content)
             state.contents[state.selected].property.align_id = content.property.align_id
             state.contents[state.selected].property.size_id = content.property.size_id
             state.contents[state.selected].property.color_id = content.property.color_id
             state.contents[state.selected].value = content.value
             state.contents[state.selected].type_id = content.type_id
-            console.log(state.contents[state.selected])
         },
         deleteContent(state){
             let index = state.selected
@@ -44,30 +62,31 @@ export default {
         },
         uploadContent(state,contents){
             state.contents = contents
+        },
+        uploadTypes(state,types){
+            state.types = types
+        },
+        uploadAligns(state,aligns){
+            state.aligns = aligns
+        },
+        uploadSizes(state,sizes){
+            state.sizes = sizes
+        },
+        uploadColors(state,colors){
+            state.colors = colors
         }
     },
     actions:{
         move({commit,state},dir){
-            console.log('ejecutando cambio')
-            console.log(dir)
             if(dir === 'down'){
                 if(state.selected < state.contents.length - 1){
                     let index = state.selected
                     let content = {
                         value: state.contents[index].value,
                         type_id: state.contents[index].type_id,
-                        // property: {
-                        //     align: state.contents[index].property.align,
-                        //     size: state.contents[index].property.size,
-                        //     color: state.contents[index].property.color
-                        // }
                         property: state.contents[index].property
                     }
-                    console.log(state.contents)
-                    console.log(content)
                     commit('deleteContent')
-                    console.log('contenidos')
-                    console.log(state.contents)
                     state.contents.splice(index+1,0,content)
                     commit('addSelected',index+1)
                 }
@@ -77,11 +96,6 @@ export default {
                     let content = {
                         value: state.contents[index].value,
                         type_id: state.contents[index].type_id,
-                        // property: {
-                        //     align: state.contents[index].property.align,
-                        //     size: state.contents[index].property.size,
-                        //     color: state.contents[index].property.color
-                        // }
                         property: state.contents[index].property
                     }
                     commit('deleteContent')
@@ -89,6 +103,21 @@ export default {
                     commit('addSelected',index-1)
                 }
             }
+        },
+        async loadProperties({commit,state}){
+            let types = await axios('/types')
+            types = types.data
+            commit('uploadTypes', types)
+            let sizes = await axios('/sizes')
+            sizes = sizes.data
+            commit('uploadSizes',sizes)
+            let aligns = await axios('/aligns')
+            aligns = aligns.data
+            commit('uploadAligns',aligns)
+            let colors = await axios('/colors')
+            colors = colors.data
+            commit('uploadColors',colors)
+
         }
     },
 }
