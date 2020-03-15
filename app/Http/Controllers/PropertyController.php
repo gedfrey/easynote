@@ -88,6 +88,8 @@ class PropertyController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $property = App\Property::findorFail($id);
+        $property->delete();
+        return $id;
     }
 }

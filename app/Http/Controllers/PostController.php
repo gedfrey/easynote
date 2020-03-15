@@ -111,9 +111,13 @@ class PostController extends Controller
     public function destroy($id)
     {
         $postDelete = App\Post::findOrFail($id);
+        foreach($postDelete->contents as $content){
+            $content->property->delete();
+        }
         $postDelete->delete();
         $posts = App\Post::all();
-        return view('home',compact('posts'));
+        $edit = false;
+        return view('home',compact('posts','edit'));
     }
 
     public function view($id)

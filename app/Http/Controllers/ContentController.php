@@ -153,6 +153,7 @@ class ContentController extends Controller
     public function destroy($id)
     {
         $content = App\Content::findOrFail($id);
+        $content->property->delete();
         $content->delete();
         return $id;
     }
