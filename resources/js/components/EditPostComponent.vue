@@ -179,8 +179,14 @@ export default {
         async publish(){
             let contents = this.$store.getters.getContents
             try {
+                console.log(contents)
                 let res = await this.saveContentsDB(contents)
+                if(res.status === 200){
+                    let url = '/publish/success/'+this.post_id
+                    window.location.pathname = url
+                }
             }catch (e) {
+                console.log(e.response)
                 this.alertActive('Error al intentar salvar el contenido','alert-danger')
             }
         },

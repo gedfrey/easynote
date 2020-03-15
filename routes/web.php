@@ -89,24 +89,24 @@ Route::middleware(['auth'])->group(function () {
 
         Route::get('/publish/success/{post_id}','ContentController@success')
             ->name('publish.success')
-            ->where('post_id','[0-9]');
+            ->where('post_id','[0-9]+');
 
 
 
         Route::get('/contentsWithProperty','ContentController@getContentsProperty')
             ->name('contents.properties')
-            ->where('id','[0-9]');
+            ->where('id','[0-9]+');
 
         Route::get('/post/contents/properties/{id}','ContentController@getContents')
             ->name('contents')
-            ->where('id','[0-9]');
+            ->where('id','[0-9]+');
 
         Route::post('/posts/contents/destroy','ContentController@destroyList')
             ->name('contents.destroy');
 
         Route::get('/post/{id}','PostController@view')
             ->name('post.view')
-            ->where('id','[0-9]');
+            ->where('id','[0-9]+');
 
     });
 

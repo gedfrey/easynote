@@ -87,7 +87,7 @@ class ContentController extends Controller
         $validator = Validator::make($request->all(), [
             'contents' => 'required|array',
             'contents.*.order' => 'required',
-            'contents.*.post_id' => ['required','exists:types,id',new PostUserOwnership()],
+            'contents.*.post_id' => ['required','exists:posts,id',new PostUserOwnership()],
             'contents.*.type_id' => 'required|exists:types,id',
             'contents.*.value' => 'required|min:4'
         ]);
