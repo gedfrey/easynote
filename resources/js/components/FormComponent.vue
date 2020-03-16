@@ -61,6 +61,30 @@
                 <button class="btn btn-primary" type="submit">Enviar</button>
             </form>
 
+            <form v-on:submit.prevent="submitFormImage" v-if="form.value  === 'images' && !form.update">
+                <div class="form-group">
+                    <label for="align">Posición</label>
+                    <select name="" id="" class="form-control" v-model="property.align">
+                        <option v-for="(align,index) in aligns" :key="index" :value="align.value">{{alignf(align.value)}}</option>
+                    </select>
+                </div>
+                <div class="custom-file mb-2">
+                    <input type="file" class="custom-file-input" id="validatedCustomFile" v-on:change="onChangeFileUpload()" required>
+                    <label class="custom-file-label" for="validatedCustomFile">{{file_name}}</label>
+                    <div class="invalid-feedback">Example invalid custom file feedback</div>
+                </div>
+                <button class="btn btn-primary" type="submit">Enviar</button>
+            </form>
+            <form v-on:submit.prevent="onSubmitImageUpdate" v-if="form.value  === 'images' && form.update">
+                <div class="form-group">
+                    <label for="align">Posición</label>
+                    <select name="" id="" class="form-control" v-model="property.align">
+                        <option v-for="(align,index) in aligns" :key="index" :value="align.value">{{alignf(align.value)}}</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary" type="submit">Enviar</button>
+            </form>
+
         </div>
     </div>
 </template>
@@ -84,6 +108,8 @@ export default {
             sizes: [],
             aligns: [],
             errors: [],
+            file_name: 'Escoge un Archivo..',
+            file: ''
         }
     },
     computed: {
@@ -120,6 +146,15 @@ export default {
             'updateContent'
 
         ]),
+        onChangeFileUpload(){
+
+            let fileInput = document.querySelector( '#validatedCustomFile' )
+            this.file = fileInput.files[0];
+            this.file_name = this.file.name
+            console.log('se seleciono una imagen')
+            console.log(this.file)
+
+        },
         updateData(){
             if(this.form.update){
                 let content = this.$store.getters.getContent
@@ -188,6 +223,8 @@ export default {
             this.property.align = 'left'
             this.property.color = 'black'
             this.errors = []
+            this.file_name = 'Escoge un Archivo..',
+            this.file = ''
 
         },
         valideText(){
@@ -203,6 +240,46 @@ export default {
                 this.errors.splice(index,1)
 
             }
+        },
+        async submitFormImage(){
+            let formData = new FormData();
+            formData.append('image', this.file);
+            try{
+                let res = await axios.post('/content/image/upload',
+                    formData,
+                    {
+
+                        headers: {
+
+                            'Content-Type': 'multipart/form-data'
+
+                        }
+                    }
+                )
+                let value = this.form.value
+                this.addContent({
+                    value: res.data,
+                    order: 0,
+                    type_id: this.types.find( function(element){
+                        return element.name === value
+                    }).id,
+                    url_temporal: true,
+                    property: {
+                        align_id: this.aligns.find(element => element.value === this.property.align).id,
+                        color_id: this.colors.find(element => element.value === this.property.color).id,
+                        size_id: this.sizes.find( element => element.value === this.property.size).id
+                    }
+                })
+                this.$emit('alert','agregado con exito','alert-success')
+                this.cleanForm()
+                this.disableForm()
+                console.log(this.$store.getters.getContents)
+
+            }catch (e) {
+                console.log('error')
+                console.log(e)
+            }
+
         },
         onSubmitText(){
             this.valideText()
@@ -251,6 +328,25 @@ export default {
             }else{
                 this.$emit('alert','Revisa los campos','alert-danger')
             }
+        },
+        onSubmitImageUpdate(){
+            let value = this.form.value
+            this.updateContent({
+                value: this.content.value,
+                order: 0,
+                type_id: this.types.find( function(element){
+                    return element.name === value
+                }).id,
+                property: {
+                    align_id: this.aligns.find(element => element.value === this.property.align).id,
+                    color_id: this.colors.find(element => element.value === this.property.color).id,
+                    size_id: this.sizes.find( element => element.value === this.property.size).id
+                }
+
+            })
+            this.$emit('alert','actualizado con exito','alert-success')
+            this.cleanForm()
+            this.disableForm()
         }
     },
     mounted(){

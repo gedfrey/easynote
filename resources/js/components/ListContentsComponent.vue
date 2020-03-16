@@ -10,8 +10,12 @@
                     <div class="container" v-if="types.find(function(element) {return element.id === content.type_id}).name === 'text'">
                         <p :class="[align(content.property.align_id)]">{{content.value}}</p>
                     </div>
-                </div>
+                    <div :class="[align(content.property.align_id),'container']"  v-if="types.find(function(element) {return element.id === content.type_id}).name === 'images'">
+<!--                        <p :class="[align(content.property.align_id)]">{{}}</p>-->
+                        <img class="img-fluid" :src="url_path+'/'+content.value" :alt="content.value">
+                    </div>
 
+                </div>
             </div>
         </div>
         <div v-if="pending" class="container text-center mt-5">
@@ -25,7 +29,7 @@
 import axios from "axios";
 import { mapMutations, mapActions} from 'vuex';
 export default {
-    props: ['contents'],
+    props: ['contents','url_path'],
     data(){
         return {
             types: [],
@@ -74,6 +78,18 @@ export default {
         },
         getColors(){
             return axios('/colors')
+        },
+        async getUrlImage(value){
+            let url = value
+            try {
+                url = await axios('/content/image/okK1k0ul7DrT35dooQvHLEKWvJjVNsJAHWcYb9Ef.png')
+                console.log(url.data)
+            }catch (e) {
+                console.log('hubo un error al traer la imagenerror')
+                console.log(e.response)
+            }
+
+            return url.data
         },
         checkSelected(obj){
             if(obj.hasOwnProperty('selected')){

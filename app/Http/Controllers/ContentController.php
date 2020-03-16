@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Rules\ContentUserOwnership;
 use App\Rules\PostUserOwnership;
 use Illuminate\Http\Request;
 use App;
@@ -65,13 +66,6 @@ class ContentController extends Controller
 
     public function createContent($content)
     {
-//        $request->validate([
-//            'order' => 'required',
-//            'post_id' => 'required|exists:posts',
-//            'type_id' => 'required|exists:types',
-//            'property' => 'required|array',
-//            'value' => 'required|min:10'
-//        ]);
 
         $properties = new PropertyController();
         $property = $properties->store($content['property']);
@@ -98,9 +92,7 @@ class ContentController extends Controller
 
         }
 
-//        return 'hola mundo';
-//        return $request->contents[0]['property'];
-//
+
         foreach ($request->contents as $content)
         {
             $this->createContent($content);
@@ -163,7 +155,7 @@ class ContentController extends Controller
 
         $validator = Validator::make($request->all(), [
             'contents' => 'required|array',
-            'contents.*.id' => 'required|exists:contents,id'
+            'contents.*.id' => ['required','exists:contents,id',new ContentUserOwnership()]
         ]);
 
         if($validator->fails()){

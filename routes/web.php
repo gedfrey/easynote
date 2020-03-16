@@ -50,6 +50,8 @@ Route::middleware(['auth'])->group(function () {
 
             });
 
+
+
         });
 
 
@@ -104,9 +106,16 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/posts/contents/destroy','ContentController@destroyList')
             ->name('contents.destroy');
 
-        Route::get('/post/{id}','PostController@view')
-            ->name('post.view')
-            ->where('id','[0-9]+');
+
+//        Route::get('/post/{id}','PostController@view')
+//            ->name('post.view')
+//            ->where('id','[0-9]+');
+
+        Route::post('/content/image/upload','UploadImageContent@upload')
+            ->name('content.image.upload');
+
+        Route::post('/content/image/change','UploadImageContent@store')
+            ->name('content.image.store');
 
     });
 
@@ -116,12 +125,17 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/admin-register/dissapprove/{user_id}', 'UserController@dissApprove')->name('admin.users.dissapprove');
     });
 
+
 });
+
+Route::get('/post/{id}','PostController@view')
+    ->name('post.view')
+    ->where('id','[0-9]+');
 
 Route::get('/error-ownership','UserController@errorOwner')
     ->name('error-owner');
 
-Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+//Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 
 Route::get('/form-contact','NotificationController@view')->name('form-contact');
 

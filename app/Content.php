@@ -16,6 +16,11 @@ class Content extends Model
         return $this->belongsTo('App\Type');
     }
 
+    public function post()
+    {
+        return $this->belongsTo('App\Post');
+    }
+
     public function property()
     {
         return $this->belongsTo('App\Property');

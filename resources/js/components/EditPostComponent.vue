@@ -28,7 +28,7 @@
                             <img :src="url_path+'/icons/files-40.png'" alt="imagen" class="text-light">
                         </button>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                            <button class="dropdown-item" @click="alertActive('Hola mundo','alert-danger')" type="button">Imagen</button>
+                            <button class="dropdown-item" @click="activeForm('images')" type="button">Imagen</button>
                         </div>
                     </div>
 
@@ -39,8 +39,7 @@
 
             <div class="col-12 col-md-8">
                 <div class="container mb-2">
-                    <ListContents :contents="getContents"/>
-<!--                    <button class="btn btn-primary" @click="alertActive('HOla mundo','alert-danger')">Click Me</button>-->
+                    <ListContents :contents="getContents" :url_path="url_path"/>
                 </div>
                 <div class="container">
                     <FormComponent :form="form" @disableForm="form.status = $event, form.update = $event" @alert="alertActive"/>
@@ -137,6 +136,7 @@ export default {
         activeForm(value){
             this.form.value = value
             this.form.status = true
+            this.form.update = false
         },
         editContent(){
             let content = this.$store.getters.getContent
@@ -158,10 +158,30 @@ export default {
                 contents: contents
             })
         },
-        saveContentsDB(contents){
-            contents.forEach((element, index) => {
+        changeUrlImage(value, post_id){
+            return axios.post('/content/image/change',{value : value, post_id: post_id})
+        },
+        async saveContentsDB(contents){
+            await contents.forEach( (element, index) => {
                 element.order = index
                 element.post_id = this.post_id
+                if(element.hasOwnProperty('url_temporal')){
+                    if(element.url_temporal){
+                        // console.log('modificando url a verdadero storage')
+                        try{
+                            // console.log(element.value)
+                            let res =  this.changeUrlImage(element.value, element.post_id)
+                            // console.log(res.data)
+                            element.value = 'post/17/32bSNYyZWLZl5yBag7yEZ8HGTMiBGP8QJYsx0y1b.png'
+                            element.url_temporal = false
+                            element.order = 88
+                        }catch (e) {
+                            this.alertActive('Error al intentar cambiar la imagen','alert-danger')
+                        }
+
+                    }
+                }
+
             })
             let payload = {
                 contents: contents
