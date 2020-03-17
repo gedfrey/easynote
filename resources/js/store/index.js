@@ -3,6 +3,7 @@ export default {
 
 
     state: {
+        comments: [],
         contents: [],
         selected: undefined,
         sizes: [],
@@ -32,6 +33,9 @@ export default {
         },
         getColors: (state) => {
             return state.colors
+        },
+        getComments: (state) => {
+            return state.comments
         }
 
 
@@ -74,6 +78,9 @@ export default {
         },
         uploadColors(state,colors){
             state.colors = colors
+        },
+        uploadComments(state,comments){
+            state.comments = comments
         }
     },
     actions:{
@@ -118,6 +125,16 @@ export default {
             colors = colors.data
             commit('uploadColors',colors)
 
+        },
+        loadComments({commit},post_id){
+            axios('/comments/post/'+post_id)
+                .then( (res) => {
+                    commit('uploadComments',res.data)
+                })
+                .catch( (error) => {
+                    console.log('error al traer los comentarios')
+                    console.log(error.response)
+                })
         }
     },
 }

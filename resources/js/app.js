@@ -34,6 +34,8 @@ const store = new Vuex.Store(
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('content-edit',require('./components/ContentEditComponent').default);
 Vue.component('post-edit',require('./components/EditPostComponent').default);
+Vue.component('list-comment',require('./components/ListCommentComponent').default);
+Vue.component('add-comment',require('./components/AddComment').default);
 
 
 const app = new Vue({

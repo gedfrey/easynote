@@ -126,7 +126,14 @@ Route::middleware(['auth'])->group(function () {
     });
 
 
+    Route::post('/comment/create','CommentController@create')
+        ->name('comment.create');
+
 });
+
+Route::get('/comments/post/{id}','CommentController@index')
+    ->name('comments.post')
+    ->where('id','[0-9]+');
 
 Route::get('/post/{id}','PostController@view')
     ->name('post.view')
@@ -135,7 +142,7 @@ Route::get('/post/{id}','PostController@view')
 Route::get('/error-ownership','UserController@errorOwner')
     ->name('error-owner');
 
-//Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 
 Route::get('/form-contact','NotificationController@view')->name('form-contact');
 

@@ -125,7 +125,8 @@ class PostController extends Controller
     {
         $contentController = new ContentController();
         $contents = $contentController->getContentsProperty($id);
+        $post_id = $id;
 
-        return view('post.view',compact('contents'));
+        return view('post.view',compact('contents','post_id'));
     }
 }
