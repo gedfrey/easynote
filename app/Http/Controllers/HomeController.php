@@ -23,7 +23,7 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
-    {   $posts = App\Post::all();
+    {   $posts = App\Post::orderBy('id','DESC')->get();
         $edit = false;
         return view('home',compact('posts','edit'));
     }
