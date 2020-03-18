@@ -142,7 +142,7 @@ Route::get('/post/{id}','PostController@view')
 Route::get('/error-ownership','UserController@errorOwner')
     ->name('error-owner');
 
-Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+//Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 
 Route::get('/form-contact','NotificationController@view')->name('form-contact');
 
