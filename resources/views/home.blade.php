@@ -15,7 +15,7 @@
                     </div>
 
                     <div class="card-body">
-                        <p class="card-text">{{$post->description}}</p>
+                        <p class="card-text">{!! nl2br(e($post->description)) !!}</p>
 
                         @if($edit)
                         <a href="{{route('posts.show',$post->id)}}" class="btn btn-primary">editar post</a>
