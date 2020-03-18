@@ -191,11 +191,11 @@ class ContentController extends Controller
 
         foreach ($contents as $content){
             if(isset($content['property']['size_id'])){
-                if($content['property']['size_id'] == 1){
+                if($content['property']['size_id'] == 3){
                     $content['property']['size_id'] = "display-1";
                 }else if($content['property']['size_id'] == 2){
                     $content['property']['size_id'] = "display-2";
-                }else if($content['property']['size_id'] == 3){
+                }else if($content['property']['size_id'] == 1){
                     $content['property']['size_id'] = "display-4";
                 }else {
                     $content['property']['size_id'] = "display-4";
