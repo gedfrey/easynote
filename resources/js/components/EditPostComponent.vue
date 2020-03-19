@@ -162,7 +162,7 @@ export default {
             return axios.post('/content/image/change',{value : value, post_id: post_id})
         },
         async saveContentsDB(contents){
-            await contents.forEach( (element, index) => {
+            await contents.forEach(  (element, index) => {
                 element.order = index
                 element.post_id = this.post_id
                 if(element.hasOwnProperty('url_temporal')){
@@ -170,11 +170,21 @@ export default {
                         // console.log('modificando url a verdadero storage')
                         try{
                             // console.log(element.value)
-                            let res =  this.changeUrlImage(element.value, element.post_id)
+                            // let res =  this.changeUrlImage(element.value, element.post_id)
+                            this.changeUrlImage().then( (res) => {
+                                // console.log('cambiando imagen')
+                                console.log(res)
+                                // console.log('terminando')
+                                element.value = res.data
+                                element.url_temporal = false
+                                element.order = 0
+                            })
                             // console.log(res.data)
-                            element.value = 'post/17/32bSNYyZWLZl5yBag7yEZ8HGTMiBGP8QJYsx0y1b.png'
-                            element.url_temporal = false
-                            element.order = 88
+                            // element.value = 'post/17/32bSNYyZWLZl5yBag7yEZ8HGTMiBGP8QJYsx0y1b.png'
+                            // console.log(res)
+                            // element.value = res.data
+                            // element.url_temporal = false
+                            // element.order = 0
                         }catch (e) {
                             this.alertActive('Error al intentar cambiar la imagen','alert-danger')
                         }
