@@ -1,8 +1,13 @@
 <template>
     <div class="container mt-2">
         <div class="card" v-if="loading">
-            <div class="card-header">
-                Comentarios
+            <div class="card-header text-center">
+                <h2>
+                    <strong>
+                        Comentarios
+                    </strong>
+                </h2>
+
             </div>
             <div class="card-body "  v-for="(comment, index) in this.$store.getters.getComments" :key="index" v-if="getComments.length != 0">
                 <p class="text-center">{{comment.value}}</p>
