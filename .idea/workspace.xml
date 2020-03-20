@@ -3,8 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="4dd288a1-2288-4000-a76c-a02e0a8ac5fe" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ContentController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ContentController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/EditPostComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/EditPostComponent.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/store/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/store/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -237,7 +240,11 @@
       <workItem from="1584394348029" duration="6664000" />
       <workItem from="1584411381882" duration="4157000" />
       <workItem from="1584494702109" duration="3791000" />
-      <workItem from="1584577915597" duration="802000" />
+      <workItem from="1584577915597" duration="1732000" />
+      <workItem from="1584581401240" duration="742000" />
+      <workItem from="1584637737333" duration="7452000" />
+      <workItem from="1584647420526" duration="19953000" />
+      <workItem from="1584713497396" duration="4492000" />
     </task>
     <servers />
   </component>
@@ -285,13 +292,13 @@
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state width="1807" height="278" key="GridCell.Tab.0.right/67.27.1853.1053/1920.0.1920.1080@67.27.1853.1053" timestamp="1583634802561" />
-    <state x="574" y="340" key="com.intellij.ide.util.TipDialog" timestamp="1584577959275">
+    <state x="574" y="340" key="com.intellij.ide.util.TipDialog" timestamp="1584713498859">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>
     <state x="280" y="263" key="com.intellij.ide.util.TipDialog/1024.0.1920.1080/0.35.1024.768@0.35.1024.768" timestamp="1581534349988" />
     <state x="1549" y="321" key="com.intellij.ide.util.TipDialog/1024.0.1920.1080/0.35.1024.768@1024.0.1920.1080" timestamp="1582660553691" />
     <state x="2445" y="321" key="com.intellij.ide.util.TipDialog/67.27.1853.1053/1920.0.1920.1080@1920.0.1920.1080" timestamp="1583363832675" />
-    <state x="574" y="340" key="com.intellij.ide.util.TipDialog/67.27.1853.1053/1920.0.1920.1080@67.27.1853.1053" timestamp="1584577959275" />
+    <state x="574" y="340" key="com.intellij.ide.util.TipDialog/67.27.1853.1053/1920.0.1920.1080@67.27.1853.1053" timestamp="1584713498859" />
     <state x="573" y="345" key="com.intellij.ide.util.TipDialog/67.34.1853.1046@67.34.1853.1046" timestamp="1577711372184" />
     <state x="575" y="340" key="com.intellij.ide.util.TipDialog/70.27.1850.1053/1920.0.1024.768@70.27.1850.1053" timestamp="1579742621961" />
     <state x="656" y="257" width="672" height="678" key="search.everywhere.popup" timestamp="1584313369610">

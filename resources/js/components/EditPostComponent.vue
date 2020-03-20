@@ -115,7 +115,9 @@ export default {
         ]),
         ...mapActions([
            'move',
-           'loadProperties'
+           'loadProperties',
+            'contentsPayload',
+            'saveContentsDB'
         ]),
         typeText(value){
             if(value === 'title'){
@@ -154,50 +156,41 @@ export default {
             return await axios.get(url)
         },
         async destroyContentsDB(contents){
-            return await axios.post('/posts/contents/destroy',{
-                contents: contents
-            })
-        },
-        changeUrlImage(value, post_id){
-            return axios.post('/content/image/change',{value : value, post_id: post_id})
-        },
-        async saveContentsDB(contents){
-            await contents.forEach(  (element, index) => {
-                element.order = index
-                element.post_id = this.post_id
-                if(element.hasOwnProperty('url_temporal')){
-                    if(element.url_temporal){
-                        // console.log('modificando url a verdadero storage')
-                        try{
-                            // console.log(element.value)
-                            // let res =  this.changeUrlImage(element.value, element.post_id)
-                            this.changeUrlImage().then( (res) => {
-                                // console.log('cambiando imagen')
-                                console.log(res)
-                                // console.log('terminando')
-                                element.value = res.data
-                                element.url_temporal = false
-                                element.order = 0
-                            })
-                            // console.log(res.data)
-                            // element.value = 'post/17/32bSNYyZWLZl5yBag7yEZ8HGTMiBGP8QJYsx0y1b.png'
-                            // console.log(res)
-                            // element.value = res.data
-                            // element.url_temporal = false
-                            // element.order = 0
-                        }catch (e) {
-                            this.alertActive('Error al intentar cambiar la imagen','alert-danger')
-                        }
-
-                    }
-                }
-
-            })
-            let payload = {
-                contents: contents
+            if(contents.length > 0){
+                return await axios.post('/posts/contents/destroy',{
+                    contents: contents
+                })
             }
-            return axios.post('/publish',payload)
+
+            this.alertActive('Nada que eliminar','alert-danger')
+
         },
+        // changeUrlImage(value, post_id){
+        //     axios.post('/content/image/change',{value : value, post_id: post_id})
+        //         .then( (res) => {
+        //             return res.data
+        //         })
+        //         .catch( (error) => {
+        //
+        //         })
+        // },
+        // createPayload(contents,post_id){
+        //
+        //         contents.forEach( (element, index) => {
+        //             element.order = index
+        //             element.post_id = post_id
+        //             if(element.hasOwnProperty('url_temporal')){
+        //                 if(element.url_temporal){
+        //                     console.log('es una imagen temporal')
+        //                     element.value = this.changeUrlImage(element.value, post_id)
+        //                 }
+        //             }
+        //         })
+        //
+        // },
+        // async saveContentsDB(payload){
+        //     return await axios.post('/publish',payload)
+        // },
         async loadContents(update){
             if(update){
                 let contents = await this.getContentsByDB()
@@ -209,33 +202,38 @@ export default {
         async publish(){
             let contents = this.$store.getters.getContents
             try {
-                console.log(contents)
-                let res = await this.saveContentsDB(contents)
-                if(res.status === 200){
+                // console.log(contents)
+                // let res = await this.saveContentsDB(this.post_id)
+                // console.log('res')
+                // console.log(res)
+                // if(res.status === 200){
+                //     let url = '/publish/success/'+this.post_id
+                //     window.location.pathname = url
+                // }
+                this.saveContentsDB(this.post_id).then( (res) => {
                     let url = '/publish/success/'+this.post_id
                     window.location.pathname = url
-                }
+                }).catch( (error) => {
+                    this.alertActive('Error al intentar salvar el contenido','alert-danger')
+                })
             }catch (e) {
                 console.log(e.response)
                 this.alertActive('Error al intentar salvar el contenido','alert-danger')
             }
         },
         async updatePublish(){
-            let contentsDB = await this.getContentsByDB();
-            let contents = this.$store.getters.getContents
-            try {
-                let save = await this.saveContentsDB(contents);
-                await this.destroyContentsDB(contentsDB.data)
-                this.alertActive('Contenido Actualizado','alert-success')
+            // console.log('ejecutando funciòn para grabar')
+            try{
+                let contentsDB = await this.getContentsByDB()
+                this.saveContentsDB(this.post_id)
+                this.destroyContentsDB(contentsDB.data)
+                this.alertActive('Actualizado','alert-success')
             }catch (e) {
-                if(e.response.data.hasOwnProperty('error')){
-                    let errors = ''
-                    e.response.data.error.forEach( (element,index) => {
-                        errors = element+' for index '+index+'\n'+errors
-                    })
-                    this.alertActive('Existen los siguientes errores: \n'+errors,'alert-danger')
-                }
+                let error = 'Error al intentar salvar el contenido.\n'+e.response
+                this.alertActive('Error al intentar salvar el contenido','alert-danger')
             }
+
+
         }
 
 

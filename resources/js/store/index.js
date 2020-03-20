@@ -9,7 +9,8 @@ export default {
         sizes: [],
         aligns: [],
         types: [],
-        colors: []
+        colors: [],
+        promises: []
     },
     getters:{
         getContents: (state) => {
@@ -110,6 +111,130 @@ export default {
                     commit('addSelected',index-1)
                 }
             }
+        },
+        contentsPayload({state,dispatch},post_id){
+
+            // let errors = []
+            //
+            // return new Promise(function (resolve, reject){
+
+                state.contents.forEach( (element, index) => {
+                    element.order = index
+                    element.post_id = post_id
+                    if(element.hasOwnProperty('url_temporal')){
+                        if(element.url_temporal){
+                            console.log('es una imagen temporal')
+                            // element.value = 'terminar'
+                            // element.value = axios.post('/content/image/change',{value : element.value, post_id: post_id})
+                            //     .then( (res) => {
+                            //         console.log('res from api')
+                            //         console.log(res)
+                            //         // element.value = res.data
+                            //         return res.data
+                            //     })
+                            //     .catch( (error) => {
+                            //         console.log('error response')
+                            //         console.log(error.response)
+                            //         return null
+                            //     })
+                            const promise = axios.post('/content/image/change',{value : element.value, post_id: post_id}).then( (res) => {
+                                console.log('la promesa fue resuelta')
+                                console.log(res.data)
+                                element.value = res.data
+                                console.log(element.data)
+                            })
+                            state.promises.push(promise)
+                        }
+                    }
+                })
+
+                // if(errors.length > 0){
+                //     reject({
+                //         message: 'Error try change image',
+                //         errors : errors
+                //     })
+                // }
+                //
+                // resolve({
+                //     status: 200,
+                //     message: 'All contents changes'
+                // })
+
+            // })
+
+
+        },
+        saveContentsDB({state,dispatch},post_id){
+            let promises = []
+
+            return new Promise(function(resolve, reject) {
+                console.log('grabando contenido')
+                dispatch('contentsPayload',post_id)
+                console.log('vamos a enviar la info')
+                console.log(state.contents)
+
+                console.log('las promesas')
+                console.log(state.promises)
+                Promise.all(state.promises).then( values => {
+                    console.log('el resultado es')
+                    console.log(state.promises)
+                    console.log(state.contents)
+                    axios.post('/publish',{contents : state.contents}).then( (res) => {
+                        console.log('respuesta desde el save content')
+                        console.log(res)
+                        resolve({
+                            status: res.status,
+                            data: res.data
+                        })
+                        // return {
+                        //     status: res.status,
+                        //     data: res.data
+                        // }
+                    }).catch( (error) => {
+                        console.log(error)
+                        reject({
+                            status: error.response.status,
+                            data: error.response
+                        })
+                        /*return {
+                            status: error.response.status,
+                            data: error.response
+                        }*/
+                    })
+                }, reason => {
+                    console.log(reason)
+                })
+            })
+
+            /*console.log('grabando contenido')
+            dispatch('contentsPayload',post_id)
+            console.log('vamos a enviar la info')
+            console.log(state.contents)
+
+            console.log('las promesas')
+            console.log(state.promises)
+            Promise.all(state.promises).then( values => {
+                console.log('el resultado es')
+                console.log(state.promises)
+                console.log(state.contents)
+                axios.post('/publish',{contents : state.contents}).then( (res) => {
+                    console.log('respuesta desde el save content')
+                    console.log(res)
+                    return {
+                        status: res.status,
+                        data: res.data
+                    }
+                }).catch( (error) => {
+                    console.log(error)
+                    return {
+                        status: error.response.status,
+                        data: error.response
+                    }
+                })
+            }, reason => {
+                console.log(reason)
+            })*/
+
         },
         async loadProperties({commit,state}){
             let types = await axios('/types')

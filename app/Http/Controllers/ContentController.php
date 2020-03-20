@@ -86,6 +86,7 @@ class ContentController extends Controller
             'contents.*.value' => 'required|min:4'
         ]);
 
+//        return $request;
 
         if($validator->fails()){
             return response()->json(['error'=>$validator->errors()->all()],400);
@@ -158,9 +159,13 @@ class ContentController extends Controller
             'contents.*.id' => ['required','exists:contents,id',new ContentUserOwnership()]
         ]);
 
+//        return $request->contents;
+
+
         if($validator->fails()){
 //            return response('error',404)->json(['error'=>$validator->errors()->all()]);
-            return response('error validation',404);
+            return response()->json(['error'=>$validator->errors()->all()],400);
+//            return response('error validation',404);
 
         }
 //
