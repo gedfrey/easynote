@@ -151,8 +151,6 @@ export default {
             let fileInput = document.querySelector( '#validatedCustomFile' )
             this.file = fileInput.files[0];
             this.file_name = this.file.name
-            console.log('se seleciono una imagen')
-            console.log(this.file)
 
         },
         updateData(){
@@ -273,11 +271,9 @@ export default {
                 this.$emit('alert','agregado con exito','alert-success')
                 this.cleanForm()
                 this.disableForm()
-                console.log(this.$store.getters.getContents)
 
             }catch (e) {
-                console.log('error')
-                console.log(e)
+                this.$emit('alert','Error al subir '+e.response,'alert-success')
             }
 
         },

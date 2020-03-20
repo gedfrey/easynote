@@ -165,32 +165,6 @@ export default {
             this.alertActive('Nada que eliminar','alert-danger')
 
         },
-        // changeUrlImage(value, post_id){
-        //     axios.post('/content/image/change',{value : value, post_id: post_id})
-        //         .then( (res) => {
-        //             return res.data
-        //         })
-        //         .catch( (error) => {
-        //
-        //         })
-        // },
-        // createPayload(contents,post_id){
-        //
-        //         contents.forEach( (element, index) => {
-        //             element.order = index
-        //             element.post_id = post_id
-        //             if(element.hasOwnProperty('url_temporal')){
-        //                 if(element.url_temporal){
-        //                     console.log('es una imagen temporal')
-        //                     element.value = this.changeUrlImage(element.value, post_id)
-        //                 }
-        //             }
-        //         })
-        //
-        // },
-        // async saveContentsDB(payload){
-        //     return await axios.post('/publish',payload)
-        // },
         async loadContents(update){
             if(update){
                 let contents = await this.getContentsByDB()
@@ -202,14 +176,6 @@ export default {
         async publish(){
             let contents = this.$store.getters.getContents
             try {
-                // console.log(contents)
-                // let res = await this.saveContentsDB(this.post_id)
-                // console.log('res')
-                // console.log(res)
-                // if(res.status === 200){
-                //     let url = '/publish/success/'+this.post_id
-                //     window.location.pathname = url
-                // }
                 this.saveContentsDB(this.post_id).then( (res) => {
                     let url = '/publish/success/'+this.post_id
                     window.location.pathname = url
@@ -217,12 +183,10 @@ export default {
                     this.alertActive('Error al intentar salvar el contenido','alert-danger')
                 })
             }catch (e) {
-                console.log(e.response)
                 this.alertActive('Error al intentar salvar el contenido','alert-danger')
             }
         },
         async updatePublish(){
-            // console.log('ejecutando funciòn para grabar')
             try{
                 let contentsDB = await this.getContentsByDB()
                 this.saveContentsDB(this.post_id)
