@@ -10,8 +10,8 @@
                 <h6 class="card-subtitle mt-2 text-muted text-right">Fecha: {{comment.created_at}}</h6>
             </div>
             <div class="card-body" v-if="getComments.length === 0">
-                <h1 class="display-2">No Hay Comentarios</h1>
-                <h1 class="display-3">Se el primero!!</h1>
+                <h1 class="display-2 text-center">No Hay Comentarios</h1>
+                <h1 class="display-3 text-center">Se el primero!!</h1>
             </div>
         </div>
         <div v-if="!loading">

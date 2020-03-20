@@ -125,8 +125,10 @@ class PostController extends Controller
     {
         $contentController = new ContentController();
         $contents = $contentController->getContentsProperty($id);
-        $post_id = $id;
-
-        return view('post.view',compact('contents','post_id'));
+//        $post_id = $id;
+//        $post = App\Post::findorFail($id)->with('user')->get();
+        $post = App\Post::where('id',$id)->with('user')->first();
+//        dd($post);
+        return view('post.view',compact('contents','post'));
     }
 }

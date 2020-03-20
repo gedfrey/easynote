@@ -148,10 +148,10 @@ export default {
                         })
                     })
                 }, reason => {
-                    reject({
-                        status: error.response.status,
-                        data: error.response
-                    })
+                    // reject({
+                    //     status: error.response.status,
+                    //     data: error.response
+                    // })
                 })
             })
 

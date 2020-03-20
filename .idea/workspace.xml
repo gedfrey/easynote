@@ -3,10 +3,13 @@
   <component name="ChangeListManager">
     <list default="true" id="4dd288a1-2288-4000-a76c-a02e0a8ac5fe" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/PostController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/PostController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/EditPostComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/EditPostComponent.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/FormComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/FormComponent.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/ListCommentComponent.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/ListCommentComponent.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/store/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/store/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/comments/comments.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/comments/comments.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/post/components/view.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/post/components/view.blade.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -243,7 +246,7 @@
       <workItem from="1584581401240" duration="742000" />
       <workItem from="1584637737333" duration="7452000" />
       <workItem from="1584647420526" duration="19953000" />
-      <workItem from="1584713497396" duration="6981000" />
+      <workItem from="1584713497396" duration="14366000" />
     </task>
     <servers />
   </component>
@@ -300,6 +303,10 @@
     <state x="574" y="340" key="com.intellij.ide.util.TipDialog/67.27.1853.1053/1920.0.1920.1080@67.27.1853.1053" timestamp="1584713498859" />
     <state x="573" y="345" key="com.intellij.ide.util.TipDialog/67.34.1853.1046@67.34.1853.1046" timestamp="1577711372184" />
     <state x="575" y="340" key="com.intellij.ide.util.TipDialog/70.27.1850.1053/1920.0.1024.768@70.27.1850.1053" timestamp="1579742621961" />
+    <state x="657" y="253" key="run.anything.popup" timestamp="1584722981568">
+      <screen x="67" y="27" width="1853" height="1053" />
+    </state>
+    <state x="657" y="253" key="run.anything.popup/67.27.1853.1053/1920.0.1920.1080@67.27.1853.1053" timestamp="1584722981568" />
     <state x="656" y="257" width="672" height="678" key="search.everywhere.popup" timestamp="1584313369610">
       <screen x="67" y="27" width="1853" height="1053" />
     </state>

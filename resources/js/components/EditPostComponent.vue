@@ -189,10 +189,19 @@ export default {
         async updatePublish(){
             try{
                 let contentsDB = await this.getContentsByDB()
-                this.saveContentsDB(this.post_id)
+                this.saveContentsDB(this.post_id).then( (res) => {
+                    this.alertActive('Actualizado','alert-success')
+                }).catch( (error) => {
+                    if(error.status === 400){
+                        if(error.data.data.hasOwnProperty('error')){
+                            this.alertActive('No hay contenido en el post','alert-danger')
+                        }
+                    }
+                })
                 this.destroyContentsDB(contentsDB.data)
-                this.alertActive('Actualizado','alert-success')
+                // this.alertActive('Actualizado','alert-success')
             }catch (e) {
+                console.log(e)
                 let error = 'Error al intentar salvar el contenido.\n'+e.response
                 this.alertActive('Error al intentar salvar el contenido','alert-danger')
             }

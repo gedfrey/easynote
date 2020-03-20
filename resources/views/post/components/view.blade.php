@@ -12,5 +12,14 @@
                 </div>
             @endif
         @endforeach
+
+        @if(isset($post))
+            <div>
+                <p class="text-right"><strong>Fecha: </strong>{{$post->created_at}}</p>
+                <p class="text-right"><strong>Autor: </strong>{{$post->user->name}}</p>
+            </div>
+        @endif
+
+
     </div>
 </div>
